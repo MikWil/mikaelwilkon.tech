@@ -21,7 +21,7 @@
       --text: #e8eaf0;
       --muted: #8892a4;
       --radius: 14px;
-      --rail: 200px;
+      --rail: 44px;
     }
 
     html { scroll-behavior: smooth; }
@@ -32,6 +32,7 @@
       color: var(--text);
       line-height: 1.55;
       overflow-x: clip;
+      padding-left: var(--rail);
     }
 
     body::before {
@@ -96,7 +97,7 @@
 
     /* ROUTE RAIL (left map) */
     .route-rail {
-      display: none;
+      display: block;
       position: fixed;
       top: 0; left: 0; bottom: 0;
       width: var(--rail);
@@ -134,6 +135,14 @@
     .marker .m-ring { fill: var(--accent); }
     .goal-flag { font-size: 17px; }
     .route-cap { fill: var(--muted); font-family: 'Inter', sans-serif; font-size: 9.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+
+    /* Mobile rail: road + dots only */
+    .stop text { display: none; }
+    .stop .tick { display: none; }
+    .route-rail .stop { pointer-events: none; }
+    .road-bg { stroke-width: 3; }
+    .road-prog { stroke-width: 3; }
+    .road-dash { stroke-width: 0.7; stroke-dasharray: 0.8 5; }
 
     /* Sections */
     section { padding: 56px 0; }
@@ -373,10 +382,15 @@
     .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    /* Desktop: show rail + offset content */
+    /* Desktop: expand rail + show labels */
     @media (min-width: 1040px) {
-      .route-rail { display: block; }
-      body { padding-left: var(--rail); }
+      :root { --rail: 200px; }
+      .stop text { display: block; }
+      .stop .tick { display: block; }
+      .route-rail .stop { pointer-events: auto; }
+      .road-bg { stroke-width: 6; }
+      .road-prog { stroke-width: 6; }
+      .road-dash { stroke-width: 1.4; stroke-dasharray: 1 9; }
       nav { padding-left: var(--rail); }
     }
 
@@ -833,13 +847,17 @@
     const stopLayer = document.getElementById('stopLayer');
     const marker = document.getElementById('marker');
     const topbar = document.getElementById('topbar');
-    const RAIL_W = 200;
+    const railEl = document.querySelector('.route-rail');
+    function getRailW() { return railEl.offsetWidth || 200; }
 
     let pathLen = 0;
     let stops = [];
 
-    function buildPathD(h) {
-      const top = 78, bottom = h - 46, cx = 66, amp = 34, segs = 7;
+    function buildPathD(h, w) {
+      // Left-of-centre on desktop (room for labels); centred on mobile (no labels)
+      const cx = w < 100 ? Math.round(w * 0.5) : Math.round(w * 0.33);
+      const amp = w < 100 ? Math.round(w * 0.22) : Math.round(w * 0.17);
+      const top = 78, bottom = h - 46, segs = 7;
       const span = bottom - top;
       let d = `M ${cx} ${top}`;
       for (let i = 1; i <= segs; i++) {
@@ -858,8 +876,9 @@
 
     function layoutRoute() {
       const h = window.innerHeight;
-      svg.setAttribute('viewBox', `0 0 ${RAIL_W} ${h}`);
-      const d = buildPathD(h);
+      const w = getRailW();
+      svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+      const d = buildPathD(h, w);
       roadBg.setAttribute('d', d);
       roadProg.setAttribute('d', d);
       roadDash.setAttribute('d', d);
@@ -884,7 +903,7 @@
         tick.setAttribute('class', 'tick');
         tick.setAttribute('x1', 9);
         tick.setAttribute('y1', 0);
-        tick.setAttribute('x2', RAIL_W - 18 - pt.x);
+        tick.setAttribute('x2', w - 18 - pt.x);
         tick.setAttribute('y2', 0);
         g.appendChild(tick);
 
@@ -906,7 +925,7 @@
         }
 
         const label = document.createElementNS(NS, 'text');
-        label.setAttribute('x', RAIL_W - 16 - pt.x);
+        label.setAttribute('x', w - 16 - pt.x);
         label.setAttribute('y', 0);
         label.setAttribute('dy', '0.32em');
         label.setAttribute('text-anchor', 'end');
