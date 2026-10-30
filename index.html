@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mikael Wilkon — Senior Consultant</title>
-  <meta name="description" content="Mikael Wilkon — senior .NET consultant in Malmö, Sweden. Engineering meets product: C#, Azure, integrations, and product data." />
+  <title>Mikael Wilkon — Senior Lead Consultant</title>
+  <meta name="description" content="Mikael Wilkon — Senior Lead Consultant in Malmö, Sweden. Leads teams where engineering meets product: Scrum Master, Product Owner and .NET engineer with deep PIM and integration experience." />
   <meta name="theme-color" content="#f1eee7" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#121110" media="(prefers-color-scheme: dark)" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23121212'/%3E%3Ctext x='8' y='44' font-family='sans-serif' font-size='28' font-weight='700' fill='%23f1eee7'%3EMW%3C/text%3E%3Crect x='50' y='36' width='8' height='8' fill='%23e5431a'/%3E%3C/svg%3E" />
@@ -19,8 +19,8 @@
       --paper: #f1eee7;
       --paper-2: #e7e3d9;
       --ink: #141312;
-      --ink-2: #4b4842;
-      --ink-3: #7a766d;
+      --ink-2: #3f3c37;
+      --ink-3: #625e56;
       --rule: rgba(20,19,18,0.14);
       --rule-strong: rgba(20,19,18,0.85);
       --signal: #e5431a;
@@ -36,8 +36,8 @@
         --paper: #121110;
         --paper-2: #1c1a18;
         --ink: #ece8df;
-        --ink-2: #b2ada2;
-        --ink-3: #807b71;
+        --ink-2: #cfcabf;
+        --ink-3: #a8a296;
         --rule: rgba(236,232,223,0.13);
         --rule-strong: rgba(236,232,223,0.8);
         --signal: #ff6a3d;
@@ -64,7 +64,7 @@
     :focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; }
 
     .wrap { max-width: 1200px; margin: 0 auto; padding: 0 var(--gutter); position: relative; }
-    .mono { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.04em; }
+    .mono { font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.03em; }
     .u { text-transform: uppercase; letter-spacing: 0.08em; }
     .muted { color: var(--ink-3); }
     .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -103,7 +103,7 @@
     .top nav { display: flex; gap: 2px; margin-left: 8px; }
     .top nav a {
       text-decoration: none; color: var(--ink-2);
-      font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.04em;
+      font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.03em;
       padding: 6px 10px; position: relative;
     }
     .top nav a b { font-weight: 500; color: var(--ink-3); margin-right: 5px; }
@@ -197,33 +197,32 @@
     .btn.primary { background: var(--signal); border-color: var(--signal); color: #fff; }
     .btn.primary::before { background: var(--ink); }
 
-    /* Engineering <-> Product spectrum */
-    .spectrum { grid-column: 5 / span 8; align-self: end; }
-    .spectrum .ends { display: flex; justify-content: space-between; color: var(--ink-2); margin-bottom: 10px; }
-    .spectrum .track { position: relative; height: 22px; }
-    .spectrum .track::before {
-      content: ''; position: absolute; left: 0; right: 0; top: 10px; height: 1px; background: var(--rule-strong);
+    /* Leadership track */
+    .leadpanel { grid-column: 5 / span 8; align-self: end; }
+    .lp-head { display: flex; justify-content: space-between; color: var(--ink-2); padding-bottom: 10px; }
+    .leadpanel ol { list-style: none; display: grid; grid-template-columns: repeat(5, 1fr); position: relative; border-top: 1px solid var(--rule); }
+    .leadpanel ol::before {
+      content: ''; position: absolute; left: 0; right: 0; top: -1px; height: 3px; background: var(--signal);
+      transform-origin: left; transition: transform 1.4s var(--ease) .3s;
     }
-    .spectrum .ticks { position: absolute; inset: 0; display: flex; justify-content: space-between; }
-    .spectrum .ticks i { width: 1px; height: 7px; margin-top: 7px; background: var(--ink-3); }
-    .spectrum .ticks i:nth-child(5n+1) { height: 13px; margin-top: 4px; background: var(--ink); }
-    .spectrum .fill {
-      position: absolute; left: 0; top: 9px; height: 3px; width: 100%; background: var(--signal);
-      transform-origin: left; transform: scaleX(var(--pos));
+    .leadpanel:not(.in) ol::before { transform: scaleX(0); }
+    .leadpanel li { padding: 14px 12px 0 0; display: flex; flex-direction: column; gap: 4px; }
+    .leadpanel li + li { padding-left: 12px; border-left: 1px solid var(--rule); }
+    .leadpanel .y { color: var(--signal-ink); }
+    .leadpanel b { font-weight: 600; font-size: 0.98rem; line-height: 1.2; }
+    .leadpanel .at { color: var(--ink-2); font-size: 0.88rem; }
+    @media (max-width: 760px) {
+      .leadpanel ol { grid-template-columns: 1fr; }
+      .leadpanel li, .leadpanel li + li { padding: 10px 0; border-left: 0; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: 86px 1fr; gap: 0 12px; }
+      .leadpanel .at { grid-column: 2; }
     }
-    .spectrum .knob {
-      position: absolute; top: 3px; left: 0; width: 16px; height: 16px; margin-left: -8px;
-      background: var(--paper); border: 3px solid var(--signal); border-radius: 50%;
-      transform: translateX(var(--x, 0px));
-    }
-    .spectrum .note { margin-top: 10px; color: var(--ink-3); }
 
     @media (max-width: 900px) {
       .figure { grid-column: 1 / span 4; grid-row: span 1; }
       .lede { grid-column: 5 / span 8; }
       .actions { grid-column: 1 / -1; flex-direction: row; flex-wrap: wrap; }
       .actions .btn { flex: 1 1 200px; }
-      .spectrum { grid-column: 1 / -1; }
+      .leadpanel { grid-column: 1 / -1; }
     }
     @media (max-width: 560px) {
       h1 { font-size: 20vw; }
@@ -297,8 +296,7 @@
     .sw { width: 18px; height: 9px; display: inline-block; }
     .t-support { background: repeating-linear-gradient(135deg, var(--ink-3) 0 2px, transparent 2px 5px); box-shadow: inset 0 0 0 1px var(--ink-3); }
     .t-build { background: var(--ink); }
-    .t-process { background: repeating-linear-gradient(90deg, var(--signal) 0 3px, transparent 3px 6px); box-shadow: inset 0 0 0 1px var(--signal); }
-    .t-product { background: var(--signal); }
+    .t-lead { background: var(--signal); }
     .t-study { background: transparent; box-shadow: inset 0 0 0 1.5px var(--ink); border-radius: 0; background-image: radial-gradient(var(--ink) 1px, transparent 1.3px); background-size: 5px 5px; }
 
     .chart { position: relative; padding: 8px 16px 0; touch-action: pan-y; }
@@ -323,7 +321,7 @@
     .gridlines { position: absolute; top: 8px; bottom: 30px; left: 136px; right: 16px; pointer-events: none; }
     .gridlines i { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--rule); }
     .now-line { position: absolute; top: 0; bottom: 0; width: 0; border-left: 1.5px dashed var(--signal); }
-    .now-line::after { content: 'now'; position: absolute; top: -2px; left: 4px; font-family: var(--mono); font-size: 0.62rem; color: var(--signal-ink); }
+    .now-line::after { content: 'now'; position: absolute; top: -2px; left: 4px; font-family: var(--mono); font-size: 0.72rem; color: var(--signal-ink); }
     .scrub { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--ink); opacity: 0; pointer-events: none; }
     .chart.scrubbing .scrub { opacity: 1; }
     .readout {
@@ -334,7 +332,7 @@
     .readout .what { font-size: 0.95rem; }
     @media (max-width: 560px) {
       .c-row { grid-template-columns: 74px 1fr; }
-      .c-label { font-size: 0.78rem; }
+      .c-label { font-size: 0.85rem; }
       .axis { margin-left: 74px; }
       .gridlines { left: 90px; }
       .axis span:nth-child(even) { display: none; }
@@ -366,7 +364,7 @@
     .role .track { grid-column: 1 / -1; display: inline-flex; align-items: center; gap: 7px; color: var(--ink-2); }
     .role p { grid-column: 1 / -1; color: var(--ink-2); line-height: 1.65; max-width: 68ch; margin-top: 6px; }
     .tags { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
-    .tag { font-family: var(--mono); font-size: 0.7rem; padding: 3px 8px; background: var(--paper-2); color: var(--ink-2); }
+    .tag { font-family: var(--mono); font-size: 0.78rem; padding: 3px 8px; background: var(--paper-2); color: var(--ink-2); }
     .role.flash::before {
       content: ''; position: absolute; inset: -10px -14px; background: var(--signal-soft); z-index: -1;
       animation: flash 1.6s var(--ease) forwards;
@@ -406,7 +404,7 @@
     .freq .desc { grid-column: 1 / span 3; color: var(--ink-2); font-size: 0.95rem; }
     .freq .desc .mono { display: block; margin-bottom: 8px; color: var(--ink); }
     .freq ol { grid-column: 4 / span 9; list-style: none; }
-    .freq li { display: grid; grid-template-columns: 170px 1fr 52px; gap: 14px; align-items: center; padding: 7px 0; border-top: 1px solid var(--rule); }
+    .freq li { display: grid; grid-template-columns: 220px 1fr 52px; gap: 14px; align-items: center; padding: 7px 0; border-top: 1px solid var(--rule); }
     .freq li:last-child { border-bottom: 1px solid var(--rule); }
     .freq .name { font-weight: 500; }
     .freq .meter { height: 10px; display: grid; gap: 3px; }
@@ -417,7 +415,8 @@
     .freq .count { text-align: right; color: var(--ink-2); }
     @media (max-width: 760px) {
       .freq .desc, .freq ol { grid-column: 1 / -1; }
-      .freq li { grid-template-columns: 110px 1fr 40px; }
+      .freq li { grid-template-columns: 1fr 44px; }
+      .freq .meter { grid-column: 1 / -1; grid-row: 2; }
     }
 
     /* ---------- Education / cert / languages ---------- */
@@ -475,7 +474,7 @@
     }
     .mail a.addr:hover { background-size: 100% 3px; }
     .copy {
-      margin-top: 12px; font: inherit; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.04em;
+      margin-top: 12px; font: inherit; font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.03em;
       background: none; border: 1px solid var(--rule-strong); color: var(--ink); padding: 6px 10px; cursor: pointer;
     }
     .copy:hover { background: var(--ink); color: var(--paper); }
@@ -502,10 +501,6 @@
     .js.ready h1 .line:nth-child(2) > span { transition-delay: .12s; }
     .js .guides span { transform: scaleY(0); }
     .js.ready .guides span { transform: none; transition: transform 1.6s var(--ease); transition-delay: calc(var(--i) * 40ms); }
-    .js .spectrum .fill { transform: scaleX(0); }
-    .js.ready .spectrum .fill { transform: scaleX(var(--pos)); transition: transform 1.6s var(--ease) .5s; }
-    .js .spectrum .knob { transform: translateX(0); }
-    .js.ready .spectrum .knob { transform: translateX(var(--x, 0px)); transition: transform 1.6s var(--ease) .5s; }
     .no-js .reveal { opacity: 1; transform: none; }
 
     @media (prefers-reduced-motion: reduce) {
@@ -514,8 +509,7 @@
       .sec-head .rule { transform: none !important; }
       .chart:not(.drawn) .bar { transform: none; }
       .freq:not(.in) .meter i.on { transform: none; }
-      .js .spectrum .fill { transform: scaleX(var(--pos)); }
-      .js .spectrum .knob { transform: translateX(var(--x, 0px)); }
+      .leadpanel:not(.in) ol::before { transform: none; }
     }
 
     @media print {
@@ -552,7 +546,7 @@
     <!-- HERO -->
     <div class="hero wrap">
       <div class="meta-row mono u">
-        <span>Senior Consultant</span>
+        <span>Senior Lead Consultant</span>
         <span class="hide-sm">55.6050° N, 13.0038° E</span>
         <span class="hide-sm">Now: PIM at Tetra Pak</span>
         <span class="status">Open to new opportunities</span>
@@ -573,7 +567,7 @@
         </figure>
 
         <div class="lede reveal" style="--d:80ms">
-          <p class="big">Senior consultant working where engineering meets product — deep .NET and product-data experience, focused on <em>what gets built and why</em>.</p>
+          <p class="big">Senior lead consultant who leads teams where engineering meets product — Scrum Master, Product Owner and hands-on .NET engineer, focused on <em>what gets built and why</em>.</p>
           <p class="loc mono">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
             Malmö, Sweden
@@ -585,14 +579,15 @@
           <a href="https://se.linkedin.com/in/mikael-wilkon-38413aa0" target="_blank" rel="noopener" class="btn">LinkedIn <span class="arr" aria-hidden="true">↗</span></a>
         </div>
 
-        <div class="spectrum reveal" style="--d:240ms">
-          <div class="ends mono u"><span>Engineering</span><span>Product</span></div>
-          <div class="track" id="spectrum" style="--pos:.58" role="img" aria-label="Positioned between engineering and product, leaning toward product">
-            <div class="ticks" aria-hidden="true"></div>
-            <div class="fill" aria-hidden="true"></div>
-            <div class="knob" aria-hidden="true"></div>
-          </div>
-          <p class="note mono">Rooted in code, heading toward product: shaping direction and outcomes, not only delivering tasks.</p>
+        <div class="leadpanel reveal" style="--d:240ms">
+          <div class="lp-head mono u"><span>Leadership track</span><span>2018 → now</span></div>
+          <ol>
+            <li><span class="y mono">2026 –</span><b>Senior Lead Consultant</b><span class="at">Sundet</span></li>
+            <li><span class="y mono">2026 –</span><b>Scrum Master, PIM Service Team</b><span class="at">Tetra Pak</span></li>
+            <li><span class="y mono">2021 – 22</span><b>Product Owner</b><span class="at">inriver</span></li>
+            <li><span class="y mono">2020</span><b>Scrum Master</b><span class="at">inriver</span></li>
+            <li><span class="y mono">2018</span><b>Certified ScrumMaster®</b><span class="at">Scrum Alliance</span></li>
+          </ol>
         </div>
       </div>
 
@@ -600,7 +595,7 @@
         <div class="stat reveal"><div class="n"><span data-count="years">11</span><sup>+</sup></div><div class="l mono u">Years in tech · since 2015</div></div>
         <div class="stat reveal" style="--d:60ms"><div class="n"><span data-count="inriver">5</span><sup>yrs</sup></div><div class="l mono u">Building a PIM platform</div></div>
         <div class="stat reveal" style="--d:120ms"><div class="n"><span data-count="roles">8</span></div><div class="l mono u">Roles across <span data-company-count>5</span> companies</div></div>
-        <div class="stat reveal" style="--d:180ms"><div class="n"><span data-count="langs">3</span></div><div class="l mono u">Languages spoken</div></div>
+        <div class="stat reveal" style="--d:180ms"><div class="n"><span data-count="lead">4</span></div><div class="l mono u">Leadership roles · lead, SM, PO</div></div>
       </div>
     </div>
 
@@ -608,7 +603,7 @@
     <section id="about" class="wrap" data-nav>
       <div class="sec-head">
         <div class="sec-num mono u"><b>01</b> / About</div>
-        <h2>Between code<br/>and product</h2>
+        <h2>Leading between<br/>code and product</h2>
         <div class="rule"></div>
       </div>
       <div class="about">
@@ -649,8 +644,7 @@
             <span><i class="sw t-study"></i>Study</span>
             <span><i class="sw t-support"></i>Support</span>
             <span><i class="sw t-build"></i>Engineering</span>
-            <span><i class="sw t-process"></i>Process</span>
-            <span><i class="sw t-product"></i>Product</span>
+            <span><i class="sw t-lead"></i>Leadership</span>
           </div>
         </div>
         <div class="chart" id="chart">
@@ -668,19 +662,19 @@
         <!-- Tetra Pak -->
         <article class="job" data-company="Tetra Pak">
           <div class="job-side"><div class="sticky reveal">
-            <div class="logo" aria-hidden="true">TP</div>
+            <div class="logo"><img src="assets/logos/tetrapak.png" alt="Tetra Pak logo" onerror="this.replaceWith(document.createTextNode('TP'))"></div>
             <div class="job-name">Tetra Pak</div>
             <div class="job-sub">Assignment · Fixed-term · Hybrid · Lund, Sweden</div>
             <span class="job-total mono" data-total>Jan 2026 – Present</span>
           </div></div>
           <div class="roles">
-            <div class="role reveal" id="role-tetrapak" data-start="2026-01" data-end="present" data-track="product">
+            <div class="role reveal" id="role-tetrapak" data-start="2026-01" data-end="present" data-track="lead">
               <h3>PIM Service Support Engineer</h3>
               <div class="when mono">Jan 2026 – Present<span class="dur" data-dur></span></div>
-              <span class="track mono u"><i class="sw t-product"></i>Product · process · hands-on</span>
+              <span class="track mono u"><i class="sw t-lead"></i>Leadership · Scrum Master · hands-on</span>
               <p>At Tetra Pak, I help drive the implementation of a new inriver PIM solution as part of the PIM Service Team. My role combines Scrum Master responsibilities, stakeholder collaboration, support for the PIM solution and its users, and hands-on technical work.</p>
               <p>I help turn business needs into priorities, coordinate the team's work, resolve issues, and improve the solution and its integrations.</p>
-              <div class="tags"><span class="tag">inRiver PIM</span><span class="tag">C#</span><span class="tag">Scrum</span><span class="tag">Integrations</span><span class="tag">Stakeholder collaboration</span></div>
+              <div class="tags"><span class="tag">inRiver PIM</span><span class="tag">C#</span><span class="tag">Scrum Master</span><span class="tag">Integrations</span><span class="tag">Stakeholder collaboration</span></div>
             </div>
           </div>
         </article>
@@ -694,12 +688,12 @@
             <span class="job-total mono" data-total>Jan 2026 – Present</span>
           </div></div>
           <div class="roles">
-            <div class="role reveal" id="role-sundet" data-start="2026-01" data-end="present" data-track="build">
-              <h3>Senior Consultant</h3>
+            <div class="role reveal" id="role-sundet" data-start="2026-01" data-end="present" data-track="lead">
+              <h3>Senior Lead Consultant</h3>
               <div class="when mono">Jan 2026 – Present<span class="dur" data-dur></span></div>
-              <span class="track mono u"><i class="sw t-build"></i>Engineering · close to the business</span>
+              <span class="track mono u"><i class="sw t-lead"></i>Leadership · engineering · close to the business</span>
               <p>.NET consulting work at a niche firm — building integrations, Azure-based solutions, and solid backend architecture for clients in the Microsoft ecosystem. Involves both hands-on coding and sitting close to the business to make sure what gets built actually solves the right problem.</p>
-              <div class="tags"><span class="tag">.NET</span><span class="tag">Azure</span><span class="tag">Integrations</span><span class="tag">System Architecture</span><span class="tag">Agile</span></div>
+              <div class="tags"><span class="tag">Technical Leadership</span><span class="tag">.NET</span><span class="tag">Azure</span><span class="tag">Integrations</span><span class="tag">System Architecture</span><span class="tag">Agile</span></div>
             </div>
           </div>
         </article>
@@ -739,19 +733,19 @@
               <p>Backend development of new features in the inriver Product Marketing Cloud — a SaaS PIM platform. Worked with Cosmos DB, Azure Functions, .NET Core and MediatR.</p>
               <div class="tags"><span class="tag">.NET Core</span><span class="tag">Azure Functions</span><span class="tag">Cosmos DB</span><span class="tag">MediatR</span><span class="tag">DevOps</span></div>
             </div>
-            <div class="role reveal" id="role-inriver-po" data-start="2021-03" data-end="2022-10" data-track="product">
+            <div class="role reveal" id="role-inriver-po" data-start="2021-03" data-end="2022-10" data-track="lead">
               <h3>Product Owner</h3>
               <div class="when mono">Mar 2021 – Oct 2022<span class="dur" data-dur></span></div>
-              <span class="track mono u"><i class="sw t-product"></i>Product</span>
+              <span class="track mono u"><i class="sw t-lead"></i>Leadership · product</span>
               <p>Drove the development of our integrations and secured the quality of stories and epics — the communication link between product management and the development team.</p>
-              <div class="tags"><span class="tag">Scrum</span><span class="tag">DevOps</span><span class="tag">Integrations</span></div>
+              <div class="tags"><span class="tag">Product Ownership</span><span class="tag">Scrum</span><span class="tag">DevOps</span><span class="tag">Integrations</span></div>
             </div>
-            <div class="role reveal" id="role-inriver-sm" data-start="2020-04" data-end="2020-09" data-track="process">
+            <div class="role reveal" id="role-inriver-sm" data-start="2020-04" data-end="2020-09" data-track="lead">
               <h3>Software Developer / Scrum Master</h3>
               <div class="when mono">Apr 2020 – Sep 2020<span class="dur" data-dur></span></div>
-              <span class="track mono u"><i class="sw t-process"></i>Process · alongside development</span>
+              <span class="track mono u"><i class="sw t-lead"></i>Leadership · process · alongside development</span>
               <p>Scrum Master role within the inriver development team — running ceremonies and keeping the process healthy, while still jumping into development when needed. Completed Scrum Master certification during this period.</p>
-              <div class="tags"><span class="tag">Scrum</span><span class="tag">DevOps</span></div>
+              <div class="tags"><span class="tag">Scrum Master</span><span class="tag">Scrum</span><span class="tag">DevOps</span></div>
             </div>
             <div class="role reveal" id="role-inriver-dev1" data-start="2018-01" data-end="2021-03" data-track="build">
               <h3>Software Developer</h3>
@@ -801,26 +795,26 @@
       </div>
       <div class="skills">
         <div class="sk reveal">
-          <h3><span class="mono">A</span>Build</h3>
+          <h3><span class="mono">A</span>Lead</h3>
+          <p class="sub">Setting direction and leading the people who build it</p>
+          <ul><li>Team leadership</li><li>Scrum Master (CSM)</li><li>Product Ownership</li><li>Stakeholder collaboration</li><li>Agile / Scrum</li><li>System Architecture</li><li>Working with AI</li></ul>
+        </div>
+        <div class="sk reveal" style="--d:80ms">
+          <h3><span class="mono">B</span>Build</h3>
           <p class="sub">The code itself</p>
           <ul><li>C# / .NET</li><li>ASP.NET Core</li><li>Blazor</li><li>WPF</li><li>PowerShell</li></ul>
         </div>
-        <div class="sk reveal" style="--d:80ms">
-          <h3><span class="mono">B</span>Ship &amp; run</h3>
-          <p class="sub">Getting it live and keeping it there</p>
-          <ul><li>Microsoft Azure</li><li>Azure Functions</li><li>SQL / Cosmos DB</li><li>DevOps / CI-CD</li><li>Integrations &amp; APIs</li></ul>
-        </div>
         <div class="sk reveal" style="--d:160ms">
-          <h3><span class="mono">C</span>Steer</h3>
-          <p class="sub">Deciding what gets built</p>
-          <ul><li>System Architecture</li><li>Agile / Scrum</li><li>Product Ownership</li><li>Working with AI</li></ul>
+          <h3><span class="mono">C</span>Ship &amp; run</h3>
+          <p class="sub">Getting it live and keeping it there</p>
+          <ul><li>Microsoft Azure</li><li>Azure Functions</li><li>SQL / Cosmos DB</li><li>DevOps / CI-CD</li><li>Integrations &amp; APIs</li><li>inRiver PIM</li></ul>
         </div>
       </div>
 
       <div class="freq" id="freq">
         <div class="desc reveal">
-          <span class="mono u">Most-used, by role</span>
-          How many of my <span data-role-count>8</span> roles put each area to work, counted from the tags on the experience above.
+          <span class="mono u">Across my roles</span>
+          How many of my <span data-role-count>9</span> roles put each area to work, counted from the tags on the experience above. Leading teams and delivery comes first.
         </div>
         <ol id="freq-list" class="reveal" style="--d:80ms"></ol>
       </div>
@@ -858,10 +852,10 @@
         </article>
 
         <div class="langs reveal" id="languages">
-          <div class="sub-head mono u"><span>Languages</span><span>Swedish, Polish, English</span></div>
+          <div class="sub-head mono u"><span>Languages</span><span>All three at native level</span></div>
           <div class="lang"><div class="name">Swedish<small>svenska</small></div><div class="lvl mono u">Native</div><div class="pips" role="img" aria-label="5 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div></div>
           <div class="lang"><div class="name">Polish<small>polski</small></div><div class="lvl mono u">Native</div><div class="pips" role="img" aria-label="5 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div></div>
-          <div class="lang"><div class="name">English</div><div class="lvl mono u">Full professional</div><div class="pips" role="img" aria-label="4 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div></div>
+          <div class="lang"><div class="name">English</div><div class="lvl mono u">Native-level</div><div class="pips" role="img" aria-label="5 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div></div>
         </div>
       </div>
     </section>
@@ -943,7 +937,7 @@
       years: Math.floor((nowM - firstJob) / 12),
       inriver: Math.floor(span(Math.min(...inriver.map(r => r.start)), Math.max(...inriver.map(r => r.end))) / 12),
       roles: roles.length,
-      langs: $$('#languages .lang').length
+      lead: roles.filter(r => r.track === 'lead').length
     };
     $$('[data-role-count]').forEach(e => e.textContent = roles.length);
     $$('[data-company-count]').forEach(e => e.textContent = new Set(roles.map(r => r.company)).size);
@@ -969,12 +963,6 @@
       };
       requestAnimationFrame(step);
     }
-
-    /* ---------- Spectrum ---------- */
-    const spec = $('#spectrum');
-    $('.ticks', spec).innerHTML = '<i></i>'.repeat(41);
-    const placeKnob = () => spec.style.setProperty('--x', (spec.clientWidth * parseFloat(getComputedStyle(spec).getPropertyValue('--pos'))) + 'px');
-    placeKnob();
 
     /* ---------- Career chart ---------- */
     const chart = $('#chart'), rowsEl = $('#chart-rows');
@@ -1060,15 +1048,16 @@
 
     /* ---------- Tag frequency ---------- */
     const families = [
+      ['Leading teams & delivery', /leadership|scrum|agile|product ownership|stakeholder/i],
       ['C# / .NET', /^(c#|\.net|c# \/ \.net|\.net core)$/i],
       ['DevOps / CI-CD', /devops|ci\/cd|pipelines/i],
       ['Azure', /azure/i],
-      ['Scrum / Agile', /scrum|agile/i],
-      ['Integrations', /integrations/i],
-      ['Support & infra', /support|service desk|infrastructure|incident/i]
+      ['Integrations', /integrations/i]
     ];
     const freq = families.map(([name, re]) => [name, roles.filter(r => r.tags.some(t => re.test(t))).length])
-      .filter(f => f[1] > 0).sort((a, b) => b[1] - a[1]);
+      .filter(f => f[1] > 0);
+    // Leadership stays pinned first; the rest sort by how often they appear
+    freq.splice(1, freq.length, ...freq.slice(1).sort((a, b) => b[1] - a[1]));
     $('#freq-list').innerHTML = freq.map(([name, n], i) => `
       <li><span class="name">${name}</span>
         <span class="meter" style="grid-template-columns:repeat(${roles.length},1fr)" aria-hidden="true">${
@@ -1109,8 +1098,6 @@
     addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
     onScroll();
 
-    let rt;
-    addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(placeKnob, 100); });
 
     requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add('ready')));
   })();
