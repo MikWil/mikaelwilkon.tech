@@ -554,7 +554,7 @@
       <div class="meta-row mono u">
         <span>Senior Consultant</span>
         <span class="hide-sm">55.6050° N, 13.0038° E</span>
-        <span class="hide-sm">C# · .NET · Azure · Product</span>
+        <span class="hide-sm">Now: PIM at Tetra Pak</span>
         <span class="status">Open to new opportunities</span>
       </div>
 
@@ -599,7 +599,7 @@
       <div class="stats">
         <div class="stat reveal"><div class="n"><span data-count="years">11</span><sup>+</sup></div><div class="l mono u">Years in tech · since 2015</div></div>
         <div class="stat reveal" style="--d:60ms"><div class="n"><span data-count="inriver">5</span><sup>yrs</sup></div><div class="l mono u">Building a PIM platform</div></div>
-        <div class="stat reveal" style="--d:120ms"><div class="n"><span data-count="roles">8</span></div><div class="l mono u">Roles across 4 companies</div></div>
+        <div class="stat reveal" style="--d:120ms"><div class="n"><span data-count="roles">8</span></div><div class="l mono u">Roles across <span data-company-count>5</span> companies</div></div>
         <div class="stat reveal" style="--d:180ms"><div class="n"><span data-count="langs">3</span></div><div class="l mono u">Languages spoken</div></div>
       </div>
     </div>
@@ -664,6 +664,26 @@
       </div>
 
       <div class="jobs">
+
+        <!-- Tetra Pak -->
+        <article class="job" data-company="Tetra Pak">
+          <div class="job-side"><div class="sticky reveal">
+            <div class="logo" aria-hidden="true">TP</div>
+            <div class="job-name">Tetra Pak</div>
+            <div class="job-sub">Assignment · Fixed-term · Hybrid · Lund, Sweden</div>
+            <span class="job-total mono" data-total>Jan 2026 – Present</span>
+          </div></div>
+          <div class="roles">
+            <div class="role reveal" id="role-tetrapak" data-start="2026-01" data-end="present" data-track="product">
+              <h3>PIM Service Support Engineer</h3>
+              <div class="when mono">Jan 2026 – Present<span class="dur" data-dur></span></div>
+              <span class="track mono u"><i class="sw t-product"></i>Product · process · hands-on</span>
+              <p>At Tetra Pak, I help drive the implementation of a new inriver PIM solution as part of the PIM Service Team. My role combines Scrum Master responsibilities, stakeholder collaboration, support for the PIM solution and its users, and hands-on technical work.</p>
+              <p>I help turn business needs into priorities, coordinate the team's work, resolve issues, and improve the solution and its integrations.</p>
+              <div class="tags"><span class="tag">inRiver PIM</span><span class="tag">C#</span><span class="tag">Scrum</span><span class="tag">Integrations</span><span class="tag">Stakeholder collaboration</span></div>
+            </div>
+          </div>
+        </article>
 
         <!-- Sundet -->
         <article class="job" data-company="Sundet">
@@ -926,6 +946,7 @@
       langs: $$('#languages .lang').length
     };
     $$('[data-role-count]').forEach(e => e.textContent = roles.length);
+    $$('[data-company-count]').forEach(e => e.textContent = new Set(roles.map(r => r.company)).size);
     const counters = $$('[data-count]');
     counters.forEach(c => { c.textContent = statVals[c.dataset.count]; });
 
@@ -964,6 +985,7 @@
     $('#span-years').textContent = `${y0}–${now.getFullYear()}`;
 
     const groups = [
+      ['Tetra Pak', roles.filter(r => r.company === 'Tetra Pak')],
       ['Sundet', roles.filter(r => r.company === 'Sundet')],
       ['Trygg-Hansa', roles.filter(r => r.company === 'Trygg-Hansa')],
       ['inriver', roles.filter(r => r.company === 'inriver')],
