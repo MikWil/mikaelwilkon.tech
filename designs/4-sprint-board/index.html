@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mikael Wilkon · Sprint board</title>
+<meta name="description" content="Mikael Wilkon, Senior Lead Consultant. Scrum Master, Product Owner and .NET engineer in Malmö, Sweden.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root { --marker: #1d3c8f; --red: #c62828; --green: #1f7a3a; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 22px; min-height: 100vh;
+    font: 19px/1.35 "Kalam", "Comic Sans MS", cursive; color: #222;
+    background: #6b5a45 repeating-linear-gradient(90deg, rgba(0,0,0,.04) 0 3px, transparent 3px 9px);
+  }
+  .board {
+    max-width: 1240px; margin: 0 auto; padding: 26px 28px 34px; position: relative;
+    background: radial-gradient(ellipse at 20% 10%, rgba(120,140,180,.10), transparent 40%),
+                radial-gradient(ellipse at 80% 70%, rgba(120,120,120,.08), transparent 45%), #f7f8f6;
+    border: 14px solid #b9bfc4; border-radius: 6px;
+    box-shadow: inset 0 0 30px rgba(0,0,0,.08), 0 10px 30px rgba(0,0,0,.35);
+  }
+  .tray { position: absolute; left: 6%; right: 6%; bottom: -26px; height: 12px; background: #9aa1a7; border-radius: 0 0 6px 6px; }
+  .tray i { position: absolute; top: -6px; width: 70px; height: 9px; border-radius: 3px; }
+  .marker { font-family: "Permanent Marker", cursive; color: var(--marker); }
+  header { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap; margin-bottom: 12px; }
+  h1 { font: 400 clamp(32px, 5vw, 56px)/1 "Permanent Marker", cursive; color: var(--marker); margin: 0; transform: rotate(-1.5deg); }
+  h1 small { display: block; font-size: .42em; color: #333; margin-top: 8px; transform: rotate(.5deg); }
+  .goal { border: 3px solid var(--red); border-radius: 50% 46% 52% 44% / 60% 50% 56% 48%; padding: 18px 40px; max-width: 500px; transform: rotate(1.2deg); }
+  .goal b { font-family: "Permanent Marker", cursive; font-weight: 400; color: var(--red); display: block; font-size: 22px; }
+  .lanes { display: grid; grid-template-columns: 290px 1fr 1fr 1.25fr; gap: 0; margin-top: 18px; }
+  .lane { padding: 0 16px 10px; border-left: 3px solid rgba(29,60,143,.55); }
+  .lane:first-child { border-left: 0; padding-left: 0; }
+  .lane h2 { font: 400 26px/1 "Permanent Marker", cursive; color: var(--marker); margin: 0 0 16px; padding-bottom: 8px; border-bottom: 3px solid rgba(29,60,143,.55); }
+  .lane h2 small { font-size: 15px; color: #666; }
+  .note {
+    position: relative; padding: 16px 16px 14px; margin: 0 0 18px; font-size: 18px;
+    box-shadow: 0 1px 1px rgba(0,0,0,.12), 0 8px 14px -6px rgba(0,0,0,.28);
+  }
+  .note::before { content: ""; position: absolute; top: -9px; left: 50%; width: 22px; height: 22px; margin-left: -11px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #ff8a80, #c62828 70%); box-shadow: 0 2px 3px rgba(0,0,0,.35); }
+  .note.tape::before { width: 86px; height: 22px; margin-left: -43px; top: -11px; border-radius: 2px; background: rgba(255,255,240,.65); box-shadow: 0 1px 2px rgba(0,0,0,.12); }
+  .y { background: #fff59d; } .p { background: #f8bbd0; } .b { background: #b3e5fc; } .g { background: #c5e1a5; } .o { background: #ffcc80; } .w { background: #fff; }
+  .r1 { transform: rotate(-2deg); } .r2 { transform: rotate(1.5deg); } .r3 { transform: rotate(-.8deg); } .r4 { transform: rotate(2.4deg); }
+  .note:has(.pts) { padding-bottom: 46px; }
+  .note h3 { margin: 0 0 4px; font: 700 21px/1.15 "Kalam", cursive; }
+  .note .who { font-size: 16px; color: #444; margin: 0 0 6px; }
+  .note p { margin: 0; }
+  .avatar { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; margin-bottom: 10px; border: 6px solid #fff; box-shadow: 0 1px 3px rgba(0,0,0,.25); filter: saturate(.9); }
+  .pts { position: absolute; right: 8px; bottom: 6px; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font: 700 15px "Kalam"; border: 2px solid currentColor; color: var(--marker); background: rgba(255,255,255,.5); }
+  .lead-flag { display: inline-block; font: 400 14px "Permanent Marker", cursive; color: #fff; background: var(--red); padding: 1px 8px 0; transform: rotate(-3deg); margin-bottom: 6px; }
+  .check { color: var(--green); font-family: "Permanent Marker", cursive; }
+  .done .note { padding: 11px 14px 10px; margin-bottom: 14px; }
+  .done .note h3 { font-size: 19px; }
+  .done .note .who { margin: 0; font-size: 16px; }
+  .done .note::after { content: "✓"; position: absolute; right: 10px; top: 4px; font: 400 26px "Permanent Marker", cursive; color: var(--green); }
+  .bottom { display: grid; grid-template-columns: 1.1fr 1fr 1fr; gap: 26px; margin-top: 22px; padding-top: 18px; border-top: 3px dashed rgba(29,60,143,.4); }
+  .bottom h2 { font: 400 24px/1 "Permanent Marker", cursive; color: var(--marker); margin: 0 0 10px; }
+  ul.dod { list-style: none; padding: 0; margin: 0; }
+  ul.dod li { padding-left: 30px; position: relative; margin-bottom: 4px; }
+  ul.dod li::before { content: "☐"; position: absolute; left: 0; top: -1px; font-size: 22px; color: var(--marker); }
+  ul.dod li.x::before { content: "☑"; color: var(--green); }
+  .magnet { display: inline-block; padding: 4px 12px; margin: 0 6px 8px 0; border-radius: 6px; color: #fff; font: 700 17px "Kalam", cursive; box-shadow: 0 3px 0 rgba(0,0,0,.25); }
+  .m1 { background: #1565c0; } .m2 { background: #2e7d32; } .m3 { background: #6a1b9a; } .m4 { background: #ef6c00; } .m5 { background: #00838f; } .m6 { background: #ad1457; }
+  svg.burn { width: 100%; height: auto; }
+  .langs { display: flex; gap: 12px; flex-wrap: wrap; }
+  .langs .note { flex: 1 1 90px; text-align: center; margin: 6px 0 10px; padding: 12px 6px; }
+  .langs .note b { display: block; font-size: 22px; }
+  .contact a { color: var(--marker); font-weight: 700; }
+  @media (max-width: 1000px) {
+    .lanes { grid-template-columns: 1fr 1fr; row-gap: 26px; }
+    .lane:nth-child(3) { border-left: 0; padding-left: 0; }
+    .bottom { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    body { padding: 8px; }
+    .board { padding: 18px 16px 26px; border-width: 8px; }
+    .lanes { grid-template-columns: 1fr; }
+    .lane { border-left: 0; padding: 0; }
+    .lane .avatar { max-width: 200px; }
+    .goal { padding: 12px 16px; border-radius: 22px; }
+  }
+</style>
+</head>
+<body>
+<div class="board">
+  <header>
+    <h1>Mikael Wilkon <small>Senior Lead Consultant &middot; Malmö</small></h1>
+    <div class="goal"><b>Sprint goal</b>Lead teams where engineering meets product, and build the <u>right</u> thing, not just a working thing.</div>
+  </header>
+
+  <div class="lanes">
+    <div class="lane">
+      <h2>Team</h2>
+      <div class="note w tape r3">
+        <img class="avatar" src="../../assets/profile.jpg" alt="Mikael Wilkon">
+        <h3>Mikael</h3>
+        <p>Scrum Master, Product Owner and hands-on .NET engineer. Over ten years in tech, leading since 2018.</p>
+      </div>
+      <div class="note y r2">
+        <h3>Contact</h3>
+        <p class="contact"><a href="mailto:MikaelWilkon@gmail.com">MikaelWilkon@gmail.com</a><br><a href="https://se.linkedin.com/in/mikael-wilkon-38413aa0">LinkedIn &rarr;</a></p>
+      </div>
+    </div>
+
+    <div class="lane">
+      <h2>To do</h2>
+      <div class="note b r2">
+        <h3>Your team's next big thing?</h3>
+        <p>Needs someone to own the backlog, unblock the team and talk to the business. I'm open to the conversation.</p>
+        <span class="pts">?</span>
+      </div>
+      <div class="note g r1 tape">
+        <h3>Keep moving toward product</h3>
+        <p>Shaping direction and outcomes, not only delivering tasks.</p>
+        <span class="pts">8</span>
+      </div>
+    </div>
+
+    <div class="lane">
+      <h2>In progress <small>(WIP 2)</small></h2>
+      <div class="note y r4">
+        <span class="lead-flag">Scrum Master</span>
+        <h3>PIM Service Support Engineer</h3>
+        <p class="who">Tetra Pak &middot; Lund, hybrid &middot; Jan 2026&ndash;</p>
+        <p>Driving a new inRiver PIM solution into the business. Priorities, stakeholders, team coordination, and hands-on integration work.</p>
+        <span class="pts">13</span>
+      </div>
+      <div class="note p r1">
+        <span class="lead-flag">Lead</span>
+        <h3>Senior Lead Consultant</h3>
+        <p class="who">Sundet &middot; Malmö &middot; Jan 2026&ndash;</p>
+        <p>.NET, Azure and integrations, sitting close to the business so we solve the right problem.</p>
+        <span class="pts">8</span>
+      </div>
+    </div>
+
+    <div class="lane done">
+      <h2>Done</h2>
+      <div class="note o r2"><h3>Software Developer</h3><p class="who">Trygg-Hansa &middot; 2023&ndash;2025</p></div>
+      <div class="note g r3"><h3>Software Developer</h3><p class="who">inriver &middot; 2022&ndash;2023 &middot; PIM SaaS backend</p></div>
+      <div class="note p r1"><span class="lead-flag">Lead</span><h3>Product Owner</h3><p class="who">inriver &middot; 2021&ndash;2022 &middot; integrations</p></div>
+      <div class="note y r4"><span class="lead-flag">Lead</span><h3>Scrum Master</h3><p class="who">inriver &middot; 2020</p></div>
+      <div class="note b r3"><h3>Software Developer</h3><p class="who">inriver &middot; 2018&ndash;2021</p></div>
+      <div class="note w r2"><h3>Service Desk &rarr; 2nd line</h3><p class="who">Atea &middot; 2015&ndash;2018</p></div>
+      <div class="note g r1"><h3>Systemutvecklare, Azure</h3><p class="who">Teknikhögskolan Malmö &middot; 2013&ndash;2015</p></div>
+    </div>
+  </div>
+
+  <div class="bottom">
+    <div>
+      <h2>Definition of done</h2>
+      <ul class="dod">
+        <li class="x">The business and the engineers agree on <i>why</i></li>
+        <li class="x">The team knows what's next and nothing is blocking it</li>
+        <li class="x">It's live, it's tested, and it runs on Azure</li>
+        <li class="x">Stakeholders hear about it before they have to ask</li>
+      </ul>
+      <p style="margin:12px 0 0"><span class="check">CSM</span> Certified ScrumMaster&reg;, Scrum Alliance, 2018</p>
+    </div>
+    <div>
+      <h2>Toolbox</h2>
+      <span class="magnet m1">Leadership</span><span class="magnet m6">Scrum</span><span class="magnet m3">Product ownership</span><span class="magnet m2">Stakeholders</span>
+      <span class="magnet m4">C# / .NET</span><span class="magnet m5">Azure</span><span class="magnet m1">Blazor</span><span class="magnet m2">inRiver PIM</span><span class="magnet m3">Integrations</span><span class="magnet m6">CI/CD</span>
+    </div>
+    <div>
+      <h2>Speaks</h2>
+      <div class="langs">
+        <div class="note y r1"><b>Svenska</b>native</div>
+        <div class="note p r2"><b>Polski</b>native</div>
+        <div class="note b r3"><b>English</b>native</div>
+      </div>
+      <svg class="burn" viewBox="0 0 300 110" aria-label="Leadership burn-up chart, rising since 2018">
+        <path d="M20 8 V96 H292" fill="none" stroke="#1d3c8f" stroke-width="3" stroke-linecap="round"/>
+        <path d="M24 92 C60 90 80 88 110 72 S160 66 190 44 S250 22 286 14" fill="none" stroke="#c62828" stroke-width="3.5" stroke-linecap="round"/>
+        <text x="30" y="20" font-family="Kalam" font-size="15" fill="#1d3c8f">leadership burn-up</text>
+        <text x="100" y="66" font-family="Kalam" font-size="13" fill="#444">2018</text>
+        <text x="252" y="38" font-family="Kalam" font-size="13" fill="#444">2026</text>
+      </svg>
+    </div>
+  </div>
+  <div class="tray"><i style="left:12%;background:#1d3c8f"></i><i style="left:30%;background:#c62828"></i><i style="left:46%;background:#1f7a3a"></i></div>
+</div>
+</body>
+</html>

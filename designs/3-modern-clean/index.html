@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mikael Wilkon</title>
+<meta name="description" content="Mikael Wilkon, Senior Lead Consultant. Scrum Master, Product Owner and .NET engineer in Malmö, Sweden.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #16181a; --soft: #5b6066; --line: #dcdcd6; --bg: #fbfbf9; --mark: #0f5c45;
+    --serif: "Newsreader", Georgia, serif; --sans: "Geist", "Helvetica Neue", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:hover { color: var(--mark); }
+  .w { max-width: 1080px; margin: 0 auto; padding: 0 32px; }
+  .top { display: flex; justify-content: space-between; align-items: baseline; padding: 26px 0; font-size: 14px; color: var(--soft); border-bottom: 1px solid var(--line); }
+  .top nav a { margin-left: 22px; text-decoration: none; }
+  .top strong { color: var(--ink); font-weight: 600; }
+  .hero { display: grid; grid-template-columns: 1fr 220px; gap: 48px; align-items: end; padding: 96px 0 72px; border-bottom: 1px solid var(--line); }
+  .hero h1 { font: 400 clamp(40px, 6.4vw, 78px)/1.02 var(--serif); letter-spacing: -0.02em; margin: 0; }
+  .hero h1 em { color: var(--mark); }
+  .hero .by { margin: 28px 0 0; color: var(--soft); max-width: 540px; }
+  .hero img { width: 100%; aspect-ratio: 4/5; object-fit: cover; filter: grayscale(1) contrast(1.05); display: block; }
+  .hero figcaption { font-size: 13px; color: var(--soft); margin-top: 8px; }
+  section { display: grid; grid-template-columns: 220px 1fr; gap: 48px; padding: 64px 0; border-bottom: 1px solid var(--line); }
+  section > h2 { font: 500 14px/1.4 var(--sans); text-transform: uppercase; letter-spacing: .08em; color: var(--soft); margin: 6px 0 0; }
+  .lede { font: 400 26px/1.4 var(--serif); margin: 0 0 20px; max-width: 720px; }
+  .body p { max-width: 640px; margin: 0 0 16px; color: #2d3135; }
+  .now { border-left: 3px solid var(--mark); padding: 4px 0 4px 24px; }
+  .now .role { font: 500 30px/1.2 var(--serif); margin: 0; }
+  .now .where { color: var(--soft); margin: 6px 0 18px; font-size: 15px; }
+  .now ul { margin: 0; padding: 0; list-style: none; max-width: 640px; }
+  .now li { padding: 8px 0; border-top: 1px solid var(--line); }
+  .now li:first-child { border-top: 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 16px; }
+  td { padding: 16px 0; border-top: 1px solid var(--line); vertical-align: top; }
+  tr:first-child td { border-top: 0; padding-top: 0; }
+  td.y { width: 130px; color: var(--soft); font-variant-numeric: tabular-nums; font-size: 15px; }
+  td.r b { font-weight: 600; }
+  td.r span { display: block; color: var(--soft); font-size: 15px; margin-top: 2px; }
+  td.c { width: 170px; text-align: right; color: var(--soft); }
+  tr.lead td.r b::before { content: ""; display: inline-block; width: 8px; height: 8px; background: var(--mark); border-radius: 50%; margin: 0 10px 2px -18px; }
+  .key { font-size: 14px; color: var(--soft); margin: 18px 0 0; }
+  .key i { display: inline-block; width: 8px; height: 8px; background: var(--mark); border-radius: 50%; margin-right: 8px; }
+  .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .cols h3 { font: 400 22px/1.2 var(--serif); margin: 0 0 12px; }
+  .cols p { margin: 0; color: #2d3135; font-size: 16px; line-height: 1.75; }
+  .langs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .langs div { border-top: 1px solid var(--ink); padding-top: 14px; }
+  .langs b { display: block; font: 400 30px/1.1 var(--serif); }
+  .langs span { color: var(--soft); font-size: 15px; }
+  .contact { padding: 96px 0 40px; }
+  .contact p { color: var(--soft); margin: 0 0 18px; }
+  .contact a.mail { font: 400 clamp(30px, 5.4vw, 64px)/1.1 var(--serif); letter-spacing: -0.02em; text-decoration: none; border-bottom: 1px solid var(--ink); }
+  .contact a.mail:hover { border-color: var(--mark); }
+  footer { display: flex; justify-content: space-between; padding: 40px 0; font-size: 14px; color: var(--soft); }
+  @media (max-width: 800px) {
+    .w { padding: 0 20px; }
+    .top nav { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 56px 0 48px; gap: 32px; }
+    .hero figure { margin: 0; max-width: 180px; order: -1; }
+    section { grid-template-columns: 1fr; gap: 20px; padding: 44px 0; }
+    .lede { font-size: 22px; }
+    .cols, .langs { grid-template-columns: 1fr; gap: 24px; }
+    td.c { display: none; }
+    td.y { width: 92px; }
+    tr.lead td.r b::before { margin-left: 0; }
+    footer { flex-direction: column; gap: 6px; }
+  }
+</style>
+</head>
+<body>
+<div class="w">
+  <header class="top">
+    <span><strong>Mikael Wilkon</strong> &nbsp;Malmö, Sweden</span>
+    <nav><a href="#now">Now</a><a href="#work">Work</a><a href="#approach">Approach</a><a href="#contact">Contact</a></nav>
+  </header>
+
+  <div class="hero">
+    <div>
+      <h1>I lead teams where <em>engineering</em> meets product.</h1>
+      <p class="by">Senior Lead Consultant at Sundet. Scrum Master, Product Owner and hands-on .NET engineer, focused on what gets built and why.</p>
+    </div>
+    <figure style="margin:0">
+      <img src="../../assets/profile.jpg" alt="Portrait of Mikael Wilkon">
+      <figcaption>Mikael Wilkon</figcaption>
+    </figure>
+  </div>
+
+  <section id="now">
+    <h2>Now</h2>
+    <div class="now">
+      <p class="role">PIM Service Support Engineer, Tetra Pak</p>
+      <p class="where">Assignment since January 2026 &middot; Lund, hybrid &middot; inRiver PIM</p>
+      <ul>
+        <li>Scrum Master for the PIM Service Team, driving a new inRiver PIM solution into the business.</li>
+        <li>Turning business needs into priorities and keeping stakeholders and engineers aligned.</li>
+        <li>Supporting the solution and its users, and doing hands-on work on integrations.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="about">
+    <h2>About</h2>
+    <div class="body">
+      <p class="lede">I do my best work in the space between the code and the product.</p>
+      <p>Over a decade in tech has taken me from frontline IT support to senior .NET consulting, and from writing the code to leading the people who write it. I've run backlogs and sprints, and sat between the business and the engineers to make sure we build the right thing, not just a working thing.</p>
+      <p>My depth is in product data and digital commerce: five years building inriver's PIM platform, and now helping a large company put one into practice. Both vendor and implementer, which is a rare vantage point.</p>
+    </div>
+  </section>
+
+  <section id="work">
+    <h2>Work</h2>
+    <div>
+      <table>
+        <tr class="lead"><td class="y">2026&ndash;</td><td class="r"><b>Senior Lead Consultant</b><span>Technical leadership, .NET, Azure, integrations</span></td><td class="c">Sundet</td></tr>
+        <tr class="lead"><td class="y">2026&ndash;</td><td class="r"><b>PIM Service Support Engineer</b><span>Scrum Master, PIM Service Team</span></td><td class="c">Tetra Pak</td></tr>
+        <tr><td class="y">2023&ndash;2025</td><td class="r"><b>Software Developer</b><span>Customer-service CRM, migration to Blazor</span></td><td class="c">Trygg-Hansa</td></tr>
+        <tr><td class="y">2022&ndash;2023</td><td class="r"><b>Software Developer</b><span>PIM SaaS backend, Azure Functions, Cosmos DB</span></td><td class="c">inriver</td></tr>
+        <tr class="lead"><td class="y">2021&ndash;2022</td><td class="r"><b>Product Owner</b><span>Integrations, link between product and development</span></td><td class="c">inriver</td></tr>
+        <tr class="lead"><td class="y">2020</td><td class="r"><b>Scrum Master</b><span>Ran the team's process while still developing</span></td><td class="c">inriver</td></tr>
+        <tr><td class="y">2018&ndash;2021</td><td class="r"><b>Software Developer</b><span>Full-stack and Azure infrastructure</span></td><td class="c">inriver</td></tr>
+        <tr><td class="y">2015&ndash;2018</td><td class="r"><b>Service Desk, 2nd-line Specialist</b><span>Incident management, PowerShell automation</span></td><td class="c">Atea</td></tr>
+        <tr><td class="y">2013&ndash;2015</td><td class="r"><b>Systemutvecklare, Microsoft Azure</b><span>Systems development degree</span></td><td class="c">Teknikhögskolan</td></tr>
+      </table>
+      <p class="key"><i></i>Leadership role &middot; Certified ScrumMaster&reg; since 2018</p>
+    </div>
+  </section>
+
+  <section id="approach">
+    <h2>Approach</h2>
+    <div class="cols">
+      <div><h3>Lead</h3><p>Team leadership, Scrum, product ownership, stakeholder collaboration, system architecture.</p></div>
+      <div><h3>Build</h3><p>C#, .NET, ASP.NET Core, Blazor, WPF, PowerShell. Close enough to the code to make good calls.</p></div>
+      <div><h3>Run</h3><p>Azure, Functions, SQL and Cosmos DB, CI/CD, integrations and APIs, inRiver PIM.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Languages</h2>
+    <div class="langs">
+      <div><b>Svenska</b><span>Native</span></div>
+      <div><b>Polski</b><span>Native</span></div>
+      <div><b>English</b><span>Native</span></div>
+    </div>
+  </section>
+
+  <div class="contact" id="contact">
+    <p>Hej &middot; Cześć &middot; Hello</p>
+    <a class="mail" href="mailto:MikaelWilkon@gmail.com">MikaelWilkon@gmail.com</a>
+  </div>
+  <footer><span>&copy; 2026 Mikael Wilkon</span><a href="https://se.linkedin.com/in/mikael-wilkon-38413aa0">LinkedIn</a></footer>
+</div>
+</body>
+</html>
