@@ -32,6 +32,8 @@
   .icons { position:absolute; top: 8px; left: 6px; bottom: 6px; display:flex; flex-direction: column; flex-wrap: wrap; align-content: flex-start; gap: 0 8px; }
   html:not(.js) .icons { display:none; }
   .icon { width: 92px; padding: 3px 2px; overflow-wrap: break-word; background: none; border: 0; color:#fff; text-align:center; font-size: 13.5px; line-height: 1.2; cursor: pointer; display:flex; flex-direction: column; align-items:center; gap: 4px; }
+  .icon-bin { position: absolute; right: 10px; bottom: 10px; }
+  html:not(.js) .icon-bin { display: none; }
   .icon span { padding: 1px 3px; text-shadow: 1px 1px 0 rgba(0,0,0,.4); }
   .icon.sel span { background: var(--title); text-shadow:none; outline: 1px dotted #fff; }
   .icon.sel svg { filter: brightness(.6) sepia(1) hue-rotate(190deg) saturate(4); }
@@ -208,7 +210,238 @@
     .flagmode { display:inline-block; }
     .tray .clk-date { display:none; }
   }
-  @media (prefers-reduced-motion: reduce) { #boot .bar i { animation: none; width: 100%; } .prog i { transition: none; } }
+  /* ===================== Shared: notifications + upgrade (both versions) ===================== */
+  .os26only { display: none !important; }
+  html.os26 .os26only { display: revert !important; }
+  html.os26 .os95only { display: none !important; }
+  #balloon { position: fixed; right: 8px; bottom: 50px; z-index: 9400; width: min(330px, calc(100vw - 16px)); background: #ffffe1; border: 1px solid #000; border-radius: 8px; padding: 10px 28px 10px 12px; font-size: 14.5px; box-shadow: 2px 2px 0 rgba(0,0,0,.25); display: none; }
+  #balloon.open { display: block; }
+  #balloon::after { content: ""; position: absolute; right: 40px; bottom: -11px; width: 18px; height: 11px; background: #ffffe1; clip-path: polygon(0 0, 100% 0, 80% 100%); border: 0; }
+  #balloon b { display: flex; gap: 6px; align-items: center; margin-bottom: 3px; }
+  #balloon .bx { position: absolute; top: 4px; right: 6px; background: none; border: 0; cursor: pointer; font-size: 14px; }
+  #balloon .acts { margin-top: 6px; display: flex; gap: 10px; flex-wrap: wrap; }
+  #balloon .acts button { background: none; border: 0; padding: 0; color: #0000ee; text-decoration: underline; cursor: pointer; font-size: 14.5px; }
+  #bell, #datebox { display: none; }
+  #update { background: #0b5cad; color: #fff; flex-direction: column; align-items: center; justify-content: center; gap: 22px; text-align: center; padding: 24px; font-family: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, sans-serif; }
+  #update .spin { width: 46px; height: 46px; position: relative; }
+  #update .spin i { position: absolute; inset: 0; animation: orbit 1.6s cubic-bezier(.5,.15,.5,.85) infinite; }
+  #update .spin i::before { content: ""; position: absolute; left: 50%; top: 0; width: 6px; height: 6px; margin-left: -3px; border-radius: 50%; background: #fff; }
+  #update .spin i:nth-child(2) { animation-delay: .12s; } #update .spin i:nth-child(3) { animation-delay: .24s; } #update .spin i:nth-child(4) { animation-delay: .36s; } #update .spin i:nth-child(5) { animation-delay: .48s; }
+  @keyframes orbit { to { transform: rotate(360deg); } }
+  #update .u1 { font-size: clamp(20px, 3.4vw, 28px); font-weight: 300; }
+  #update .u2 { font-size: 16px; opacity: .85; max-width: 520px; }
+  #update .u3 { font-size: 14px; opacity: .7; min-height: 20px; }
+  #bsod .bs26 { display: none; }
+  html.os26 #bsod { background: #0b5cad; font-family: "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif; justify-content: flex-start; padding: 10vh 8vw; }
+  html.os26 #bsod .bs95 { display: none; }
+  html.os26 #bsod .bs26 { display: block; max-width: 720px; }
+  #bsod .bs26 .sad { font-size: clamp(80px, 14vw, 140px); line-height: 1; margin: 0 0 24px; font-weight: 300; }
+  #bsod .bs26 p { font-size: clamp(18px, 2.2vw, 24px); line-height: 1.4; margin: 0 0 18px; font-weight: 300; }
+  #bsod .bs26 small { display: block; font-size: 14px; opacity: .85; margin-top: 30px; }
+
+  /* ===================== MikaelOS 26 ===================== */
+  html.os26 {
+    --m-font: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+    --m-bg: #dfe8f3; --m-surface: rgba(249, 250, 252, .86); --m-solid: #f7f8fa; --m-card: #ffffff; --m-fg: #1a1d22; --m-soft: #5b6270;
+    --m-line: rgba(0, 0, 0, .09); --m-hover: rgba(0, 0, 0, .05); --m-accent: #0b5cad; --m-accent-fg: #ffffff; --m-accent-soft: rgba(11, 92, 173, .12);
+    --m-bar: rgba(238, 242, 247, .82); --m-shadow: 0 18px 50px rgba(15, 30, 60, .22), 0 2px 6px rgba(15, 30, 60, .08);
+    --wall: #dfe8f3;
+  }
+  html.os26.dark {
+    --m-bg: #101722; --m-surface: rgba(32, 36, 44, .86); --m-solid: #22262e; --m-card: #2b3039; --m-fg: #eef1f6; --m-soft: #a8b0be;
+    --m-line: rgba(255, 255, 255, .09); --m-hover: rgba(255, 255, 255, .06); --m-accent: #5aa6f0; --m-accent-fg: #0b1a2c; --m-accent-soft: rgba(90, 166, 240, .16);
+    --m-bar: rgba(28, 31, 38, .84); --m-shadow: 0 18px 50px rgba(0, 0, 0, .5), 0 2px 6px rgba(0, 0, 0, .3);
+    color-scheme: dark;
+  }
+  html.os26 body { font-family: var(--m-font); color: var(--m-fg); font-size: 15.5px;
+    background: radial-gradient(1100px 700px at 80% 115%, rgba(11, 92, 173, .9), transparent 62%) fixed,
+                radial-gradient(900px 650px at 12% -12%, rgba(38, 170, 150, .85), transparent 62%) fixed,
+                radial-gradient(800px 560px at 105% 5%, rgba(240, 150, 70, .7), transparent 60%) fixed,
+                linear-gradient(160deg, #3e6fa8, #22406e) fixed; }
+  html.os26.dark body { background: radial-gradient(1100px 700px at 80% 115%, rgba(30, 90, 180, .75), transparent 62%) fixed,
+                radial-gradient(900px 650px at 12% -12%, rgba(20, 120, 105, .6), transparent 62%) fixed,
+                radial-gradient(800px 560px at 105% 5%, rgba(170, 90, 40, .45), transparent 60%) fixed,
+                linear-gradient(160deg, #142238, #0a1220) fixed; }
+  html.os26 a { color: var(--m-accent); }
+  html.os26 #desk { bottom: 48px; }
+  html.os26 .icon { color: #fff; font-size: 13px; border-radius: 6px; padding: 6px 2px; }
+  html.os26 .icon span { text-shadow: 0 1px 3px rgba(0,0,0,.55); background: none !important; outline: 0 !important; }
+  html.os26 .icon.sel, html.os26 .icon:hover { background: rgba(255,255,255,.22); }
+  html.os26 .icon.sel svg { filter: none; }
+  html.os26 .icon svg { filter: drop-shadow(0 2px 3px rgba(0,0,0,.25)); }
+  html.os26 .bevel, html.os26 .sunk { border: 1px solid var(--m-line); box-shadow: none; }
+  html.os26 .sunk { background: var(--m-card); border-radius: 6px; }
+  html.os26 .win { background: var(--m-surface); -webkit-backdrop-filter: blur(24px) saturate(1.4); backdrop-filter: blur(24px) saturate(1.4); border-radius: 10px; padding: 0; box-shadow: var(--m-shadow); overflow: hidden; border: 1px solid var(--m-line); color: var(--m-fg); max-height: calc(100vh - 64px); }
+  html.os26 .win:not(.active) { box-shadow: 0 8px 24px rgba(15,30,60,.14); }
+  html.os26 .tb, html.os26 .win.active .tb { background: transparent; color: var(--m-fg); font-weight: 400; font-size: 13px; padding: 0 0 0 12px; height: 38px; gap: 10px; }
+  html.os26 .win:not(.active) .tb { color: var(--m-soft); }
+  html.os26 .tb .ctl { gap: 0; align-self: stretch; }
+  html.os26 .tb .ctl button { width: 46px; height: 38px; border: 0; background: transparent; color: inherit; font-size: 0; }
+  html.os26 .tb .ctl button::before { font-size: 13px; font-weight: 400; font-family: var(--m-font); }
+  html.os26 .tb .ctl .mn::before { content: "\2014"; }
+  html.os26 .tb .ctl .mx::before { content: "\25A2"; font-size: 15px; }
+  html.os26 .tb .ctl .x::before { content: "\2715"; }
+  html.os26 .tb .ctl button:hover { background: var(--m-hover); }
+  html.os26 .tb .ctl .x:hover { background: #c42b1c; color: #fff; }
+  html.os26 .menu { display: none; }
+  html.os26 .body { padding: 8px 18px 18px; }
+  html.os26 .status { padding: 6px 12px 8px; gap: 12px; }
+  html.os26 .status span { border: 0; padding: 0; color: var(--m-soft); }
+  html.os26 .btn { border: 1px solid var(--m-line); box-shadow: none; border-radius: 6px; background: var(--m-card); color: var(--m-fg); padding: 6px 16px; font-size: 14.5px; }
+  html.os26 .btn:hover { background: var(--m-hover); }
+  html.os26 .btn:active { border-color: var(--m-line); box-shadow: none; opacity: .8; }
+  html.os26 .btn.primary, html.os26 [data-close].btn:last-child { background: var(--m-accent); color: var(--m-accent-fg); border-color: transparent; }
+  html.os26 .btn:focus-visible { outline: 2px solid var(--m-accent); outline-offset: 2px; }
+  html.os26 .tabs { gap: 4px; padding: 0 0 10px; margin: 0; }
+  html.os26 .tabs button { border: 0; border-radius: 6px; padding: 6px 12px; background: transparent; margin: 0; color: var(--m-soft); }
+  html.os26 .tabs button[aria-selected="true"] { background: var(--m-accent-soft); color: var(--m-accent); padding-bottom: 6px; margin-top: 0; font-weight: 600; }
+  html.os26 .tabpanel { border: 1px solid var(--m-line); border-radius: 8px; background: var(--m-card); }
+  html.os26 .intro img { border-radius: 50%; border: 0; }
+  html.os26 .hr { border-top-color: var(--m-line); border-bottom: 0; }
+  html.os26 .kv dt { color: var(--m-soft); }
+  html.os26 fieldset { border: 1px solid var(--m-line); border-radius: 8px; }
+  html.os26 .quote { border-left-color: var(--m-accent); }
+  html.os26 .info { border-color: var(--m-accent); color: var(--m-accent); background: var(--m-card); }
+  html.os26 .prog { height: 6px; padding: 0; border-radius: 3px; background: var(--m-line); border: 0; }
+  html.os26 .prog i { background: var(--m-accent); border-radius: 3px; }
+  html.os26 table.det th { background: transparent; border: 0; border-bottom: 1px solid var(--m-line); color: var(--m-soft); font-size: 13px; padding: 8px; }
+  html.os26 table.det td { padding: 7px 8px; }
+  html.os26 table.det tbody tr:hover td, html.os26 table.det tbody tr.sel td { background: var(--m-accent-soft); color: var(--m-fg); }
+  html.os26 table.det tr.lead td:first-child b::after { color: var(--m-accent); }
+  html.os26 .chips span { border-radius: 20px; background: var(--m-accent-soft); color: var(--m-accent); border: 0; padding: 2px 10px; }
+  html.os26 .cp button { border-radius: 8px; }
+  html.os26 .cp button:hover span, html.os26 .cp button:focus span { background: none; color: var(--m-accent); }
+  html.os26 .cp button:hover { background: var(--m-hover); }
+  html.os26 .cp h3 { border-bottom-color: var(--m-line); color: var(--m-soft); font-weight: 600; }
+  html.os26 .flag { border-radius: 3px; border-color: var(--m-line); }
+  html.os26 .notepad { font-family: "Cascadia Mono", Consolas, "SF Mono", "Liberation Mono", monospace; }
+  html.os26 ul.bin li:hover { background: var(--m-hover); color: var(--m-fg); }
+  html.os26 .grid button { border: 0; border-radius: 4px; margin: 1px; width: 26px; height: 26px; background: var(--m-accent-soft); }
+  html.os26 .grid button.r { background: var(--m-card); border: 0; }
+  html.os26 .lcd { border-radius: 4px; }
+  html.os26 .face { border-radius: 50%; background: var(--m-card); }
+  html.os26 .sw-top { background: transparent !important; border: 0; }
+  html.os26 input, html.os26 textarea { color: var(--m-fg); background: var(--m-card); border-radius: 6px; }
+
+  /* taskbar 26 */
+  html.os26 .taskbar { height: 48px; background: var(--m-bar); -webkit-backdrop-filter: blur(28px) saturate(1.5); backdrop-filter: blur(28px) saturate(1.5); border-top: 1px solid var(--m-line); box-shadow: none; justify-content: center; gap: 4px; padding: 0 8px; }
+  html.os26 .start { border: 0; box-shadow: none; background: transparent; width: 44px; height: 40px; padding: 0; justify-content: center; border-radius: 6px; font-size: 0; }
+  html.os26 .start:hover, html.os26 .start.on { background: var(--m-hover); }
+  html.os26 .logo4 { transform: none; width: 22px; height: 22px; gap: 2px; }
+  html.os26 .logo4 i { border-radius: 1px; background: var(--m-accent) !important; }
+  html.os26 .logo4 i:nth-child(2), html.os26 .logo4 i:nth-child(3) { opacity: .75; }
+  html.os26 #tasks { flex: 0 1 auto; gap: 4px; }
+  html.os26 .task { flex: 0 0 44px; width: 44px; min-width: 44px; height: 40px; padding: 0; justify-content: center; border: 0; box-shadow: none; background: transparent; border-radius: 6px; position: relative; }
+  html.os26 .task span { display: none; }
+  html.os26 .task svg { width: 24px; height: 24px; }
+  html.os26 .task:hover { background: var(--m-hover); }
+  html.os26 .task::after { content: ""; position: absolute; bottom: 3px; left: 50%; width: 6px; height: 3px; margin-left: -3px; border-radius: 2px; background: var(--m-soft); }
+  html.os26 .task.on { background: var(--m-hover); font-weight: 400; }
+  html.os26 .task.on::after { width: 16px; margin-left: -8px; background: var(--m-accent); }
+  html.os26 .tray { position: absolute; right: 6px; top: 4px; bottom: 4px; height: auto; border: 0; gap: 2px; padding: 0; }
+  html.os26 .tray > * { border-radius: 6px; }
+  html.os26 .tray button { padding: 0 8px; height: 40px; align-items: center; }
+  html.os26 .tray button:hover { background: var(--m-hover); }
+  html.os26 .tray .net95 { display: none; }
+  html.os26 #clockbtn { display: flex; flex-direction: column; align-items: flex-end; justify-content: center; line-height: 1.25; font-size: 12.5px; color: var(--m-fg); }
+  html.os26 #bell, html.os26 #datebox { display: inline; }
+  html.os26 #bell { position: relative; display: grid; place-items: center; color: var(--m-fg); }
+  #bell .badge { position: absolute; top: 5px; right: 3px; min-width: 16px; height: 16px; border-radius: 8px; background: var(--m-accent); color: var(--m-accent-fg); font-size: 10.5px; font-weight: 700; line-height: 16px; padding: 0 4px; text-align: center; }
+  #bell .badge:empty { display: none; }
+  #bell.dnd .badge { background: var(--m-soft); }
+
+  /* start menu 26 */
+  #start26 { position: fixed; left: 50%; bottom: 58px; transform: translateX(-50%); width: min(620px, calc(100vw - 16px)); max-height: calc(100vh - 80px); overflow: auto; z-index: 9500; background: var(--m-surface); -webkit-backdrop-filter: blur(30px) saturate(1.5); backdrop-filter: blur(30px) saturate(1.5); border: 1px solid var(--m-line); border-radius: 10px; box-shadow: var(--m-shadow); color: var(--m-fg); display: none; }
+  #start26.open { display: block; animation: rise .18s ease-out; }
+  @keyframes rise { from { transform: translate(-50%, 16px); opacity: 0; } to { transform: translate(-50%, 0); opacity: 1; } }
+  #start26 .in { padding: 22px 28px 14px; }
+  #s26q { width: 100%; font: inherit; padding: 9px 14px; border-radius: 20px; border: 1px solid var(--m-line); background: var(--m-card); color: var(--m-fg); }
+  #s26q:focus { outline: 2px solid var(--m-accent); outline-offset: 1px; }
+  #start26 h4 { font-size: 14px; font-weight: 600; margin: 20px 0 8px; display: flex; justify-content: space-between; }
+  #start26 h4 small { font-weight: 400; color: var(--m-soft); }
+  .pins { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; }
+  .pins button { background: none; border: 0; border-radius: 6px; padding: 10px 2px 8px; display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 12.5px; color: var(--m-fg); cursor: pointer; text-align: center; line-height: 1.2; }
+  .pins button:hover, .pins button:focus-visible { background: var(--m-hover); outline: 0; }
+  .pins button.hide { display: none; }
+  .recs { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 10px; }
+  .recs button { display: flex; gap: 12px; align-items: center; text-align: left; background: none; border: 0; border-radius: 6px; padding: 8px; cursor: pointer; color: var(--m-fg); font-size: 13.5px; line-height: 1.3; }
+  .recs button small { display: block; color: var(--m-soft); font-size: 12px; }
+  .recs button:hover { background: var(--m-hover); }
+  #start26 .foot { display: flex; justify-content: space-between; align-items: center; padding: 12px 28px; border-top: 1px solid var(--m-line); background: var(--m-hover); }
+  #start26 .me { display: flex; gap: 10px; align-items: center; font-size: 14px; }
+  #start26 .me img { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; }
+  #start26 .foot .acts { display: flex; gap: 4px; }
+  #start26 .foot button { background: none; border: 0; border-radius: 6px; padding: 8px 10px; cursor: pointer; color: var(--m-fg); font-size: 13.5px; display: flex; gap: 6px; align-items: center; }
+  #start26 .foot button:hover { background: var(--m-hover); }
+  #s26none { color: var(--m-soft); font-size: 14px; padding: 8px 4px; }
+
+  /* notification centre 26 */
+  #ncenter { position: fixed; right: 10px; bottom: 58px; width: min(380px, calc(100vw - 20px)); max-height: calc(100vh - 80px); z-index: 9500; display: none; flex-direction: column; gap: 10px; color: var(--m-fg); }
+  #ncenter.open { display: flex; animation: slidein .2s ease-out; }
+  @keyframes slidein { from { transform: translateX(30px); opacity: 0; } to { transform: none; opacity: 1; } }
+  .panel26 { background: var(--m-surface); -webkit-backdrop-filter: blur(30px) saturate(1.5); backdrop-filter: blur(30px) saturate(1.5); border: 1px solid var(--m-line); border-radius: 10px; box-shadow: var(--m-shadow); }
+  #nlist-wrap { flex: 1 1 auto; overflow: auto; min-height: 0; padding: 12px 14px; }
+  #nlist-wrap header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  #nlist-wrap header b { font-size: 14px; }
+  #nlist-wrap header button { background: var(--m-card); border: 1px solid var(--m-line); border-radius: 6px; padding: 3px 10px; font-size: 12.5px; color: var(--m-fg); cursor: pointer; }
+  .nitem { background: var(--m-card); border: 1px solid var(--m-line); border-radius: 8px; padding: 10px 12px; margin-bottom: 8px; display: grid; grid-template-columns: 24px 1fr auto; gap: 4px 10px; font-size: 13.5px; }
+  .nitem .app { grid-column: 2; color: var(--m-soft); font-size: 12px; }
+  .nitem b { grid-column: 2; font-size: 14px; }
+  .nitem p { grid-column: 2 / -1; margin: 0; }
+  .nitem svg { grid-row: 1 / 3; width: 24px; height: 24px; }
+  .nitem .when { grid-column: 3; grid-row: 1; color: var(--m-soft); font-size: 12px; }
+  .nitem .acts { grid-column: 2 / -1; display: flex; gap: 6px; margin-top: 4px; flex-wrap: wrap; }
+  .nitem .acts button, .toast .acts button { border: 1px solid var(--m-line); background: var(--m-solid); color: var(--m-fg); border-radius: 6px; padding: 4px 12px; font: inherit; font-size: 13px; cursor: pointer; }
+  .nitem .acts button:first-child, .toast .acts button:first-child { background: var(--m-accent); color: var(--m-accent-fg); border-color: transparent; }
+  #nempty { color: var(--m-soft); font-size: 14px; text-align: center; padding: 18px 0; }
+  .qs { padding: 14px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .qs button { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--m-line); background: var(--m-card); color: var(--m-fg); font: inherit; font-size: 13px; text-align: left; cursor: pointer; min-height: 64px; }
+  .qs button[aria-pressed="true"] { background: var(--m-accent); color: var(--m-accent-fg); border-color: transparent; }
+  .qs button b { font-size: 16px; line-height: 1; }
+  .qs-foot { grid-column: 1 / -1; display: flex; justify-content: space-between; font-size: 13px; color: var(--m-soft); }
+  .cal { padding: 12px 16px; font-size: 13.5px; display: flex; justify-content: space-between; align-items: baseline; }
+  .cal b { font-size: 15px; }
+
+  /* toasts 26 */
+  #toasts { position: fixed; right: 12px; bottom: 60px; z-index: 9450; display: flex; flex-direction: column; gap: 8px; width: min(370px, calc(100vw - 24px)); pointer-events: none; }
+  .toast { pointer-events: auto; background: var(--m-surface); -webkit-backdrop-filter: blur(30px) saturate(1.5); backdrop-filter: blur(30px) saturate(1.5); border: 1px solid var(--m-line); border-radius: 10px; box-shadow: var(--m-shadow); color: var(--m-fg); padding: 12px 14px 14px; display: grid; grid-template-columns: 24px 1fr auto; gap: 4px 10px; font-size: 14px; animation: toastin .28s cubic-bezier(.2,.9,.3,1.2); }
+  .toast.out { animation: toastout .22s ease-in forwards; }
+  @keyframes toastin { from { transform: translateX(110%); } to { transform: none; } }
+  @keyframes toastout { to { transform: translateX(110%); opacity: 0; } }
+  .toast svg { width: 24px; height: 24px; grid-row: 1 / 3; }
+  .toast .app { color: var(--m-soft); font-size: 12px; }
+  .toast b { grid-column: 2; font-size: 14.5px; }
+  .toast p { grid-column: 2 / -1; margin: 0; }
+  .toast .tx { grid-column: 3; grid-row: 1; background: none; border: 0; color: var(--m-soft); cursor: pointer; font-size: 14px; padding: 0 2px; }
+  .toast .acts { grid-column: 2 / -1; display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+
+  /* context menu + misc 26 */
+  html.os26 #ctx { background: var(--m-surface); -webkit-backdrop-filter: blur(30px); backdrop-filter: blur(30px); border-radius: 8px; padding: 4px; box-shadow: var(--m-shadow); color: var(--m-fg); }
+  html.os26 #ctx button { border-radius: 4px; padding: 7px 14px; }
+  html.os26 #ctx button:hover { background: var(--m-hover); color: var(--m-fg); }
+  html.os26 .sm-sep { border-top-color: var(--m-line); border-bottom: 0; }
+  html.os26 #startmenu { display: none !important; }
+  html.os26 #boot { background: #0b1220; }
+  html.os26 #boot .bl { font: 300 clamp(30px, 5vw, 48px)/1 var(--m-font); font-style: normal; letter-spacing: 0; }
+  html.os26 #boot .bl b { color: #fff; font-weight: 600; } html.os26 #boot .bl em { color: #5aa6f0; }
+  html.os26 #boot .bar { border: 0; height: 4px; padding: 0; border-radius: 2px; background: rgba(255,255,255,.15); }
+  html.os26 #boot .bar i { background: #5aa6f0; border-radius: 2px; }
+  html.os26 #off { background: #0b1220; color: #fff; font-weight: 300; }
+
+  @media (max-width: 700px) {
+    html.os26 .win { border-radius: 0; height: calc(100vh - 48px) !important; height: calc(100dvh - 48px) !important; max-height: none; }
+    html.os26 #tasks { overflow-x: auto; max-width: calc(100vw - 150px); }
+    html.os26 .tray { right: 2px; }
+    html.os26 #clockbtn .clk-date { display: none; }
+    .pins { grid-template-columns: repeat(4, 1fr); }
+    .recs { grid-template-columns: 1fr; }
+    #start26 .in { padding: 16px 14px 10px; }
+    #start26 .foot { padding: 10px 14px; }
+    #toasts { right: 12px; left: 12px; width: auto; top: 12px; bottom: auto; }
+    @keyframes toastin { from { transform: translateY(-120%); } to { transform: none; } }
+    #ncenter { right: 8px; left: 8px; width: auto; }
+  }
+  @media (prefers-reduced-motion: reduce) { .toast, #start26.open, #ncenter.open { animation: none !important; } #update .spin i { animation-duration: 4s; } #boot .bar i { animation: none; width: 100%; } .prog i { transition: none; } }
 </style>
 </head>
 <body>
@@ -235,6 +468,28 @@
     <symbol id="ic-mute" viewBox="0 0 16 16"><path d="M2 6h3l4-3v10l-4-3H2z" fill="#ffef7a" stroke="#000"/><path d="M11 6l4 4M15 6l-4 4" stroke="#c00000" stroke-width="1.5"/></symbol>
     <symbol id="ic-net" viewBox="0 0 16 16"><rect x="1" y="2" width="8" height="6" fill="#008080" stroke="#000"/><rect x="7" y="8" width="8" height="6" fill="#008080" stroke="#000"/></symbol>
     <symbol id="ic-shut" viewBox="0 0 32 32"><rect x="3" y="4" width="26" height="18" fill="#c0c0c0" stroke="#000"/><rect x="6" y="7" width="20" height="12" fill="#000"/><path d="M16 9v5" stroke="#f80" stroke-width="2"/><path d="M12 11a5 5 0 1 0 8 0" fill="none" stroke="#f80" stroke-width="2"/><rect x="8" y="24" width="16" height="4" fill="#c0c0c0" stroke="#000"/></symbol>
+    <symbol id="m-pc" viewBox="0 0 32 32"><defs><linearGradient id="g-pc" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4f9cf0"/><stop offset="1" stop-color="#1d5fc4"/></linearGradient></defs><rect x="2" y="2" width="28" height="28" rx="7" fill="url(#g-pc)"/><circle cx="16" cy="12.5" r="4" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 24c1-4 4-6 7-6s6 2 7 6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="m-folder" viewBox="0 0 32 32"><defs><linearGradient id="g-folder" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd36b"/><stop offset="1" stop-color="#f0a92b"/></linearGradient></defs><rect x="2" y="2" width="28" height="28" rx="7" fill="url(#g-folder)"/><path d="M8 11h6l2 2h8v10H8z" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="m-run" viewBox="0 0 32 32"><defs><linearGradient id="g-run" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3fc6a6"/><stop offset="1" stop-color="#14907a"/></linearGradient></defs><rect x="2" y="2" width="28" height="28" rx="7" fill="url(#g-run)"/><path d="M13 10l8 6-8 6z" fill="#fff"/></symbol>
+    <symbol id="m-cp" viewBox="0 0 32 32"><defs><linearGradient id="g-cp" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b93a8"/><stop offset="1" stop-color="#545c72"/></linearGradient></defs><rect x="2" y="2" width="28" height="28" rx="7" fill="url(#g-cp)"/><circle cx="16" cy="16" r="3.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 8v3M16 21v3M8 16h3M21 16h3M10.5 10.5l2 2M19.5 19.5l2 2M21.5 10.5l-2 2M12.5 19.5l-2 2" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="m-globe" viewBox="0 0 32 32"><defs><linearGradient id="g-globe" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#56b8f5"/><stop offset="1" stop-color="#1f7fd1"/></linearGradient></defs><rect x="2" y="2" width="28" height="28" rx="7" fill="url(#g-globe)"/><circle cx="16" cy="16" r="7.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.5 16h15M16 8.5c3 3 3 12 0 15M16 8.5c-3 3-3 12 0 15" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="m-mail" viewBox="0 0 32 32"><defs><linearGradient id="g-mail" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5a8ff2"/><stop offset="1" stop-color="#3a5fd0"/></linearGradient></defs><rect x="2" y="2" width="28" height="28" rx="7" fill="url(#g-mail)"/><rect x="8.5" y="10.5" width="15" height="11" rx="1.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 11.5l7 5.5 7-5.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="m-doc" viewBox="0 0 32 32"><defs><linearGradient id="g-doc" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3f5f8"/><stop offset="1" stop-color="#cdd3dd"/></linearGradient></defs><rect x="2" y="2" width="28" height="28" rx="7" fill="url(#g-doc)"/><path d="M11 9h7l4 4v10H11z" fill="#fff" stroke="#5b6270" stroke-width="1.6" stroke-linejoin="round"/><path d="M13.5 16h6M13.5 19h6" stroke="#0b5cad" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="m-mine" viewBox="0 0 32 32"><defs><linearGradient id="g-mine" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7b6cf0"/><stop offset="1" stop-color="#4c3fc4"/></linearGradient></defs><rect x="2" y="2" width="28" height="28" rx="7" fill="url(#g-mine)"/><circle cx="16" cy="16" r="4.5" fill="#fff"/><path d="M16 8.5v3M16 20.5v3M8.5 16h3M20.5 16h3M10.7 10.7l2 2M19.3 19.3l2 2M21.3 10.7l-2 2M12.7 19.3l-2 2" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="m-web" viewBox="0 0 32 32"><defs><linearGradient id="g-web" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2b8ad6"/><stop offset="1" stop-color="#0a5ca8"/></linearGradient></defs><rect x="2" y="2" width="28" height="28" rx="7" fill="url(#g-web)"/><text x="16" y="21.5" text-anchor="middle" font-family="Arial" font-weight="700" font-size="14" fill="#fff">in</text></symbol>
+    <symbol id="m-exe" viewBox="0 0 32 32"><defs><linearGradient id="g-exe" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3b3f49"/><stop offset="1" stop-color="#191b20"/></linearGradient></defs><rect x="2" y="2" width="28" height="28" rx="7" fill="url(#g-exe)"/><path d="M10 12l4 4-4 4M16 21h6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="m-bin" viewBox="0 0 32 32"><defs><linearGradient id="g-bin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c9d2df"/><stop offset="1" stop-color="#8f9bb0"/></linearGradient></defs><rect x="2" y="2" width="28" height="28" rx="7" fill="url(#g-bin)"/><path d="M10 11h12M14 11V9h4v2M11.5 11l1 12h7l1-12" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="m-bulb" viewBox="0 0 32 32"><defs><linearGradient id="g-bulb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffcf5a"/><stop offset="1" stop-color="#f29f1d"/></linearGradient></defs><rect x="2" y="2" width="28" height="28" rx="7" fill="url(#g-bulb)"/><path d="M16 8a5 5 0 0 0-3 9v2h6v-2a5 5 0 0 0-3-9zM14 22.5h4" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="m-info" viewBox="0 0 32 32"><defs><linearGradient id="g-info" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4f9cf0"/><stop offset="1" stop-color="#1d5fc4"/></linearGradient></defs><rect x="2" y="2" width="28" height="28" rx="7" fill="url(#g-info)"/><text x="16" y="22" text-anchor="middle" font-family="Georgia" font-weight="700" font-size="15" fill="#fff">i</text></symbol>
+    <symbol id="m-people" viewBox="0 0 32 32"><defs><linearGradient id="g-people" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff8a65"/><stop offset="1" stop-color="#e0533a"/></linearGradient></defs><rect x="2" y="2" width="28" height="28" rx="7" fill="url(#g-people)"/><circle cx="13" cy="13" r="3" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="20" cy="14" r="2.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 23c.6-3 2.6-5 5-5s4.4 2 5 5M18 18.5c2.4 0 4.2 1.7 5 4.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="m-code" viewBox="0 0 32 32"><defs><linearGradient id="g-code" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2d2f36"/><stop offset="1" stop-color="#121318"/></linearGradient></defs><rect x="2" y="2" width="28" height="28" rx="7" fill="url(#g-code)"/><path d="M12 12l-4 4 4 4M20 12l4 4-4 4" stroke="#7ee2b8" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="m-cloud" viewBox="0 0 32 32"><defs><linearGradient id="g-cloud" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7cc8ff"/><stop offset="1" stop-color="#2f8fe6"/></linearGradient></defs><rect x="2" y="2" width="28" height="28" rx="7" fill="url(#g-cloud)"/><path d="M11 21a3.5 3.5 0 0 1 .5-7 5 5 0 0 1 9.5-1 4 4 0 0 1 .5 8z" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="m-shut" viewBox="0 0 32 32"><defs><linearGradient id="g-shut" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e05a4f"/><stop offset="1" stop-color="#b5332a"/></linearGradient></defs><rect x="2" y="2" width="28" height="28" rx="7" fill="url(#g-shut)"/><path d="M16 8.5v6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M11.5 11.5a6.5 6.5 0 1 0 9 0" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="m-upgrade" viewBox="0 0 32 32"><defs><linearGradient id="g-upgrade" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4fb6f5"/><stop offset="1" stop-color="#3a5fd0"/></linearGradient></defs><rect x="2" y="2" width="28" height="28" rx="7" fill="url(#g-upgrade)"/><path d="M16 23V10M10.5 15.5L16 10l5.5 5.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="ic-upgrade" viewBox="0 0 32 32"><rect x="3" y="4" width="26" height="20" fill="#c0c0c0" stroke="#000"/><rect x="5" y="6" width="22" height="14" fill="#2f6fd6"/><path d="M16 18V9M12 13l4-4 4 4" stroke="#fff" stroke-width="2.5" fill="none"/><rect x="9" y="25" width="14" height="3" fill="#808080" stroke="#000"/></symbol>
+    <symbol id="ic-bell" viewBox="0 0 16 16"><path d="M8 2a4 4 0 0 0-4 4v3l-1.5 2.5h11L12 9V6a4 4 0 0 0-4-4zM6.5 13a1.5 1.5 0 0 0 3 0" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></symbol>
+    <symbol id="ic-bell-off" viewBox="0 0 16 16"><path d="M8 2a4 4 0 0 0-4 4v3l-1.5 2.5h11L12 9V6a4 4 0 0 0-4-4zM6.5 13a1.5 1.5 0 0 0 3 0" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M2 2l12 12" stroke="currentColor" stroke-width="1.3"/></symbol>
+    <symbol id="m-classic" viewBox="0 0 32 32"><defs><linearGradient id="g-classic" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#008080"/><stop offset="1" stop-color="#005a5a"/></linearGradient></defs><rect x="2" y="2" width="28" height="28" rx="7" fill="url(#g-classic)"/><rect x="9" y="10" width="14" height="10" fill="#c0c0c0" stroke="#000"/><rect x="10" y="11" width="12" height="2.5" fill="#000080"/><rect x="12" y="21" width="8" height="2" fill="#c0c0c0"/></symbol>
   </defs>
 </svg>
 
@@ -244,14 +499,15 @@
     <button class="icon" data-open="w-career"><svg class="i32"><use href="#ic-folder"/></svg><span>Career</span></button>
     <button class="icon" data-open="w-now"><svg class="i32"><use href="#ic-run"/></svg><span>Now running</span></button>
     <button class="icon" data-open="w-skills"><svg class="i32"><use href="#ic-cp"/></svg><span>Control Panel</span></button>
-    <button class="icon" data-open="w-lang"><svg class="i32"><use href="#ic-globe"/></svg><span>Regional Settings</span></button>
     <button class="icon" data-open="w-mail"><svg class="i32"><use href="#ic-mail"/></svg><span>Inbox</span></button>
     <button class="icon" data-open="w-readme"><svg class="i32"><use href="#ic-doc"/></svg><span>README.TXT</span></button>
     <button class="icon" data-open="w-sweep"><svg class="i32"><use href="#ic-mine"/></svg><span>Blocker Sweeper</span></button>
     <button class="icon" data-link="https://se.linkedin.com/in/mikael-wilkon-38413aa0"><svg class="i32"><use href="#ic-web"/></svg><span>LinkedIn</span></button>
     <button class="icon" data-bsod><svg class="i32"><use href="#ic-exe"/></svg><span>legacy_code.exe</span></button>
-    <button class="icon" data-open="w-bin"><svg class="i32"><use href="#ic-bin"/></svg><span>Recycle Bin</span></button>
+    <button class="icon os95only" data-upgrade><svg class="i32"><use href="#ic-upgrade"/></svg><span>Upgrade to MikaelOS 26</span></button>
+    <button class="icon os26only" data-classic><svg class="i32"><use href="#m-classic"/></svg><span>MikaelOS 95 (classic)</span></button>
   </nav>
+  <button class="icon icon-bin" data-open="w-bin"><svg class="i32"><use href="#ic-bin"/></svg><span>Recycle Bin</span></button>
 
   <!-- ABOUT -->
   <section class="win bevel" id="w-about" data-x="128" data-y="26" data-w="580" aria-labelledby="t-about">
@@ -528,6 +784,7 @@ JavaScript. No frameworks, no trackers.</pre>
     <div class="sm-sep"></div>
     <button role="menuitem" data-open="w-mail"><svg class="i32"><use href="#ic-mail"/></svg>Contact Mikael...</button>
     <button role="menuitem" data-open="w-run"><svg class="i32"><use href="#ic-exe"/></svg>Run...</button>
+    <button role="menuitem" data-upgrade><svg class="i32"><use href="#ic-upgrade"/></svg>Upgrade to MikaelOS 26...</button>
     <div class="sm-sep"></div>
     <button role="menuitem" id="shutdown"><svg class="i32"><use href="#ic-shut"/></svg>Shut Down...</button>
   </div>
@@ -538,6 +795,7 @@ JavaScript. No frameworks, no trackers.</pre>
   <button data-act="arrange">Arrange Icons</button>
   <button data-act="wall">Change Wallpaper</button>
   <button data-act="closeall">Close All Windows</button>
+  <button data-act="theme" class="os26only">Switch light / dark</button>
   <div class="sm-sep"></div>
   <button data-open="w-about">Properties</button>
 </div>
@@ -547,13 +805,72 @@ JavaScript. No frameworks, no trackers.</pre>
   <div id="tasks"></div>
   <div class="tray">
     <button id="sound" aria-label="Sound off" title="Sound: off"><svg class="i16"><use href="#ic-mute"/></svg></button>
-    <svg class="i16" aria-hidden="true"><use href="#ic-net"/></svg>
-    <span id="clock" title="Malmö time">--:--</span>
+    <svg class="i16 net95" aria-hidden="true"><use href="#ic-net"/></svg>
+    <button id="clockbtn" title="Malmö time"><span id="clock">--:--</span><span id="datebox" class="clk-date"></span></button>
+    <button id="bell" aria-label="Notifications"><svg class="i16"><use href="#ic-bell"/></svg><span class="badge" id="badge"></span></button>
   </div>
 </div>
 
+<!-- MikaelOS 26: Start -->
+<div id="start26" role="dialog" aria-label="Start">
+  <div class="in">
+    <input id="s26q" type="search" placeholder="Search apps, roles and skills, or type a command" autocomplete="off" aria-label="Search">
+    <h4>Pinned <small>Press Enter to run</small></h4>
+    <div class="pins" id="pins">
+      <button data-open="w-about" data-k="about mikael profile me"><svg class="i32"><use href="#m-pc"/></svg>About Mikael</button>
+      <button data-open="w-now" data-k="now tetra pak pim scrum current"><svg class="i32"><use href="#m-run"/></svg>Now</button>
+      <button data-open="w-career" data-k="career cv roles experience jobs"><svg class="i32"><use href="#m-folder"/></svg>Career</button>
+      <button data-open="w-skills" data-k="skills settings azure .net c# scrum leadership"><svg class="i32"><use href="#m-cp"/></svg>Skills</button>
+      <button data-open="w-lang" data-k="languages svenska polski english swedish polish"><svg class="i32"><use href="#m-globe"/></svg>Languages</button>
+      <button data-open="w-mail" data-k="contact mail email hire message"><svg class="i32"><use href="#m-mail"/></svg>Mail</button>
+      <button data-open="w-readme" data-k="readme notes notepad"><svg class="i32"><use href="#m-doc"/></svg>README</button>
+      <button data-open="w-sweep" data-k="game sweeper blocker minesweeper"><svg class="i32"><use href="#m-mine"/></svg>Sweeper</button>
+      <button data-open="w-bin" data-k="recycle bin excuses"><svg class="i32"><use href="#m-bin"/></svg>Recycle Bin</button>
+      <button data-link="https://se.linkedin.com/in/mikael-wilkon-38413aa0" data-k="linkedin profile"><svg class="i32"><use href="#m-web"/></svg>LinkedIn</button>
+      <button data-classic data-k="classic 95 old retro downgrade"><svg class="i32"><use href="#m-classic"/></svg>MikaelOS 95</button>
+      <button data-bsod data-k="legacy code exe"><svg class="i32"><use href="#m-exe"/></svg>legacy_code</button>
+    </div>
+    <p id="s26none" hidden>No matches. Try "career", "contact" or "hire mikael".</p>
+    <h4>Recommended</h4>
+    <div class="recs">
+      <button data-role="1"><svg class="i32"><use href="#m-doc"/></svg><span>PIM Service Support Engineer<small>Tetra Pak &middot; since Jan 2026</small></span></button>
+      <button data-role="0"><svg class="i32"><use href="#m-doc"/></svg><span>Senior Lead Consultant<small>Sundet &middot; since Jan 2026</small></span></button>
+      <button data-role="4"><svg class="i32"><use href="#m-doc"/></svg><span>Product Owner<small>inriver &middot; 2021&ndash;2022</small></span></button>
+      <button data-role="5"><svg class="i32"><use href="#m-doc"/></svg><span>Scrum Master<small>inriver &middot; 2020</small></span></button>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="me"><img src="assets/profile.jpg" alt=""><span>Mikael Wilkon</span></div>
+    <div class="acts"><button data-classic title="Switch to MikaelOS 95">Classic mode</button><button id="power26" aria-label="Shut down"><svg class="i16"><use href="#ic-shut"/></svg></button></div>
+  </div>
+</div>
+
+<!-- MikaelOS 26: notification centre + quick settings -->
+<div id="ncenter" role="dialog" aria-label="Notifications and quick settings">
+  <div class="panel26" id="nlist-wrap">
+    <header><b>Notifications</b><button id="nclear">Clear all</button></header>
+    <div id="nlist"></div>
+    <p id="nempty">You're all caught up.</p>
+  </div>
+  <div class="panel26 qs">
+    <button id="qs-dnd" aria-pressed="false"><b>&#9790;</b>Do not disturb</button>
+    <button id="qs-dark" aria-pressed="false"><b>&#9680;</b>Dark mode</button>
+    <button id="qs-sound" aria-pressed="false"><b>&#9835;</b>Sound</button>
+    <button data-classic aria-pressed="false"><b>95</b>Classic mode</button>
+    <button data-open="w-mail" aria-pressed="false"><b>&#9993;</b>Contact</button>
+    <button data-link="https://se.linkedin.com/in/mikael-wilkon-38413aa0" aria-pressed="false"><b>in</b>LinkedIn</button>
+    <div class="qs-foot"><span>Malmö, Sweden</span><span>Open to opportunities</span></div>
+  </div>
+  <div class="panel26 cal"><b id="caldate"></b><span>Life moves on, so does technology.</span></div>
+</div>
+<div id="toasts" aria-live="polite"></div>
+
+<!-- MikaelOS 95: balloon tip -->
+<div id="balloon" role="status"><button class="bx" aria-label="Close">&times;</button><b><svg class="i16"><use href="#ic-info"/></svg><span id="btitle"></span></b><span id="bbody"></span><div class="acts" id="bacts"></div></div>
+
+<div class="overlay" id="update" role="status" aria-live="polite"><div class="spin" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div><div class="u1" id="u1">Working on updates 0%</div><div class="u2" id="u2">Life moves on, so does technology. Please don't turn off your stakeholders.</div><div class="u3" id="u3"></div></div>
 <div class="overlay" id="boot" aria-hidden="true"><div class="bl"><b>Mikael</b>OS <em>95</em></div><div class="bar"><i></i></div><div class="bs">Starting MikaelOS... loading leadership drivers</div></div>
-<div class="overlay" id="bsod" role="alertdialog" aria-label="Blue screen"><div class="in">
+<div class="overlay" id="bsod" role="alertdialog" aria-label="Blue screen"><div class="bs26"><p class="sad">:(</p><p>Your PC ran into a problem: legacy_code.exe has accumulated too much technical debt. We're collecting some error info, and then we'll add it to the backlog.</p><p>100% complete</p><small>Stop code: TECH_DEBT_OVERFLOW &middot; Press any key to continue</small></div><div class="in bs95">
   <div class="h">MikaelOS</div>
   <p>A fatal exception 0E has occurred at 0028:C0FFEE42 in VXD LEGACY(01). The current application has accumulated too much technical debt.</p>
   <p>*&nbsp; Press any key to put it in the backlog.<br>*&nbsp; Press CTRL+ALT+DEL to call a Scrum Master. You will lose any unsaved estimates.</p>
@@ -629,7 +946,7 @@ JavaScript. No frameworks, no trackers.</pre>
       b.addEventListener('click', function () {
         if (w.classList.contains('active') && !w.classList.contains('min')) { minimise(w); } else { w.classList.remove('min'); focus(w); }
       });
-      tasks.appendChild(b);
+      tasks.appendChild(b); if (root.classList.contains('os26')) swapIcons(true, b);
     }
     focus(w); sfx.open();
     if (id === 'w-now') runProgress();
@@ -678,6 +995,8 @@ JavaScript. No frameworks, no trackers.</pre>
     if (ic.dataset.open) open(ic.dataset.open);
     else if (ic.dataset.link) window.open(ic.dataset.link, '_blank', 'noopener');
     else if (ic.hasAttribute('data-bsod')) bsod();
+    else if (ic.hasAttribute('data-upgrade')) upgrade('26');
+    else if (ic.hasAttribute('data-classic')) upgrade('95');
   }
   var lastPointer = 'mouse';
   $$('.icon').forEach(function (ic) {
@@ -694,12 +1013,14 @@ JavaScript. No frameworks, no trackers.</pre>
 
   /* ---------- start menu + context menu ---------- */
   var sm = $('#startmenu'), sb = $('#startbtn'), ctx = $('#ctx');
-  function closeMenus() { sm.classList.remove('open'); sb.classList.remove('on'); sb.setAttribute('aria-expanded', 'false'); ctx.classList.remove('open'); }
+  function closeMenus() { sm.classList.remove('open'); sb.classList.remove('on'); sb.setAttribute('aria-expanded', 'false'); ctx.classList.remove('open'); var a = document.getElementById('start26'), b = document.getElementById('ncenter'); if (a) a.classList.remove('open'); if (b) b.classList.remove('open'); }
   sb.addEventListener('click', function (e) {
-    e.stopPropagation(); var on = !sm.classList.contains('open'); closeMenus();
+    e.stopPropagation();
+    if (root.classList.contains('os26')) { var s2 = $('#start26'), o2 = !s2.classList.contains('open'); closeMenus(); if (o2) { s2.classList.add('open'); sb.classList.add('on'); sb.setAttribute('aria-expanded', 'true'); var qq = $('#s26q'); qq.value = ''; qq.dispatchEvent(new Event('input')); if (!mobile.matches) qq.focus({ preventScroll: true }); } return; }
+    var on = !sm.classList.contains('open'); closeMenus();
     if (on) { sm.classList.add('open'); sb.classList.add('on'); sb.setAttribute('aria-expanded', 'true'); var f = $('button', sm); if (f) f.focus({ preventScroll: true }); }
   });
-  document.addEventListener('pointerdown', function (e) { if (!e.target.closest('#startmenu, #startbtn, #ctx')) closeMenus(); });
+  document.addEventListener('pointerdown', function (e) { if (!e.target.closest('#startmenu, #startbtn, #ctx, #start26, #ncenter, #bell, #clockbtn, .toast, #balloon')) closeMenus(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenus(); });
   $('#desk').addEventListener('contextmenu', function (e) {
     if (e.target.closest('.win')) return;
@@ -777,7 +1098,7 @@ JavaScript. No frameworks, no trackers.</pre>
     $('#mailtxt').textContent = 'Message handed to your mail program.';
   });
   $('#copy').addEventListener('click', function () {
-    var done = function () { $('#mailtxt').textContent = 'Address copied to the clipboard.'; sfx.ding(); };
+    var done = function () { $('#mailtxt').textContent = 'Address copied to the clipboard.'; notify({ app: 'Mail', icon: 'm-mail', title: 'Address copied', body: 'MikaelWilkon@gmail.com is on your clipboard.', actions: [] }); };
     try { navigator.clipboard.writeText('MikaelWilkon@gmail.com').then(done, function () { $('#m-to').select(); }); } catch (e) { $('#m-to').select(); }
   });
 
@@ -811,15 +1132,19 @@ JavaScript. No frameworks, no trackers.</pre>
   /* ---------- run dialog ---------- */
   $('#runform').addEventListener('submit', function (e) {
     e.preventDefault();
-    var v = $('#runinput').value.trim().toLowerCase().replace(/\.exe$/, '');
+    close($('#w-run')); runCommand($('#runinput').value);
+  });
+  function runCommand(raw) {
+    var v = String(raw || '').trim().toLowerCase().replace(/\.exe$/, '');
     var map = { about: 'w-about', mikael: 'w-about', career: 'w-career', cv: 'w-career', now: 'w-now', 'tetra pak': 'w-now', skills: 'w-skills', control: 'w-skills', languages: 'w-lang', lang: 'w-lang', contact: 'w-mail', mail: 'w-mail', email: 'w-mail', readme: 'w-readme', notepad: 'w-readme', sweeper: 'w-sweep', minesweeper: 'w-sweep', game: 'w-sweep', bin: 'w-bin', tip: 'w-tip' };
-    close($('#w-run'));
+    if (/upgrade|26|modern|new/.test(v)) { upgrade('26'); return; }
+    if (/classic|95|retro|downgrade/.test(v)) { upgrade('95'); return; }
     if (/hire|recruit|job|offer/.test(v)) { open('w-mail'); $('#m-sub').value = 'Let\'s work together'; return; }
     if (v === 'legacy_code' || v === 'legacy') { bsod(); return; }
     if (v === 'linkedin') { window.open('https://se.linkedin.com/in/mikael-wilkon-38413aa0', '_blank', 'noopener'); return; }
     if (map[v]) { open(map[v]); return; }
     alertBox('Cannot find \'' + (v || '(nothing)') + '\'. Make sure the name is right, or try "career", "contact" or "hire mikael".', 'Run');
-  });
+  }
   document.addEventListener('click', function (e) { if (e.target.closest('[data-open="w-run"]')) setTimeout(function () { $('#runinput').focus(); }, 30); });
 
   /* ---------- blocker sweeper ---------- */
@@ -895,8 +1220,10 @@ JavaScript. No frameworks, no trackers.</pre>
     open('w-about');
     if (!mobile.matches) {
       open('w-now');
-      if (store('mw-tips') !== 'off') { nextTip(); open('w-tip'); }
+      if (os === '95' && store('mw-tips') !== 'off') { nextTip(); open('w-tip'); }
+      else open('w-about');
     }
+    schedule();
   }
   function boot(force) {
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -939,13 +1266,216 @@ JavaScript. No frameworks, no trackers.</pre>
 
   /* ---------- clock ---------- */
   function tick() {
-    try { $('#clock').textContent = new Date().toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Stockholm' }); } catch (e) {}
+    try {
+      var d = new Date();
+      $('#clock').textContent = d.toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Stockholm' });
+      $('#datebox').textContent = d.toLocaleDateString('sv-SE', { timeZone: 'Europe/Stockholm' });
+      $('#caldate').textContent = d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'Europe/Stockholm' });
+      if ($('#ncenter').classList.contains('open')) renderCenter();
+    } catch (e) {}
   }
   tick(); setInterval(tick, 20000);
 
   window.addEventListener('resize', function () {
     wins.forEach(function (w) { if (w.classList.contains('open') && !mobile.matches) { var r = w.getBoundingClientRect(); if (r.left > window.innerWidth - 60 || r.top > window.innerHeight - 80) { w.dataset.placed = ''; place(w); } } });
   });
+
+  /* =====================================================================
+     MikaelOS 26: "Life moves on, so does technology"
+     ===================================================================== */
+  var os = store('mw-os') === '26' ? '26' : '95';
+  var darkPref = store('mw-dark');
+  var dark = darkPref ? darkPref === 'on' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+  var dnd = store('mw-dnd') === 'on';
+
+  function swapIcons(to26, scope) {
+    $$('use', scope).forEach(function (u) {
+      var h = u.getAttribute('href') || '';
+      if (to26 && h.indexOf('#ic-') === 0 && document.getElementById('m-' + h.slice(4))) { u.setAttribute('data-ic', h); u.setAttribute('href', '#m-' + h.slice(4)); }
+      else if (!to26 && u.hasAttribute('data-ic')) { u.setAttribute('href', u.getAttribute('data-ic')); u.removeAttribute('data-ic'); }
+    });
+  }
+  function applyDark() {
+    root.classList.toggle('dark', os === '26' && dark);
+    $('#qs-dark').setAttribute('aria-pressed', dark ? 'true' : 'false');
+  }
+  function setOS(m) {
+    os = m; store('mw-os', m);
+    root.classList.toggle('os26', m === '26');
+    swapIcons(m === '26');
+    $('#boot .bl').innerHTML = '<b>Mikael</b>OS <em>' + m + '</em>';
+    $('#boot .bs').textContent = m === '26' ? 'Getting things ready' : 'Starting MikaelOS... loading leadership drivers';
+    var meta = document.querySelector('meta[name="theme-color"]'); if (meta) meta.setAttribute('content', m === '26' ? '#0b5cad' : '#008080');
+    applyDark(); closeMenus(); hideBalloon();
+    $$('.toast').forEach(function (t) { t.remove(); }); toastQ = []; toastShowing = 0;
+  }
+
+  /* ---------- upgrade / roll back ---------- */
+  var upSteps = ['Backing up 1995 memories', 'Installing Certified ScrumMaster® (2018)', 'Migrating Product Owner settings (2021)', 'Updating .NET, Azure and integrations', 'Configuring calmer notifications', 'Installing Senior Lead Consultant (2026)', 'Almost there'];
+  var downSteps = ['Restoring the teal', 'Re-installing beveled buttons', 'Finding the Start button', 'Almost there'];
+  var upgrading = false;
+  function upgrade(to) {
+    if (os === to || upgrading) return;
+    upgrading = true; closeMenus(); hideBalloon();
+    var el = $('#update'), steps = to === '26' ? upSteps : downSteps, p = 0;
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    el.style.background = to === '26' ? '#0b5cad' : '#008080';
+    $('#u2').textContent = to === '26' ? 'Life moves on, so does technology. Please don\'t turn off your stakeholders.' : 'Some things are worth keeping. Rolling back to MikaelOS 95.';
+    $('#u1').textContent = (to === '26' ? 'Working on updates ' : 'Restoring ') + '0%'; $('#u3').textContent = steps[0];
+    el.classList.add('open');
+    var iv = setInterval(function () {
+      p = Math.min(100, p + (reduce ? 34 : 6 + Math.floor(Math.random() * 9)));
+      $('#u1').textContent = (to === '26' ? 'Working on updates ' : 'Restoring ') + p + '%';
+      $('#u3').textContent = steps[Math.min(steps.length - 1, Math.floor(p / 100 * steps.length))];
+      if (p >= 100) {
+        clearInterval(iv);
+        setTimeout(function () {
+          el.classList.remove('open'); setOS(to); upgrading = false; sfx.chime();
+          notes = notes.filter(function (x) { return x.app !== 'MikaelOS Update'; }); renderCenter(); updateBadge();
+          if (to === '26' && $('#w-tip').classList.contains('open')) close($('#w-tip'));
+          if (to === '26') {
+            notify({ app: 'MikaelOS', icon: 'm-upgrade', title: 'Welcome to MikaelOS 26', body: 'Same Mikael, newer stack. Notifications now wait their turn, and Do not disturb holds them for later.', actions: [{ label: 'Show me', run: openCenter }, { label: 'Open profile', run: function () { open('w-about'); } }] });
+          } else {
+            notify({ app: 'MikaelOS', title: 'Welcome back to MikaelOS 95', body: 'Life moves on, but the teal stays. You can upgrade again from the Start menu any time.', actions: [] });
+          }
+        }, 450);
+      }
+    }, 260);
+  }
+
+  /* ---------- notifications: one at a time, never lost, quiet when asked ---------- */
+  var notes = [], toastQ = [], toastShowing = 0, noteId = 0;
+  function ago(d) { var m = Math.round((Date.now() - d) / 60000); return m < 1 ? 'Now' : m + ' min ago'; }
+  function actionButtons(box, n, after) {
+    (n.actions || []).forEach(function (a) {
+      var b = document.createElement('button'); b.textContent = a.label;
+      b.addEventListener('click', function (e) { e.stopPropagation(); n.read = true; updateBadge(); if (after) after(); if (a.run) a.run(); });
+      box.appendChild(b);
+    });
+  }
+  function renderCenter() {
+    var list = $('#nlist'); list.innerHTML = '';
+    notes.forEach(function (n) {
+      var d = document.createElement('div'); d.className = 'nitem';
+      d.innerHTML = '<svg aria-hidden="true"><use href="#' + (n.icon || 'm-info') + '"/></svg><span class="app"></span><span class="when"></span><b></b><p></p><div class="acts"></div>';
+      $('.app', d).textContent = n.app; $('.when', d).textContent = ago(n.time); $('b', d).textContent = n.title; $('p', d).textContent = n.body;
+      actionButtons($('.acts', d), n, closeMenus);
+      list.appendChild(d);
+    });
+    $('#nempty').hidden = notes.length > 0;
+  }
+  function updateBadge() {
+    var n = notes.filter(function (x) { return !x.read; }).length, bell = $('#bell');
+    $('#badge').textContent = n ? String(n) : '';
+    bell.classList.toggle('dnd', dnd);
+    $('use', bell).setAttribute('href', dnd ? '#ic-bell-off' : '#ic-bell');
+    bell.setAttribute('aria-label', 'Notifications' + (n ? ', ' + n + ' unread' : '') + (dnd ? ', Do not disturb is on' : ''));
+    $('#qs-dnd').setAttribute('aria-pressed', dnd ? 'true' : 'false');
+  }
+  function notify(n) {
+    n.id = ++noteId; n.time = Date.now(); n.read = false;
+    notes.unshift(n); if (notes.length > 20) notes.pop();
+    renderCenter(); updateBadge();
+    if (dnd) return;
+    if (os === '95') { balloon(n); return; }
+    if ($('#ncenter').classList.contains('open')) return;
+    toastQ.push(n); pump();
+  }
+  function pump() {
+    if (toastShowing || !toastQ.length) return;
+    toastShowing = 1; showToast(toastQ.shift());
+  }
+  function showToast(n) {
+    var t = document.createElement('div'), timer = null, gone = false;
+    t.className = 'toast'; t.setAttribute('role', 'status');
+    t.innerHTML = '<svg aria-hidden="true"><use href="#' + (n.icon || 'm-info') + '"/></svg><span class="app"></span><button class="tx" aria-label="Dismiss">&#10005;</button><b></b><p></p><div class="acts"></div>';
+    $('.app', t).textContent = n.app; $('b', t).textContent = n.title; $('p', t).textContent = n.body;
+    function dismiss() {
+      if (gone) return; gone = true; clearTimeout(timer); t.classList.add('out');
+      setTimeout(function () { t.remove(); toastShowing = 0; setTimeout(pump, 500); }, 230);
+    }
+    actionButtons($('.acts', t), n, dismiss);
+    $('.tx', t).addEventListener('click', dismiss);
+    t.addEventListener('mouseenter', function () { clearTimeout(timer); });
+    t.addEventListener('mouseleave', function () { timer = setTimeout(dismiss, 3000); });
+    $('#toasts').appendChild(t); sfx.open();
+    timer = setTimeout(dismiss, 7000);
+  }
+  function openCenter() {
+    if (os !== '26') return;
+    closeMenus(); renderCenter();
+    notes.forEach(function (n) { n.read = true; }); updateBadge();
+    $$('.toast').forEach(function (t) { t.remove(); }); toastQ = []; toastShowing = 0;
+    $('#ncenter').classList.add('open');
+  }
+  $('#bell').addEventListener('click', function (e) { e.stopPropagation(); if ($('#ncenter').classList.contains('open')) closeMenus(); else openCenter(); });
+  $('#clockbtn').addEventListener('click', function (e) { if (os !== '26') return; e.stopPropagation(); if ($('#ncenter').classList.contains('open')) closeMenus(); else openCenter(); });
+  $('#nclear').addEventListener('click', function () { notes = []; renderCenter(); updateBadge(); });
+  $('#qs-dnd').addEventListener('click', function () {
+    dnd = !dnd; store('mw-dnd', dnd ? 'on' : 'off'); updateBadge();
+    if (!dnd) { var missed = notes.filter(function (x) { return !x.read; }).length; if (missed) { closeMenus(); notify({ app: 'MikaelOS', title: 'You have ' + missed + ' unread notification' + (missed > 1 ? 's' : ''), body: 'They waited quietly while Do not disturb was on.', actions: [{ label: 'View', run: openCenter }] }); } }
+  });
+  $('#qs-dark').addEventListener('click', function () { dark = !dark; store('mw-dark', dark ? 'on' : 'off'); applyDark(); });
+  $('#qs-sound').addEventListener('click', function () { $('#sound').click(); this.setAttribute('aria-pressed', soundOn ? 'true' : 'false'); });
+
+  /* ---------- 95 balloon tips ---------- */
+  var bTimer = null;
+  function hideBalloon() { $('#balloon').classList.remove('open'); clearTimeout(bTimer); }
+  function balloon(n) {
+    $('#btitle').textContent = n.title; $('#bbody').textContent = n.body;
+    var acts = $('#bacts'); acts.innerHTML = ''; actionButtons(acts, n, hideBalloon);
+    $('#balloon').classList.add('open'); sfx.ding();
+    clearTimeout(bTimer); bTimer = setTimeout(hideBalloon, 12000);
+  }
+  $('#balloon .bx').addEventListener('click', hideBalloon);
+
+  /* ---------- Start (26) ---------- */
+  var s26 = $('#start26'), q = $('#s26q');
+  q.addEventListener('input', function () {
+    var v = q.value.trim().toLowerCase(), any = false;
+    $$('#pins button').forEach(function (b) { var hit = !v || (b.dataset.k + ' ' + b.textContent).toLowerCase().indexOf(v) >= 0; b.classList.toggle('hide', !hit); any = any || hit; });
+    $('#s26none').hidden = any;
+  });
+  q.addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter') return; e.preventDefault();
+    var v = q.value.trim(), first = $('#pins button:not(.hide)');
+    if (v && /hire|recruit|job|offer|legacy/i.test(v)) { closeMenus(); runCommand(v); }
+    else if (first && v) first.click(); else if (v) { closeMenus(); runCommand(v); }
+  });
+  $('#power26').addEventListener('click', function () { $('#shutdown').click(); });
+
+  /* ---------- shared click routing ---------- */
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-upgrade],[data-classic],[data-link],[data-bsod],[data-role]');
+    if (!t || t.classList.contains('icon')) return;
+    closeMenus();
+    if (t.hasAttribute('data-upgrade')) upgrade('26');
+    else if (t.hasAttribute('data-classic')) upgrade('95');
+    else if (t.dataset.link) window.open(t.dataset.link, '_blank', 'noopener');
+    else if (t.hasAttribute('data-bsod')) bsod();
+    else if (t.dataset.role) showRole($$('#jobs tr')[+t.dataset.role]);
+  });
+
+  /* ---------- gentle startup schedule ---------- */
+  var scheduled = false;
+  function schedule() {
+    if (scheduled) return; scheduled = true;
+    setTimeout(function () {
+      if (os === '95') {
+        if (!sstore('mw-later')) notify({ app: 'MikaelOS Update', icon: 'm-upgrade', title: 'A new version of MikaelOS is available', body: 'Life moves on, so does technology. Upgrade to MikaelOS 26 for a modern desktop and calmer notifications.', actions: [{ label: 'Upgrade now', run: function () { upgrade('26'); } }, { label: 'Later', run: function () { sstore('mw-later', '1'); } }] });
+      } else {
+        notify({ app: 'Career', icon: 'm-run', title: 'Now: Scrum Master, PIM Service Team', body: 'Tetra Pak, Lund. Driving a new inRiver PIM solution into the business.', actions: [{ label: 'Open', run: function () { open('w-now'); } }, { label: 'Career', run: function () { open('w-career'); } }] });
+      }
+    }, 5000);
+    setTimeout(function () {
+      if (os === '26') notify({ app: 'Mail', icon: 'm-mail', title: 'Mikael is open to new opportunities', body: 'Have a team that needs leading where engineering meets product?', actions: [{ label: 'Send a message', run: function () { open('w-mail'); } }] });
+    }, 35000);
+    setTimeout(function () {
+      if (os === '26') notify({ app: 'Tips', icon: 'm-bulb', title: 'Tip: notifications wait their turn', body: 'Only one shows at a time. Turn on Do not disturb in the bell menu and they will wait for you there.', actions: [{ label: 'Open bell menu', run: openCenter }] });
+    }, 80000);
+  }
+
+  setOS(os); renderCenter(); updateBadge();
 
   boot(false);
 })();
