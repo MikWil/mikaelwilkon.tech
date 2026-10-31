@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Releases · Mikael Wilkon</title>
+<meta name="description" content="Mikael Wilkon, Senior Lead Consultant. Scrum Master, Product Owner and .NET engineer in Malmö, Sweden.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#fafaf7; --ink:#14171c; --soft:#5f6670; --line:#e3e3dc; --add:#1a7f37; --chg:#9a6700; --brk:#cf222e; --lead:#d9480f; --chip:#f0efe8; }
+  * { box-sizing: border-box; }
+  body { margin:0; background: var(--bg); color: var(--ink); font: 16px/1.6 "IBM Plex Sans", system-ui, sans-serif; }
+  a { color: #0b5cad; }
+  .mono { font-family: "IBM Plex Mono", monospace; }
+  .w { max-width: 1180px; margin: 0 auto; padding: 36px 28px 60px; display:grid; grid-template-columns: 1fr 330px; gap: 44px; }
+  header.top { grid-column: 1 / -1; display:flex; align-items: center; gap: 18px; border-bottom: 1px solid var(--line); padding-bottom: 22px; }
+  header.top img { width: 64px; height: 64px; border-radius: 10px; object-fit: cover; }
+  header.top h1 { margin: 0; font-size: 28px; letter-spacing: -.01em; }
+  header.top h1 span { font: 500 16px "IBM Plex Mono"; color: var(--soft); margin-left: 8px; }
+  header.top p { margin: 2px 0 0; color: var(--soft); }
+  .tabs { margin-left: auto; display:flex; gap: 4px; font-size: 14px; }
+  .tabs span { padding: 6px 12px; border-radius: 6px; }
+  .tabs span.on { background: var(--ink); color: #fff; }
+  .rel { display:grid; grid-template-columns: 150px 1fr; gap: 24px; padding: 26px 0; border-bottom: 1px solid var(--line); }
+  .rel .side { font-size: 14px; color: var(--soft); }
+  .rel .side .v { font: 600 17px "IBM Plex Mono"; color: var(--ink); display:block; }
+  .latest { display:inline-block; margin-top: 6px; font: 600 12px "IBM Plex Mono"; color: #fff; background: var(--add); padding: 2px 8px; border-radius: 20px; }
+  .rel h2 { margin: 0 0 4px; font-size: 22px; line-height: 1.25; }
+  .rel .org { color: var(--soft); margin: 0 0 12px; font-size: 15px; }
+  .rel .org b { color: var(--lead); font-weight: 600; }
+  .ch { margin: 10px 0 0; }
+  .ch h4 { margin: 0 0 4px; font: 600 12.5px "IBM Plex Mono"; text-transform: uppercase; letter-spacing: .06em; }
+  .ch.add h4 { color: var(--add); } .ch.chg h4 { color: var(--chg); } .ch.brk h4 { color: var(--brk); }
+  .ch ul { margin: 0; padding-left: 20px; }
+  .ch li { margin: 2px 0; }
+  .ch.brk { background: #fff1f0; border: 1px solid #ffd1cf; border-radius: 8px; padding: 10px 14px; }
+  code { font: 500 13.5px "IBM Plex Mono"; background: var(--chip); padding: 1px 6px; border-radius: 4px; }
+  aside { position: sticky; top: 20px; align-self: start; display:grid; gap: 18px; }
+  .panel { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 18px; }
+  .panel h3 { margin: 0 0 12px; font: 600 13px "IBM Plex Mono"; text-transform: uppercase; letter-spacing: .06em; color: var(--soft); }
+  .big { font-size: 34px; font-weight: 700; line-height: 1; }
+  .big small { font-size: 15px; font-weight: 500; color: var(--soft); margin-left: 6px; }
+  .chart { display:grid; grid-template-columns: repeat(12, 1fr); gap: 4px; align-items: end; height: 120px; margin-top: 14px; }
+  .chart div { display:flex; flex-direction: column; justify-content: flex-end; height: 100%; }
+  .chart i { display:block; background: #d6d6cc; border-radius: 3px 3px 0 0; }
+  .chart i.l { background: var(--lead); }
+  .axis { display:grid; grid-template-columns: repeat(12, 1fr); gap: 4px; font: 500 10.5px "IBM Plex Mono"; color: var(--soft); text-align: center; margin-top: 4px; }
+  .key { font-size: 13px; color: var(--soft); margin-top: 8px; }
+  .key i { display:inline-block; width: 10px; height: 10px; border-radius: 2px; background: var(--lead); margin-right: 5px; vertical-align: -1px; }
+  .kv { display:grid; grid-template-columns: 1fr auto; gap: 6px 10px; font-size: 15px; }
+  .kv span:nth-child(even) { font-family: "IBM Plex Mono"; font-size: 13.5px; color: var(--soft); }
+  .btn { display:block; text-align:center; background: var(--ink); color:#fff; text-decoration:none; padding: 11px; border-radius: 8px; font-weight: 600; }
+  @media (max-width: 960px) { .w { grid-template-columns: 1fr; } aside { position: static; order: -1; grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 640px) {
+    .w { padding: 22px 16px 40px; gap: 24px; }
+    .tabs { display:none; }
+    aside { grid-template-columns: 1fr; }
+    .rel { grid-template-columns: 1fr; gap: 6px; }
+    header.top h1 span { display:block; margin: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="w">
+  <header class="top">
+    <img src="../../../assets/profile.jpg" alt="Mikael Wilkon">
+    <div><h1>mikael-wilkon <span>v6.0.0</span></h1><p>Senior Lead Consultant. Leads teams where engineering meets product.</p></div>
+    <div class="tabs"><span>Overview</span><span class="on">Releases</span><span>Roadmap</span></div>
+  </header>
+
+  <main>
+    <article class="rel">
+      <div class="side"><span class="v">v6.0.0</span>Jan 2026<br><span class="latest">Latest</span></div>
+      <div>
+        <h2>Senior Lead</h2>
+        <p class="org"><b>Leadership release</b> &middot; Sundet, Malmö &middot; Tetra Pak, Lund (hybrid)</p>
+        <div class="ch add"><h4>Added</h4><ul>
+          <li>Senior Lead Consultant at Sundet: technical leadership, .NET, Azure and integrations, close to the business</li>
+          <li>Scrum Master for the PIM Service Team at Tetra Pak, as PIM Service Support Engineer</li>
+          <li>Stakeholder collaboration: turning business needs into priorities for the team</li>
+        </ul></div>
+        <div class="ch chg"><h4>Changed</h4><ul><li>PIM experience moved from the vendor side to the implementer side: rolling out a new <code>inRiver PIM</code> solution</li></ul></div>
+      </div>
+    </article>
+
+    <article class="rel">
+      <div class="side"><span class="v">v5.0.0</span>May 2023</div>
+      <div>
+        <h2>Software Developer</h2>
+        <p class="org">Trygg-Hansa, Malmö &middot; until Dec 2025</p>
+        <div class="ch add"><h4>Added</h4><ul><li>Internal CRM used by customer service, in <code>C#</code> <code>.NET</code> <code>WPF</code></li></ul></div>
+        <div class="ch chg"><h4>Changed</h4><ul><li>Drove the migration to a modern web-based solution in <code>Blazor</code>, with CI/CD on Azure Pipelines</li></ul></div>
+      </div>
+    </article>
+
+    <article class="rel">
+      <div class="side"><span class="v">v4.1.0</span>Sep 2022</div>
+      <div>
+        <h2>Back to the backend</h2>
+        <p class="org">inriver &middot; Software Developer</p>
+        <div class="ch add"><h4>Added</h4><ul><li>New features in the inriver PIM SaaS platform with <code>Azure Functions</code> <code>Cosmos DB</code> <code>MediatR</code></li></ul></div>
+      </div>
+    </article>
+
+    <article class="rel">
+      <div class="side"><span class="v">v4.0.0</span>Mar 2021</div>
+      <div>
+        <h2>Product Owner</h2>
+        <p class="org"><b>Leadership release</b> &middot; inriver</p>
+        <div class="ch add"><h4>Added</h4><ul><li>Ownership of the integrations backlog</li><li>The communication link between product management and the development team</li></ul></div>
+        <div class="ch chg"><h4>Improved</h4><ul><li>Quality of stories and epics</li></ul></div>
+      </div>
+    </article>
+
+    <article class="rel">
+      <div class="side"><span class="v">v3.0.0</span>Apr 2020</div>
+      <div>
+        <h2>Scrum Master</h2>
+        <p class="org"><b>Leadership release</b> &middot; inriver</p>
+        <div class="ch brk"><h4>Breaking change</h4><ul><li>Started leading the team's process, not just following it</li></ul></div>
+        <div class="ch add"><h4>Added</h4><ul><li>Ran ceremonies and kept the process healthy, while still developing when needed</li></ul></div>
+      </div>
+    </article>
+
+    <article class="rel">
+      <div class="side"><span class="v">v2.1.0</span>Oct 2018</div>
+      <div><h2>Certified ScrumMaster&reg;</h2><p class="org">Scrum Alliance &middot; ID 845533</p></div>
+    </article>
+
+    <article class="rel">
+      <div class="side"><span class="v">v2.0.0</span>Jan 2018</div>
+      <div>
+        <h2>Software Developer</h2>
+        <p class="org">inriver, Malmö</p>
+        <div class="ch add"><h4>Added</h4><ul><li>Full-stack features, internal tooling and Azure infrastructure</li><li>Customer environments set up and running in the cloud</li></ul></div>
+      </div>
+    </article>
+
+    <article class="rel">
+      <div class="side"><span class="v">v1.1.0</span>May 2016</div>
+      <div>
+        <h2>2nd-line Specialist</h2>
+        <p class="org">Atea Sverige</p>
+        <div class="ch add"><h4>Added</h4><ul><li>PowerShell automation and a support tool that sped up issue resolution</li><li>Incident management</li></ul></div>
+      </div>
+    </article>
+
+    <article class="rel">
+      <div class="side"><span class="v">v1.0.0</span>Jul 2015</div>
+      <div><h2>Service Desk Agent</h2><p class="org">Atea Sverige &middot; first production release</p></div>
+    </article>
+
+    <article class="rel" style="border:0">
+      <div class="side"><span class="v">v0.1.0</span>2013</div>
+      <div><h2>Systemutvecklare, Microsoft Azure</h2><p class="org">Teknikhögskolan Malmö &middot; 2013&ndash;2015</p></div>
+    </article>
+  </main>
+
+  <aside>
+    <div class="panel">
+      <h3>Leadership share</h3>
+      <div class="big">4<small>leadership roles</small></div>
+      <div class="chart" aria-label="Months in a leadership role per year, 2015 to 2026">
+        <div><i class="" style="height:4px" title="0 months"></i></div><div><i class="" style="height:4px" title="0 months"></i></div><div><i class="" style="height:4px" title="0 months"></i></div><div><i class="" style="height:4px" title="0 months"></i></div><div><i class="" style="height:4px" title="0 months"></i></div><div><i class="l" style="height:50%" title="6 months"></i></div><div><i class="l" style="height:83%" title="10 months"></i></div><div><i class="l" style="height:83%" title="10 months"></i></div><div><i class="" style="height:4px" title="0 months"></i></div><div><i class="" style="height:4px" title="0 months"></i></div><div><i class="" style="height:4px" title="0 months"></i></div><div><i class="l" style="height:83%" title="10 months"></i></div>
+      </div>
+      <div class="axis"><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span><span>26</span></div>
+      <p class="key"><i></i>Months in a leadership role, per year (2026 so far)</p>
+    </div>
+    <div class="panel">
+      <h3>Supported languages</h3>
+      <div class="kv"><span>Svenska</span><span>native</span><span>Polski</span><span>native</span><span>English</span><span>native</span></div>
+    </div>
+    <div class="panel">
+      <h3>Maintainer</h3>
+      <div class="kv"><span>Location</span><span>Malmö</span><span>Since</span><span>2015</span><span>Stack</span><span>.NET, Azure</span></div>
+      <p style="margin:14px 0 0"><a class="btn" href="mailto:MikaelWilkon@gmail.com">Open an issue (email)</a></p>
+      <p style="margin:8px 0 0;text-align:center;font-size:14px"><a href="https://se.linkedin.com/in/mikael-wilkon-38413aa0">LinkedIn</a></p>
+    </div>
+  </aside>
+</div>
+</body>
+</html>

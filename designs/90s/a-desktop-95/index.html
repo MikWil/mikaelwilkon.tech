@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mikael Wilkon 95</title>
+<meta name="description" content="Mikael Wilkon, Senior Lead Consultant. Scrum Master, Product Owner and .NET engineer in Malmö, Sweden.">
+<style>
+  :root { --face:#c0c0c0; --hi:#fff; --lo:#808080; --dk:#000; --title:#000080; }
+  * { box-sizing: border-box; }
+  body { margin:0; min-height:100vh; background:#008080; font:16px/1.5 "Liberation Sans", Arial, sans-serif; color:#000; padding-bottom:44px; }
+  .bevel { border:2px solid; border-color: var(--hi) var(--dk) var(--dk) var(--hi); box-shadow: inset -1px -1px 0 var(--lo), inset 1px 1px 0 #dfdfdf; }
+  .sunk { border:2px solid; border-color: var(--lo) var(--hi) var(--hi) var(--lo); box-shadow: inset 1px 1px 0 var(--dk); background:#fff; }
+  .desk { display:grid; grid-template-columns: 96px 1fr; gap: 10px; padding: 14px; max-width: 1300px; margin: 0 auto; }
+  .icons { display:flex; flex-direction:column; gap: 18px; padding-top: 6px; }
+  .icon { color:#fff; text-align:center; font-size:13px; text-decoration:none; }
+  .icon i { display:block; width:40px; height:36px; margin:0 auto 4px; position:relative; }
+  .ic-pc { background: linear-gradient(#e0e0e0,#9a9a9a); border:2px solid #333; border-radius:2px; }
+  .ic-pc::after { content:""; position:absolute; inset:5px 5px 9px; background:#000080; }
+  .ic-folder { background:#f7d64a; border:1px solid #8a6d00; border-radius:2px 6px 2px 2px; height:30px !important; margin-top:6px !important; }
+  .ic-doc { background:#fff; border:1px solid #333; width:30px !important; }
+  .ic-doc::after { content:""; position:absolute; left:5px; right:5px; top:8px; height:14px; background: repeating-linear-gradient(#000 0 1px, transparent 1px 4px); }
+  .ic-mail { background:#fff; border:1px solid #333; height:26px !important; margin-top:8px !important; }
+  .ic-mail::after { content:""; position:absolute; inset:0; background: linear-gradient(30deg, transparent 48%, #333 49% 51%, transparent 52%), linear-gradient(-30deg, transparent 48%, #333 49% 51%, transparent 52%); }
+  .ic-bin { width:30px !important; background: repeating-linear-gradient(90deg,#ddd 0 4px,#999 4px 6px); border:1px solid #333; border-radius: 0 0 4px 4px; }
+  .icon span { display:inline-block; padding:0 3px; }
+  .icon:focus span, .icon:hover span { background:#000080; outline:1px dotted #fff; }
+  .wins { display:grid; grid-template-columns: 1.15fr 1fr; gap: 14px; align-items:start; }
+  .win { background: var(--face); padding: 3px; }
+  .tb { background: linear-gradient(90deg, #000080, #1084d0); color:#fff; font-weight:bold; font-size:14px; padding: 3px 4px 3px 6px; display:flex; justify-content:space-between; align-items:center; }
+  .tb.off { background: linear-gradient(90deg, #808080, #b5b5b5); color:#d4d0c8; }
+  .tb .b { display:flex; gap:2px; }
+  .tb .b span { width:18px; height:16px; background:var(--face); color:#000; font:bold 12px/12px "Liberation Sans", Arial; text-align:center; border:2px solid; border-color: var(--hi) var(--dk) var(--dk) var(--hi); }
+  .menu { display:flex; gap: 14px; padding: 3px 6px; font-size:14px; }
+  .menu u { text-decoration: underline; }
+  .content { padding: 14px 16px; }
+  .note { font: 16px/1.55 "Liberation Mono", "Courier New", monospace; white-space: pre-wrap; }
+  .intro { display:flex; gap: 16px; align-items:flex-start; }
+  .intro img { width: 128px; height:128px; image-rendering: pixelated; }
+  h1 { font-size: 24px; margin: 0 0 4px; }
+  .lead { font-size:17px; margin:0 0 10px; }
+  table.det { width:100%; border-collapse: collapse; font-size: 14px; }
+  table.det th { text-align:left; font-weight:normal; padding: 3px 6px; background: var(--face); border:1px solid; border-color: var(--hi) var(--dk) var(--dk) var(--hi); white-space:nowrap; }
+  table.det td { padding: 4px 6px; vertical-align: top; }
+  table.det tr.lead td:first-child::before { content:"★ "; color:#c00000; }
+  table.det tr:hover td { background:#000080; color:#fff; }
+  .status { display:flex; gap:3px; padding: 2px; font-size: 13px; }
+  .status span { flex:1; padding: 2px 6px; }
+  .dialog .content { display:flex; gap: 14px; }
+  .info { flex: 0 0 34px; height: 34px; border-radius: 50%; background:#fff; border:2px solid #000080; color:#000080; font: bold 22px/30px Georgia, serif; text-align:center; }
+  .prog { height: 22px; padding: 2px; margin: 10px 0 6px; }
+  .prog i { display:block; height:100%; width: 70%; background: repeating-linear-gradient(90deg, #000080 0 12px, transparent 12px 14px); }
+  .btn { display:inline-block; min-width: 86px; padding: 5px 12px; text-align:center; background:var(--face); color:#000; text-decoration:none; font-size:14px; margin-right: 6px; }
+  .btn:active { border-color: var(--dk) var(--hi) var(--hi) var(--dk); }
+  .props { display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  fieldset { border: 2px groove #fff; padding: 8px 12px 10px; margin: 0; }
+  legend { padding: 0 4px; }
+  fieldset label { display:block; font-size: 14px; }
+  fieldset input { margin: 0 6px 0 0; vertical-align: -2px; accent-color: #000080; }
+  .taskbar { position: fixed; left:0; right:0; bottom:0; height: 38px; background:var(--face); border-top: 2px solid #fff; display:flex; align-items:center; gap: 6px; padding: 0 4px; z-index: 5; }
+  .start { font-weight:bold; padding: 3px 8px; display:flex; align-items:center; gap: 6px; font-size: 15px; }
+  .flag { width: 18px; height: 16px; display:grid; grid-template-columns: 1fr 1fr; gap: 1px; transform: skewY(-6deg); }
+  .flag i:nth-child(1){background:#f25022}.flag i:nth-child(2){background:#7fba00}.flag i:nth-child(3){background:#00a4ef}.flag i:nth-child(4){background:#ffb900}
+  .task { padding: 3px 10px; font-size: 13px; max-width: 200px; white-space:nowrap; overflow:hidden; text-overflow: ellipsis; }
+  .task.on { border-color: var(--dk) var(--hi) var(--hi) var(--dk); background: repeating-conic-gradient(#c0c0c0 0 25%, #fff 0 50%) 0 0/2px 2px; font-weight:bold; }
+  .tray { margin-left:auto; padding: 3px 10px; font-size: 13px; border:1px solid; border-color: var(--lo) var(--hi) var(--hi) var(--lo); }
+  @media (max-width: 900px) { .wins { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) {
+    .desk { grid-template-columns: 1fr; padding: 8px; }
+    .icons { flex-direction: row; justify-content: space-around; padding: 0; }
+    .icon { font-size: 12px; }
+    .intro { flex-direction: column; }
+    .props { grid-template-columns: 1fr; }
+    .task:not(.on) { display:none; }
+    table.det th:nth-child(3), table.det td:nth-child(3) { display:none; }
+  }
+</style>
+</head>
+<body>
+<div class="desk">
+  <div class="icons">
+    <a class="icon" href="#about"><i class="ic-pc"></i><span>My Mikael</span></a>
+    <a class="icon" href="#career"><i class="ic-folder"></i><span>Career</span></a>
+    <a class="icon" href="#now"><i class="ic-doc"></i><span>NOW.TXT</span></a>
+    <a class="icon" href="mailto:MikaelWilkon@gmail.com"><i class="ic-mail"></i><span>Inbox</span></a>
+    <a class="icon" href="#"><i class="ic-bin"></i><span>Old excuses</span></a>
+  </div>
+
+  <div class="wins">
+    <div style="display:grid;gap:14px">
+      <section class="win bevel" id="about">
+        <div class="tb"><span>About Mikael - Properties</span><span class="b"><span>?</span><span>×</span></span></div>
+        <div class="content">
+          <div class="intro">
+            <img class="sunk" src="../../../assets/profile.jpg" alt="Mikael Wilkon">
+            <div>
+              <h1>Mikael Wilkon</h1>
+              <p class="lead"><b>Senior Lead Consultant</b> at Sundet, Malmö</p>
+              <p style="margin:0">I lead teams where engineering meets product. Scrum Master, Product Owner and hands-on .NET engineer, focused on <b>what</b> gets built and <b>why</b>.</p>
+            </div>
+          </div>
+          <div class="props" style="margin-top:14px">
+            <fieldset><legend>Installed components</legend>
+              <label><input type="checkbox" checked>Team leadership</label>
+              <label><input type="checkbox" checked>Scrum Master (CSM, 2018)</label>
+              <label><input type="checkbox" checked>Product ownership</label>
+              <label><input type="checkbox" checked>Stakeholder collaboration</label>
+              <label><input type="checkbox" checked>C# / .NET / Blazor</label>
+              <label><input type="checkbox" checked>Azure, integrations, inRiver PIM</label>
+            </fieldset>
+            <fieldset><legend>Regional settings</legend>
+              <label><input type="radio" checked>Svenska: native</label>
+              <label><input type="radio" checked>Polski: native</label>
+              <label><input type="radio" checked>English: native</label>
+              <p style="margin:8px 0 0;font-size:13px">All three languages are installed at the same level.</p>
+            </fieldset>
+          </div>
+        </div>
+      </section>
+
+      <section class="win bevel dialog" id="now">
+        <div class="tb"><span>Now running...</span><span class="b"><span>×</span></span></div>
+        <div class="content">
+          <div class="info">i</div>
+          <div>
+            <p style="margin:0"><b>PIM Service Support Engineer</b> at <b>Tetra Pak</b><br>Jan 2026 &ndash; present &middot; Lund &middot; hybrid</p>
+            <p style="margin:8px 0 0">Scrum Master of the PIM Service Team, driving a new inRiver PIM solution into the business. Turning business needs into priorities, coordinating the team, working with stakeholders, and doing hands-on integration work.</p>
+            <div class="prog sunk"><i></i></div>
+            <p style="margin:0 0 12px;font-size:13px">Implementing inRiver PIM... please don't turn off your stakeholders.</p>
+            <a class="btn bevel" href="mailto:MikaelWilkon@gmail.com">Contact...</a><a class="btn bevel" href="https://se.linkedin.com/in/mikael-wilkon-38413aa0">LinkedIn</a>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section class="win bevel" id="career">
+      <div class="tb"><span>C:\Career</span><span class="b"><span>_</span><span>□</span><span>×</span></span></div>
+      <div class="menu"><span><u>F</u>ile</span><span><u>E</u>dit</span><span><u>V</u>iew</span><span><u>H</u>elp</span></div>
+      <div class="sunk" style="margin:0 3px">
+        <table class="det">
+          <tr><th>Name</th><th>Company</th><th>Modified</th></tr>
+          <tr class="lead"><td>Senior Lead Consultant</td><td>Sundet</td><td>2026&ndash;</td></tr>
+          <tr class="lead"><td>PIM Service Support Engineer (Scrum Master)</td><td>Tetra Pak</td><td>2026&ndash;</td></tr>
+          <tr><td>Software Developer</td><td>Trygg-Hansa</td><td>2023&ndash;2025</td></tr>
+          <tr><td>Software Developer</td><td>inriver</td><td>2022&ndash;2023</td></tr>
+          <tr class="lead"><td>Product Owner, integrations</td><td>inriver</td><td>2021&ndash;2022</td></tr>
+          <tr class="lead"><td>Scrum Master / Developer</td><td>inriver</td><td>2020</td></tr>
+          <tr><td>Software Developer</td><td>inriver</td><td>2018&ndash;2021</td></tr>
+          <tr><td>2nd-line Specialist</td><td>Atea</td><td>2016&ndash;2018</td></tr>
+          <tr><td>Service Desk Agent</td><td>Atea</td><td>2015&ndash;2016</td></tr>
+          <tr><td>Systemutvecklare, Azure</td><td>Teknikhögskolan</td><td>2013&ndash;2015</td></tr>
+        </table>
+      </div>
+      <div class="status"><span class="sunk" style="background:none">10 object(s), 4 leadership roles ★</span><span class="sunk" style="background:none">11+ years</span></div>
+    </section>
+  </div>
+</div>
+
+<div class="taskbar">
+  <span class="start bevel"><span class="flag"><i></i><i></i><i></i><i></i></span>Start</span>
+  <span class="task bevel on">About Mikael</span>
+  <span class="task bevel">C:\Career</span>
+  <span class="task bevel">Now running...</span>
+  <span class="tray" id="clock">Malmö</span>
+</div>
+<script>
+  (function(){ var c=document.getElementById('clock'); function t(){ try { c.textContent = new Date().toLocaleTimeString('sv-SE',{hour:'2-digit',minute:'2-digit',timeZone:'Europe/Stockholm'}); } catch(e){} } t(); setInterval(t, 30000); })();
+</script>
+</body>
+</html>

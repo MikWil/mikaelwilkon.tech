@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C:\MIKAEL</title>
+<meta name="description" content="Mikael Wilkon, Senior Lead Consultant. Scrum Master, Product Owner and .NET engineer in Malmö, Sweden.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#0000a8; --cy:#55ffff; --ye:#ffff55; --wh:#ffffff; --gr:#aaaaaa; --sel:#00a8a8; }
+  * { box-sizing: border-box; }
+  html, body { margin:0; background:#000; }
+  body { font: 24px/1.15 "VT323", "Courier New", monospace; color: var(--cy); padding: 0 0 40px; }
+  .menubar { background: var(--sel); color:#000; padding: 0 12px; display:flex; gap: 28px; }
+  .menubar b { color: var(--ye); font-weight: normal; }
+  .screen { display:grid; grid-template-columns: 1fr 1.6fr; background: var(--bg); min-height: calc(100vh - 70px); }
+  .panel { border: 4px double var(--cy); margin: 4px; position: relative; padding: 14px 14px 10px; }
+  .panel > .cap { position:absolute; top:-15px; left:50%; transform: translateX(-50%); background: var(--bg); padding: 0 8px; color: var(--wh); white-space: nowrap; }
+  .panel > .cap.on { background: var(--sel); color: #000; }
+  .cols { display:grid; grid-template-columns: 1fr 70px 110px; color: var(--ye); border-bottom: 2px solid var(--cy); margin-bottom: 4px; }
+  ul.files { list-style:none; margin:0; padding:0; }
+  ul.files li a { display:grid; grid-template-columns: 1fr 70px 110px; color: var(--cy); text-decoration:none; padding: 0 4px; }
+  ul.files li a.dir { color: var(--wh); }
+  ul.files li a.on, ul.files li a:hover { background: var(--sel); color:#000; }
+  .free { position:absolute; bottom: 8px; left: 14px; right: 14px; border-top: 2px solid var(--cy); padding-top: 4px; color: var(--gr); font-size: 20px; }
+  .view { color: var(--wh); }
+  .view h1 { font: inherit; font-size: 44px; line-height: 1; color: var(--ye); margin: 0 0 6px; }
+  .view h2 { font: inherit; color: var(--ye); margin: 18px 0 6px; }
+  .view p { margin: 0 0 10px; max-width: 760px; }
+  .view .hl { color: var(--ye); }
+  .view .dim { color: var(--gr); }
+  .doc { display:none; }
+  .doc.show { display:block; }
+  .ascii { color: var(--cy); white-space: pre; font-size: 20px; line-height: 1; margin: 0 0 10px; overflow: hidden; }
+  table.t { border-collapse: collapse; width: 100%; }
+  table.t td { padding: 1px 10px 1px 0; vertical-align: top; }
+  table.t td:first-child { color: var(--gr); white-space: nowrap; width: 130px; }
+  table.t tr.lead td:nth-child(2) { color: var(--ye); }
+  .bar { display:inline-block; background: var(--cy); height: 14px; vertical-align: 2px; }
+  .cmd { background:#000; color: var(--gr); padding: 2px 10px; }
+  .cmd b { color: var(--wh); font-weight: normal; }
+  .cur { display:inline-block; width: 12px; height: 4px; background: var(--wh); vertical-align: -2px; animation: bl 1s steps(1) infinite; }
+  @keyframes bl { 50% { opacity: 0; } }
+  .fkeys { position: fixed; bottom: 0; left: 0; right: 0; display:flex; background:#000; font-size: 20px; overflow:hidden; }
+  .fkeys a { flex: 1; color:#000; text-decoration:none; white-space: nowrap; }
+  .fkeys a b { color: var(--wh); font-weight: normal; padding: 0 2px 0 6px; background:#000; }
+  .fkeys a span { background: var(--sel); padding: 0 6px 0 2px; display:inline-block; width: calc(100% - 30px); }
+  @media (max-width: 760px) {
+    body { font-size: 21px; }
+    .screen { grid-template-columns: 1fr; }
+    .panel.left { padding-bottom: 46px; }
+    .view h1 { font-size: 36px; }
+    .ascii { font-size: 12px; }
+    .fkeys a:nth-child(n+5) { display:none; }
+    .doc { display:block; margin-bottom: 18px; border-bottom: 2px dashed var(--cy); padding-bottom: 12px; }
+    table.t td:first-child { width: 100px; }
+  }
+</style>
+</head>
+<body>
+<div class="menubar"><span><b>L</b>eft</span><span><b>F</b>iles</span><span><b>C</b>ommands</span><span><b>O</b>ptions</span><span><b>R</b>ight</span></div>
+<div class="screen">
+  <div class="panel left">
+    <span class="cap on">C:\MIKAEL</span>
+    <div class="cols"><span>Name</span><span>Size</span><span>Date</span></div>
+    <ul class="files">
+      <li><a class="dir" href="#">..</a></li>
+      <li><a href="#about" data-doc="about" class="on"><span>ABOUT.TXT</span><span>4K</span><span>10-31-26</span></a></li>
+      <li><a href="#now" data-doc="now"><span>NOW.TXT</span><span>2K</span><span>01-01-26</span></a></li>
+      <li><a href="#career" data-doc="career" class="dir"><span>CAREER</span><span>DIR</span><span>10-31-26</span></a></li>
+      <li><a href="#skills" data-doc="skills"><span>SKILLS.BAT</span><span>1K</span><span>10-31-26</span></a></li>
+      <li><a href="#lang" data-doc="lang"><span>LANGUAGE.SYS</span><span>3K</span><span>10-31-26</span></a></li>
+      <li><a href="#contact" data-doc="contact"><span>CONTACT.COM</span><span>1K</span><span>10-31-26</span></a></li>
+    </ul>
+    <div class="free">4 leadership roles, 11+ years, 0 bugs (that we know of)</div>
+  </div>
+
+  <div class="panel view">
+    <span class="cap">VIEW</span>
+
+    <div class="doc show" id="about">
+<pre class="ascii" aria-hidden="true"> __  __ _ _              _
+|  \/  (_) | ____ _  ___| |
+| |\/| | | |/ / _` |/ _ \ |
+| |  | | |   < (_| |  __/ |
+|_|  |_|_|_|\_\__,_|\___|_|</pre>
+      <h1>Mikael Wilkon</h1>
+      <p class="hl">Senior Lead Consultant &middot; Sundet &middot; Malmö, Sweden</p>
+      <p>I lead teams where engineering meets product. I've been a Scrum Master, a Product Owner and a hands-on .NET engineer, and I do my best work in the space between the code and the product.</p>
+      <p>I own <span class="hl">what</span> gets built and <span class="hl">why</span>, not just how, and I keep the business and the engineers building the right thing together.</p>
+      <p class="dim">Five years building inriver's PIM platform, now helping a large company put one into practice. Both vendor and implementer.</p>
+    </div>
+
+    <div class="doc show" id="now">
+      <h2>NOW.TXT</h2>
+      <p class="hl">PIM Service Support Engineer &middot; Tetra Pak</p>
+      <p class="dim">Jan 2026 - present &middot; Lund, Sweden &middot; hybrid</p>
+      <p>Scrum Master of the PIM Service Team, helping drive the implementation of a new inRiver PIM solution. I turn business needs into priorities, coordinate the team's work, collaborate with stakeholders, support the solution and its users, and do hands-on work on the integrations.</p>
+    </div>
+
+    <div class="doc" id="career">
+      <h2>DIR CAREER /O:-D</h2>
+      <table class="t">
+        <tr class="lead"><td>2026-</td><td>Senior Lead Consultant, Sundet *</td></tr>
+        <tr class="lead"><td>2026-</td><td>PIM Service Support Engineer / Scrum Master, Tetra Pak *</td></tr>
+        <tr><td>2023-2025</td><td>Software Developer, Trygg-Hansa</td></tr>
+        <tr><td>2022-2023</td><td>Software Developer, inriver</td></tr>
+        <tr class="lead"><td>2021-2022</td><td>Product Owner, inriver *</td></tr>
+        <tr class="lead"><td>2020</td><td>Scrum Master, inriver *</td></tr>
+        <tr><td>2018-2021</td><td>Software Developer, inriver</td></tr>
+        <tr><td>2015-2018</td><td>Service Desk, 2nd-line Specialist, Atea</td></tr>
+        <tr><td>2013-2015</td><td>Systemutvecklare (Azure), Teknikhögskolan Malmö</td></tr>
+      </table>
+      <p class="dim" style="margin-top:8px">* = leadership role</p>
+    </div>
+
+    <div class="doc" id="skills">
+      <h2>SKILLS.BAT</h2>
+      <table class="t">
+        <tr><td>LEAD</td><td>Team leadership, Scrum Master (CSM 2018), Product Ownership, stakeholders, architecture</td></tr>
+        <tr><td>BUILD</td><td>C#, .NET, ASP.NET Core, Blazor, WPF, PowerShell</td></tr>
+        <tr><td>RUN</td><td>Azure, Functions, SQL, Cosmos DB, CI/CD, integrations, inRiver PIM</td></tr>
+      </table>
+    </div>
+
+    <div class="doc" id="lang">
+      <h2>LANGUAGE.SYS</h2>
+      <table class="t">
+        <tr><td>SVENSKA</td><td><span class="bar" style="width:200px"></span> native</td></tr>
+        <tr><td>POLSKI</td><td><span class="bar" style="width:200px"></span> native</td></tr>
+        <tr><td>ENGLISH</td><td><span class="bar" style="width:200px"></span> native</td></tr>
+      </table>
+    </div>
+
+    <div class="doc" id="contact">
+      <h2>CONTACT.COM</h2>
+      <p>E-mail: <a style="color:var(--ye)" href="mailto:MikaelWilkon@gmail.com">MikaelWilkon@gmail.com</a><br>LinkedIn: <a style="color:var(--ye)" href="https://se.linkedin.com/in/mikael-wilkon-38413aa0">mikael-wilkon</a></p>
+    </div>
+  </div>
+</div>
+<div class="cmd">C:\MIKAEL&gt;<b> hire /role:lead</b><span class="cur"></span></div>
+<nav class="fkeys">
+  <a href="#about" data-doc="about"><b>1</b><span>About</span></a>
+  <a href="#now" data-doc="now"><b>2</b><span>Now</span></a>
+  <a href="#career" data-doc="career"><b>3</b><span>Career</span></a>
+  <a href="#contact" data-doc="contact"><b>4</b><span>Mail</span></a>
+  <a href="#skills" data-doc="skills"><b>5</b><span>Skills</span></a>
+  <a href="#lang" data-doc="lang"><b>6</b><span>Lang</span></a>
+  <a href="#"><b>10</b><span>Quit</span></a>
+</nav>
+<script>
+  (function(){
+    var links = document.querySelectorAll('[data-doc]');
+    function show(id){
+      document.querySelectorAll('.doc').forEach(function(d){ d.classList.toggle('show', d.id===id); });
+      document.querySelectorAll('ul.files a').forEach(function(a){ a.classList.toggle('on', a.dataset.doc===id); });
+    }
+    links.forEach(function(a){ a.addEventListener('click', function(e){ if (window.innerWidth > 760) { e.preventDefault(); show(a.dataset.doc); } }); });
+    document.addEventListener('keydown', function(e){ var m = {F1:'about',F2:'now',F3:'career',F4:'contact',F5:'skills',F6:'lang'}; if (m[e.key]) { e.preventDefault(); show(m[e.key]); } });
+  })();
+</script>
+</body>
+</html>

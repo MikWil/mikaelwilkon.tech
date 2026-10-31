@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MIKAEL · Lv 11 Lead</title>
+<meta name="description" content="Mikael Wilkon, Senior Lead Consultant. Scrum Master, Product Owner and .NET engineer in Malmö, Sweden.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin:0; padding: 28px 16px 50px; color:#fff; font: 25px/1.2 "VT323", monospace; background:#101018; background-image: radial-gradient(#ffffff22 1px, transparent 1px); background-size: 24px 24px; }
+  .px { font-family: "Press Start 2P", monospace; font-size: 13px; line-height: 1.6; }
+  .wrap { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .box { background: linear-gradient(180deg, #2a3fb8, #0b1660); border: 4px solid #e8e8f0; border-radius: 10px; box-shadow: 0 0 0 4px #101018, 0 0 0 6px #6a6a80; padding: 18px 20px; }
+  .box h2 { font: 400 14px/1.4 "Press Start 2P", monospace; color: #ffe066; margin: 0 0 14px; }
+  .hero { grid-column: 1 / -1; display: grid; grid-template-columns: 170px 1fr 300px; gap: 22px; align-items: center; }
+  canvas, .face { width: 170px; height: 170px; image-rendering: pixelated; border: 4px solid #e8e8f0; border-radius: 6px; background:#000; display:block; }
+  .name { font: 400 26px/1.3 "Press Start 2P", monospace; margin: 0 0 8px; }
+  .cls { color: #9ff; margin: 0 0 6px; }
+  .bar { display:grid; grid-template-columns: 70px 1fr 90px; gap: 10px; align-items: center; margin: 6px 0; }
+  .bar i { display:block; height: 14px; border: 2px solid #e8e8f0; background:#000; position: relative; }
+  .bar i b { position:absolute; inset: 0 auto 0 0; background: linear-gradient(180deg, #8f8, #2c2); }
+  .bar.mp i b { background: linear-gradient(180deg, #8cf, #26c); }
+  .bar.xp i b { background: linear-gradient(180deg, #ff8, #ca2); }
+  .stats { display:grid; grid-template-columns: 1fr auto; gap: 2px 16px; }
+  .stats span:nth-child(even) { color:#ffe066; text-align:right; }
+  .quest p { margin: 0 0 10px; }
+  .quest .tag { color: #ff7a7a; }
+  ul.log { list-style: none; margin: 0; padding: 0; }
+  ul.log li { padding-left: 26px; position: relative; margin-bottom: 4px; }
+  ul.log li::before { content: "▶"; position: absolute; left: 0; color: #ffe066; font-size: 18px; top: 3px; }
+  .jobs { list-style:none; margin:0; padding:0; }
+  .jobs li { display:grid; grid-template-columns: 112px 1fr; gap: 10px; padding: 4px 0; border-bottom: 2px dotted #4a5ad0; }
+  .jobs li:last-child { border: 0; }
+  .jobs .yr { color:#9ff; }
+  .jobs .lead { color:#ffe066; }
+  .jobs small { display:block; color:#b8c0ff; font-size: 21px; }
+  .equip { display:grid; grid-template-columns: 1fr; gap: 6px; }
+  .equip div { display:flex; gap: 10px; align-items: baseline; }
+  .equip em { font-style: normal; color:#9ff; min-width: 100px; }
+  .dialog { grid-column: 1 / -1; font-size: 28px; }
+  .choice { display:flex; gap: 40px; margin-top: 10px; }
+  .choice a { color:#fff; text-decoration:none; }
+  .choice a::before { content:"  "; white-space: pre; }
+  .choice a:first-child::before, .choice a:hover::before { content:"▶ "; color:#ffe066; }
+  .blink { animation: b 1s steps(1) infinite; color:#ffe066; }
+  @keyframes b { 50% { opacity: 0; } }
+  @media (max-width: 860px) {
+    .wrap { grid-template-columns: 1fr; }
+    .hero { grid-template-columns: 120px 1fr; }
+    .hero .stats-box { grid-column: 1 / -1; }
+    canvas, .face { width: 120px; height: 120px; }
+    .name { font-size: 18px; }
+  }
+  @media (max-width: 480px) {
+    body { font-size: 22px; padding: 14px 10px 40px; }
+    .hero { grid-template-columns: 1fr; }
+    .jobs li { grid-template-columns: 90px 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="box hero">
+    <div><canvas id="face" width="40" height="40" aria-label="Pixel portrait of Mikael Wilkon"></canvas></div>
+    <div>
+      <h1 class="name">MIKAEL WILKON</h1>
+      <p class="cls">Class: Senior Lead Consultant &middot; Lv 11</p>
+      <p style="margin:0 0 8px">Leads teams where engineering meets product. Home town: Malmö.</p>
+      <div class="bar"><span class="px">HP</span><i><b style="width:100%"></b></i><span>999/999</span></div>
+      <div class="bar mp"><span class="px">MP</span><i><b style="width:92%"></b></i><span>Scrum</span></div>
+      <div class="bar xp"><span class="px">XP</span><i><b style="width:78%"></b></i><span>2015&ndash;</span></div>
+    </div>
+    <div class="stats-box">
+      <div class="stats">
+        <span>LEADERSHIP</span><span>99</span>
+        <span>PRODUCT SENSE</span><span>92</span>
+        <span>STAKEHOLDER CHARM</span><span>95</span>
+        <span>.NET / C#</span><span>90</span>
+        <span>AZURE</span><span>85</span>
+        <span>INRIVER PIM</span><span>99</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="box quest">
+    <h2>CURRENT QUEST</h2>
+    <p><span class="tag">!</span> <b>The PIM Service at Tetra Pak</b></p>
+    <p style="color:#9ff">PIM Service Support Engineer &middot; Lund (hybrid) &middot; Jan 2026&ndash;</p>
+    <ul class="log">
+      <li>Lead the PIM Service Team as Scrum Master</li>
+      <li>Drive the rollout of a new inRiver PIM solution</li>
+      <li>Turn business needs into priorities</li>
+      <li>Keep stakeholders in the party</li>
+      <li>Hands-on fixes to the integrations</li>
+    </ul>
+    <h2 style="margin-top:20px">GUILD</h2>
+    <p style="margin:0">Sundet, Malmö &middot; Senior Lead Consultant since Jan 2026</p>
+  </section>
+
+  <section class="box">
+    <h2>JOB CLASSES UNLOCKED</h2>
+    <ul class="jobs">
+      <li><span class="yr">2026</span><span class="lead">Senior Lead Consultant &#9733;<small>Sundet</small></span></li>
+      <li><span class="yr">2026</span><span class="lead">Scrum Master, PIM &#9733;<small>Tetra Pak</small></span></li>
+      <li><span class="yr">2023&ndash;25</span><span>Software Developer<small>Trygg-Hansa</small></span></li>
+      <li><span class="yr">2021&ndash;22</span><span class="lead">Product Owner &#9733;<small>inriver</small></span></li>
+      <li><span class="yr">2020</span><span class="lead">Scrum Master &#9733;<small>inriver</small></span></li>
+      <li><span class="yr">2018&ndash;23</span><span>Software Developer<small>inriver</small></span></li>
+      <li><span class="yr">2015&ndash;18</span><span>Service Desk, 2nd line<small>Atea</small></span></li>
+      <li><span class="yr">2013&ndash;15</span><span>Systemutvecklare (Azure)<small>Teknikhögskolan Malmö</small></span></li>
+    </ul>
+  </section>
+
+  <section class="box">
+    <h2>EQUIPMENT</h2>
+    <div class="equip">
+      <div><em>Badge</em>Certified ScrumMaster&reg; (2018)</div>
+      <div><em>Weapon</em>C#, .NET, Blazor</div>
+      <div><em>Armour</em>Azure, CI/CD</div>
+      <div><em>Relic</em>inRiver PIM</div>
+    </div>
+  </section>
+
+  <section class="box">
+    <h2>LANGUAGES</h2>
+    <div class="stats">
+      <span>SVENSKA</span><span>MAX</span>
+      <span>POLSKI</span><span>MAX</span>
+      <span>ENGLISH</span><span>MAX</span>
+    </div>
+    <p style="margin:10px 0 0;color:#b8c0ff">All three at native level.</p>
+  </section>
+
+  <section class="box dialog">
+    <p style="margin:0">MIKAEL wants to join your party!<span class="blink"> &#9660;</span></p>
+    <div class="choice"><a href="mailto:MikaelWilkon@gmail.com">YES (e-mail)</a><a href="https://se.linkedin.com/in/mikael-wilkon-38413aa0">CHECK STATS (LinkedIn)</a></div>
+  </section>
+</div>
+<script>
+  (function(){
+    var c = document.getElementById('face'), x = c.getContext('2d'), img = new Image();
+    img.onload = function(){ x.imageSmoothingEnabled = true; x.drawImage(img, 70, 30, 280, 280, 0, 0, 40, 40); };
+    img.src = '../../../assets/profile.jpg';
+  })();
+</script>
+</body>
+</html>

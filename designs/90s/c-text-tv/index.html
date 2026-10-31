@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Text 100 · Mikael Wilkon</title>
+<meta name="description" content="Mikael Wilkon, Senior Lead Consultant. Scrum Master, Product Owner and .NET engineer in Malmö, Sweden.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --y:#ffff00; --c:#00ffff; --g:#00ff00; --w:#ffffff; --r:#ff2020; --m:#ff00ff; --b:#0000ff; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:#151515; color: var(--w); font: 22px/1.3 "Pixelify Sans", "Courier New", monospace; padding: 26px 14px 60px; }
+  .tv { max-width: 860px; margin: 0 auto; background:#000; padding: 26px 30px 30px; border-radius: 26px; box-shadow: 0 0 0 14px #2a2a2a, 0 0 0 16px #444, 0 30px 60px rgba(0,0,0,.6); position: relative; overflow: hidden; }
+  .tv::after { content:""; position:absolute; inset:0; pointer-events:none; background: repeating-linear-gradient(transparent 0 2px, rgba(0,0,0,.22) 2px 4px); }
+  .hdr { display:flex; justify-content: space-between; color: var(--w); margin-bottom: 10px; }
+  .hdr .p { color: var(--y); }
+  .mosaic { display:grid; grid-template-columns: repeat(24, 1fr); gap: 0; width: 100%; max-width: 420px; margin: 0 0 4px; }
+  .mosaic i { aspect-ratio: 1/1.2; }
+  .mosaic i.on { background: var(--c); }
+  .band { padding: 2px 10px; margin: 8px 0; }
+  .bb { background: var(--b); color: var(--y); }
+  .br { background: var(--r); color: var(--w); }
+  .bg { background: var(--g); color: #000; }
+  .bm { background: var(--m); color: #000; }
+  .bc { background: var(--c); color: #000; }
+  .dbl { font-size: 44px; line-height: 1.05; font-weight: 600; }
+  .y { color: var(--y); } .c { color: var(--c); } .g { color: var(--g); } .m { color: var(--m); } .r { color: var(--r); }
+  .idx { display:grid; grid-template-columns: 1fr 1fr; gap: 0 26px; margin: 10px 0 6px; }
+  .idx a { display:flex; justify-content: space-between; color: var(--w); text-decoration: none; border-bottom: 2px dotted #333; }
+  .idx a span:last-child { color: var(--y); }
+  .idx a:hover { background: var(--b); }
+  p { margin: 6px 0; }
+  .page { margin-top: 34px; padding-top: 20px; border-top: 3px solid var(--b); }
+  table { width: 100%; border-collapse: collapse; }
+  td { padding: 2px 6px 2px 0; vertical-align: top; }
+  td.n { color: var(--c); white-space: nowrap; width: 140px; }
+  tr.lead td { color: var(--y); }
+  .fc { display:grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 10px; }
+  .fc div { border: 2px solid var(--c); padding: 8px 10px; }
+  .fc b { display:block; color: var(--y); font-weight: 600; }
+  .sun { color: var(--y); font-size: 34px; line-height: 1; }
+  .fast { display:flex; margin-top: 30px; }
+  .fast a { flex:1; text-align:center; color:#000; text-decoration:none; padding: 2px 0; }
+  @media (max-width: 640px) {
+    body { font-size: 18px; padding: 10px 6px 40px; }
+    .tv { padding: 16px 14px 20px; border-radius: 14px; box-shadow: 0 0 0 6px #2a2a2a; }
+    .dbl { font-size: 32px; }
+    .idx { grid-template-columns: 1fr; }
+    .fc { grid-template-columns: 1fr; }
+    td.n { width: 96px; }
+  }
+</style>
+</head>
+<body>
+<div class="tv">
+  <div class="hdr"><span><span class="p">100</span> MW TEXT 100</span><span id="clk">fre 31 okt</span></div>
+
+  <div class="mosaic" aria-hidden="true" id="mosaic"></div>
+  <div class="dbl c">MIKAEL WILKON</div>
+  <div class="band bb">SENIOR LEAD CONSULTANT &middot; MALMÖ</div>
+
+  <p class="y dbl" style="font-size:30px;margin-top:16px">Leder team där teknik möter produkt</p>
+  <p>Leads teams where engineering meets product. Scrum Master, Product Owner and hands-on .NET engineer, focused on what gets built and why.</p>
+
+  <div class="idx">
+    <a href="#p101"><span>Nyheter / Now</span><span>101</span></a>
+    <a href="#p200"><span>Karriär / Career</span><span>200</span></a>
+    <a href="#p300"><span>Ledarskap / Lead</span><span>300</span></a>
+    <a href="#p400"><span>Väder / Skills</span><span>400</span></a>
+    <a href="#p500"><span>Språk / Languages</span><span>500</span></a>
+    <a href="#p888"><span>Kontakt / Contact</span><span>888</span></a>
+  </div>
+
+  <section class="page" id="p101">
+    <div class="hdr"><span><span class="p">101</span> NYHETER</span><span>Tetra Pak, Lund</span></div>
+    <div class="band br">JUST NU</div>
+    <p class="dbl" style="font-size:30px">Mikael leder PIM-teamet på Tetra Pak</p>
+    <p class="c">PIM Service Support Engineer &middot; Jan 2026&ndash; &middot; hybrid</p>
+    <p>As Scrum Master of the PIM Service Team, Mikael helps drive a new inRiver PIM solution into the business: turning business needs into priorities, coordinating the team, working with stakeholders, and doing hands-on work on the integrations.</p>
+  </section>
+
+  <section class="page" id="p200">
+    <div class="hdr"><span><span class="p">200</span> KARRIÄR</span><span>Resultat 2013&ndash;2026</span></div>
+    <table>
+      <tr class="lead"><td class="n">2026&ndash;</td><td>Senior Lead Consultant &middot; Sundet</td></tr>
+      <tr class="lead"><td class="n">2026&ndash;</td><td>Scrum Master, PIM &middot; Tetra Pak</td></tr>
+      <tr><td class="n">2023&ndash;25</td><td>Software Developer &middot; Trygg-Hansa</td></tr>
+      <tr><td class="n">2022&ndash;23</td><td>Software Developer &middot; inriver</td></tr>
+      <tr class="lead"><td class="n">2021&ndash;22</td><td>Product Owner &middot; inriver</td></tr>
+      <tr class="lead"><td class="n">2020</td><td>Scrum Master &middot; inriver</td></tr>
+      <tr><td class="n">2018&ndash;21</td><td>Software Developer &middot; inriver</td></tr>
+      <tr><td class="n">2015&ndash;18</td><td>Service Desk, 2nd line &middot; Atea</td></tr>
+      <tr><td class="n">2013&ndash;15</td><td>Systemutvecklare &middot; Teknikhögskolan</td></tr>
+    </table>
+    <p class="y" style="margin-top:8px">Gult = ledarroll / leadership role</p>
+  </section>
+
+  <section class="page" id="p300">
+    <div class="hdr"><span><span class="p">300</span> LEDARSKAP</span><span>Sedan 2018</span></div>
+    <p>&bull; Certified ScrumMaster&reg;, Scrum Alliance, 2018</p>
+    <p>&bull; Product Owner for integrations at inriver</p>
+    <p>&bull; Sits between the business and the engineers so the team builds the right thing, not just a working thing</p>
+  </section>
+
+  <section class="page" id="p400">
+    <div class="hdr"><span><span class="p">400</span> VÄDER</span><span>Prognos: kompetens</span></div>
+    <div class="fc">
+      <div><span class="sun">&#9728;</span><b>LEAD</b>Team leadership, Scrum, product ownership, stakeholders</div>
+      <div><span class="sun">&#9728;</span><b>BUILD</b>C#, .NET, ASP.NET Core, Blazor, WPF, PowerShell</div>
+      <div><span class="sun">&#9728;</span><b>RUN</b>Azure, SQL, Cosmos DB, CI/CD, integrations, inRiver PIM</div>
+    </div>
+  </section>
+
+  <section class="page" id="p500">
+    <div class="hdr"><span><span class="p">500</span> SPRÅK</span><span>Alla på samma nivå</span></div>
+    <table>
+      <tr><td class="n">Svenska</td><td class="g">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608; modersmål</td></tr>
+      <tr><td class="n">Polski</td><td class="g">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608; ojczysty</td></tr>
+      <tr><td class="n">English</td><td class="g">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608; native</td></tr>
+    </table>
+  </section>
+
+  <section class="page" id="p888">
+    <div class="hdr"><span><span class="p">888</span> KONTAKT</span><span>Textning för alla</span></div>
+    <p>E-post: <a class="y" href="mailto:MikaelWilkon@gmail.com">MikaelWilkon@gmail.com</a></p>
+    <p>LinkedIn: <a class="y" href="https://se.linkedin.com/in/mikael-wilkon-38413aa0">mikael-wilkon</a></p>
+  </section>
+
+  <nav class="fast">
+    <a class="br" style="color:#fff" href="#p101">Nyheter</a><a class="bg" href="#p200">Karriär</a><a style="background:var(--y)" href="#p400">Väder</a><a class="bc" href="#p888">Kontakt</a>
+  </nav>
+</div>
+<script>
+  (function(){
+    // "MW" in teletext mosaic blocks, 24 x 5
+    var rows = ['10001010001000000000000','11011010001000000000000','10101010101000000000000','10001011011000000000000','10001010001000000000000'];
+    var m = document.getElementById('mosaic'), h = '';
+    rows.forEach(function(r){ for (var i=0;i<24;i++) h += '<i class="'+(r[i]==='1'?'on':'')+'"></i>'; });
+    m.innerHTML = h;
+    try { var d = new Date(); document.getElementById('clk').textContent = d.toLocaleDateString('sv-SE',{weekday:'short',day:'numeric',month:'short',timeZone:'Europe/Stockholm'}) + ' ' + d.toLocaleTimeString('sv-SE',{hour:'2-digit',minute:'2-digit',timeZone:'Europe/Stockholm'}); } catch(e){}
+  })();
+</script>
+</body>
+</html>

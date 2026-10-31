@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Story map · Mikael Wilkon</title>
+<meta name="description" content="Mikael Wilkon, Senior Lead Consultant. Scrum Master, Product Owner and .NET engineer in Malmö, Sweden.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --wall:#e9ecef; --ink:#15191e; --soft:#5d6570; --bb:#1e3a5f; --a1:#ffd166; --a2:#ffb4a2; --a3:#b8e0d2; --a4:#c7d2fe; --a5:#e2e8f0; }
+  * { box-sizing: border-box; }
+  body { margin:0; background: var(--wall); color: var(--ink); font: 16px/1.5 "Schibsted Grotesk", system-ui, sans-serif; }
+  a { color: inherit; }
+  .w { max-width: 1320px; margin: 0 auto; padding: 34px 26px 60px; }
+  header { display:grid; grid-template-columns: auto 1fr auto; gap: 20px; align-items: center; margin-bottom: 26px; }
+  header img { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 3px solid #fff; }
+  header h1 { margin: 0; font-size: clamp(26px, 3.6vw, 40px); line-height: 1.05; letter-spacing: -.02em; }
+  header p { margin: 4px 0 0; color: var(--soft); }
+  header .persona { background: #fff; border-radius: 8px; padding: 12px 16px; max-width: 360px; font-size: 14.5px; box-shadow: 0 2px 0 #d3d8de; }
+  header .persona b { display:block; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--soft); }
+  .map { display:grid; grid-template-columns: 150px repeat(5, minmax(0, 1fr)); gap: 10px; }
+  .bb { background: var(--bb); color: #fff; border-radius: 6px; padding: 12px 12px; font-weight: 700; font-size: 15px; line-height: 1.25; box-shadow: 0 3px 0 #0f2238; }
+  .bb small { display:block; font-weight: 500; opacity: .75; font-size: 13px; margin-top: 2px; }
+  .corner { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--soft); align-self: end; padding-bottom: 6px; }
+  .slice { display: contents; }
+  .slice .lbl { border-top: 2px dashed #9aa4b0; padding-top: 12px; }
+  .slice .lbl b { display:block; font-size: 22px; line-height: 1; }
+  .slice .lbl span { font-size: 13.5px; color: var(--soft); }
+  .slice .lbl em { display:inline-block; margin-top: 6px; font-style: normal; font-size: 11.5px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; background: var(--ink); color: #fff; padding: 2px 7px; border-radius: 3px; }
+  .cell { border-top: 2px dashed #9aa4b0; padding-top: 12px; display:flex; flex-direction: column; gap: 8px; min-height: 40px; }
+  .card { border-radius: 4px; padding: 10px 11px; font-size: 14.5px; line-height: 1.35; box-shadow: 0 2px 0 rgba(0,0,0,.12); }
+  .card b { display:block; font-size: 15px; margin-bottom: 2px; }
+  .c1 { background: var(--a1); } .c2 { background: var(--a2); } .c3 { background: var(--a3); } .c4 { background: var(--a4); } .c5 { background: var(--a5); }
+  .now .card { outline: 2px solid var(--ink); }
+  .vision .card { background: transparent; border: 2px dashed #7d8793; box-shadow: none; }
+  .note { margin-top: 30px; display:grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 16px; }
+  .note .box { background: #fff; border-radius: 8px; padding: 18px 20px; box-shadow: 0 2px 0 #d3d8de; }
+  .note h2 { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--soft); margin: 0 0 8px; }
+  .note p { margin: 0 0 8px; }
+  .langs { display:grid; grid-template-columns: 1fr auto; gap: 4px 12px; }
+  .langs span:nth-child(even) { color: var(--soft); }
+  .btn { display:inline-block; background: var(--ink); color:#fff; text-decoration: none; padding: 10px 16px; border-radius: 6px; font-weight: 700; margin-top: 4px; }
+  @media (max-width: 1000px) {
+    .map { grid-template-columns: 1fr; gap: 8px; }
+    .corner, .map > .bb { display:none; }
+    .slice .lbl { margin-top: 18px; }
+    .cell { border: 0; padding: 0; }
+    .cell:empty { display:none; }
+    .card::before { content: attr(data-act); display:block; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; opacity: .65; }
+    header { grid-template-columns: auto 1fr; }
+    header .persona { grid-column: 1 / -1; max-width: none; }
+    .note { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) { .w { padding: 22px 14px 40px; } }
+</style>
+</head>
+<body>
+<div class="w">
+  <header>
+    <img src="../../../assets/profile.jpg" alt="Mikael Wilkon">
+    <div><h1>Mikael Wilkon</h1><p>Senior Lead Consultant &middot; a career mapped like a product</p></div>
+    <div class="persona"><b>Persona</b>A team or business that needs someone to lead where engineering meets product, and to build the right thing, not just a working thing.</div>
+  </header>
+
+  <div class="map">
+    <div class="corner">Release &darr; / Activity &rarr;</div>
+    <div class="bb">Understand the business<small>needs, stakeholders</small></div>
+    <div class="bb">Set direction<small>priorities, backlog</small></div>
+    <div class="bb">Lead the team<small>process, people</small></div>
+    <div class="bb">Build<small>code, architecture</small></div>
+    <div class="bb">Ship &amp; run<small>cloud, support</small></div>
+
+    <div class="slice vision">
+      <div class="lbl"><b>Next</b><span>2027 &rarr;</span><br><em>Vision</em></div>
+      <div class="cell"></div>
+      <div class="cell"><div class="card" data-act="Set direction"><b>Shape direction and outcomes</b>Own what gets built and why, across more of the business.</div></div>
+      <div class="cell"><div class="card" data-act="Lead the team"><b>Lead more teams</b>Grow from one team's process to product and delivery leadership.</div></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+
+    <div class="slice now">
+      <div class="lbl"><b>2026</b><span>Sundet &middot; Tetra Pak</span><br><em>Now</em></div>
+      <div class="cell"><div class="card c1" data-act="Understand the business"><b>Business needs &rarr; priorities</b>Stakeholder collaboration on the PIM Service at Tetra Pak.</div></div>
+      <div class="cell"><div class="card c2" data-act="Set direction"><b>Drive the inRiver PIM rollout</b>A new PIM solution for a large company.</div></div>
+      <div class="cell"><div class="card c3" data-act="Lead the team"><b>Scrum Master, PIM Service Team</b>PIM Service Support Engineer, Lund, hybrid.</div><div class="card c3" data-act="Lead the team"><b>Senior Lead Consultant</b>Sundet, Malmö.</div></div>
+      <div class="cell"><div class="card c4" data-act="Build"><b>Hands-on integrations</b>C#, inRiver PIM.</div></div>
+      <div class="cell"><div class="card c5" data-act="Ship &amp; run"><b>Support the solution and its users</b>Resolve issues, improve the platform.</div></div>
+    </div>
+
+    <div class="slice">
+      <div class="lbl"><b>2023&ndash;25</b><span>Trygg-Hansa</span></div>
+      <div class="cell"><div class="card c1" data-act="Understand the business"><b>Customer service needs</b>Internal CRM used every day.</div></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"><div class="card c4" data-act="Build"><b>Software Developer</b>C#, .NET, WPF, then a migration to Blazor.</div></div>
+      <div class="cell"><div class="card c5" data-act="Ship &amp; run"><b>CI/CD</b>Azure Pipelines, SQL.</div></div>
+    </div>
+
+    <div class="slice">
+      <div class="lbl"><b>2018&ndash;23</b><span>inriver</span></div>
+      <div class="cell"><div class="card c1" data-act="Understand the business"><b>Five years in PIM</b>The vendor side of product data and commerce.</div></div>
+      <div class="cell"><div class="card c2" data-act="Set direction"><b>Product Owner, integrations</b>2021&ndash;22. Link between product management and dev.</div></div>
+      <div class="cell"><div class="card c3" data-act="Lead the team"><b>Scrum Master</b>2020. Ran ceremonies, kept the process healthy.</div><div class="card c3" data-act="Lead the team"><b>Certified ScrumMaster&reg;</b>2018</div></div>
+      <div class="cell"><div class="card c4" data-act="Build"><b>Software Developer</b>Full-stack, then backend: Azure Functions, Cosmos DB.</div></div>
+      <div class="cell"><div class="card c5" data-act="Ship &amp; run"><b>Azure infrastructure</b>Customer environments in the cloud.</div></div>
+    </div>
+
+    <div class="slice">
+      <div class="lbl"><b>2015&ndash;18</b><span>Atea</span></div>
+      <div class="cell"><div class="card c1" data-act="Understand the business"><b>Service Desk</b>Frontline: what users actually need.</div></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"><div class="card c4" data-act="Build"><b>PowerShell tooling</b>A support tool that sped up issue resolution.</div></div>
+      <div class="cell"><div class="card c5" data-act="Ship &amp; run"><b>2nd line &amp; incidents</b>Customer infrastructure, escalations.</div></div>
+    </div>
+
+    <div class="slice">
+      <div class="lbl"><b>2013&ndash;15</b><span>Teknikhögskolan</span></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"><div class="card c4" data-act="Build"><b>Systemutvecklare</b>.NET, databases, systems design.</div></div>
+      <div class="cell"><div class="card c5" data-act="Ship &amp; run"><b>Microsoft Azure</b>Cloud specialisation.</div></div>
+    </div>
+  </div>
+
+  <div class="note">
+    <div class="box"><h2>Reading the map</h2><p>Each row is a chapter of my career, newest at the top. Each column is part of building a product. Over time the work has spread from the right (build and run) to the left (understand, set direction, lead). That's the direction I'm heading.</p></div>
+    <div class="box"><h2>Languages</h2><div class="langs"><span>Svenska</span><span>native</span><span>Polski</span><span>native</span><span>English</span><span>native</span></div></div>
+    <div class="box"><h2>Contact</h2><p><a href="mailto:MikaelWilkon@gmail.com">MikaelWilkon@gmail.com</a><br><a href="https://se.linkedin.com/in/mikael-wilkon-38413aa0">LinkedIn</a></p><a class="btn" href="mailto:MikaelWilkon@gmail.com">Get in touch</a></div>
+  </div>
+</div>
+</body>
+</html>
