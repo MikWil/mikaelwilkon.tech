@@ -70,7 +70,7 @@
   h1 { font-size: 26px; margin: 0 0 2px; line-height: 1.15; }
   .lead { font-size:17px; margin:0 0 10px; }
   .hr { border:0; border-top: 1px solid var(--lo); border-bottom: 1px solid var(--hi); margin: 14px 0; }
-  .kv { display:grid; grid-template-columns: 120px 1fr; gap: 4px 10px; font-size: 15px; }
+  .kv { display:grid; grid-template-columns: minmax(120px, max-content) 1fr; gap: 4px 10px; font-size: 15px; }
   .kv dt { color: #333; }
   .kv dd { margin: 0; }
   fieldset { border: 2px groove #fff; padding: 8px 12px 10px; margin: 0 0 10px; }
@@ -111,7 +111,19 @@
   .cp button:focus span, .cp button:hover span { background:#000080; color:#fff; }
 
   /* Languages */
-  .langrow { display:grid; grid-template-columns: 34px 110px 1fr; gap: 8px; align-items:center; padding: 6px 0; }
+  .langrow { display:grid; grid-template-columns: 34px 110px 1fr; gap: 8px; align-items:center; padding: 6px 4px; width: 100%; background: none; border: 0; font: inherit; color: inherit; text-align: left; cursor: pointer; }
+  .langrow b { padding: 1px 3px; justify-self: start; }
+  .langrow:hover b, .langrow:focus-visible b { background:#000080; color:#fff; }
+  .langrow .lstate { text-decoration: underline; color: #000080; }
+  .langrow[aria-pressed="true"] .lstate { text-decoration: none; color: inherit; font-weight: 700; }
+  .langrow[aria-pressed="true"] .lstate::before { content: "\2713  "; }
+  .tray #langbtn { display:inline-block; font: 700 11px/1 Tahoma, "MS Sans Serif", Arial, sans-serif; background:#000080; color:#fff; padding: 2px 3px; letter-spacing: .02em; }
+  #langmenu { position: fixed; z-index: 9700; background: var(--face); padding: 2px; display:none; min-width: 170px; }
+  #langmenu.open { display:block; }
+  #langmenu button { display:flex; align-items:center; gap: 10px; width:100%; text-align:left; padding: 5px 12px 5px 8px; background:none; border:0; cursor:pointer; font: inherit; font-size: 14.5px; color: inherit; }
+  #langmenu button:hover, #langmenu button:focus-visible { background:#000080; color:#fff; }
+  #langmenu .lcode { font: 700 11px/1 Tahoma, Arial, sans-serif; background:#000080; color:#fff; padding: 3px 0; width: 24px; text-align:center; }
+  #langmenu button[aria-checked="true"]::after { content: "\2713"; margin-left: auto; }
   .meter { height: 18px; padding: 2px; }
   .meter i { display:block; height: 100%; width: 100%; background: repeating-linear-gradient(90deg, #000080 0 10px, transparent 10px 12px); }
   .flag { width: 30px; height: 20px; border: 1px solid #000; }
@@ -204,7 +216,7 @@
     .intro { flex-direction: column; }
     .intro img { width: 112px; height: 112px; }
     .task { flex-basis: 110px; }
-    .kv { grid-template-columns: 100px 1fr; }
+    .kv { grid-template-columns: minmax(90px, max-content) 1fr; }
     table.det { font-size: 14px; }
     table.det td:first-child svg { display:none; }
     .flagmode { display:inline-block; }
@@ -421,6 +433,17 @@
   html.os26 #ctx button:hover { background: var(--m-hover); color: var(--m-fg); }
   html.os26 .sm-sep { border-top-color: var(--m-line); border-bottom: 0; }
   html.os26 #startmenu { display: none !important; }
+  html.os26 .tray #langbtn { background: none; color: var(--m-fg); font: 600 12px/1 inherit; letter-spacing: .04em; }
+  html.os26 #langmenu { background: var(--m-surface); -webkit-backdrop-filter: blur(30px); backdrop-filter: blur(30px); border: 1px solid var(--m-line); border-radius: 10px; padding: 4px; box-shadow: var(--m-shadow); color: var(--m-fg); }
+  html.os26 #langmenu button { border-radius: 6px; padding: 9px 14px 9px 10px; font-size: 14px; }
+  html.os26 #langmenu button:hover, html.os26 #langmenu button:focus-visible { background: var(--m-hover); color: var(--m-fg); }
+  html.os26 #langmenu .lcode { background: var(--m-accent-soft); color: var(--m-fg); border-radius: 4px; }
+  html.os26 .langrow { border-radius: 8px; padding: 8px; }
+  html.os26 .langrow:hover { background: var(--m-hover); }
+  html.os26 .langrow:hover b, html.os26 .langrow:focus-visible b { background: none; color: inherit; }
+  html.os26 .langrow .lstate { color: var(--m-accent); }
+  html.os26 .langrow[aria-pressed="true"] { background: var(--m-accent-soft); }
+  html.os26 .langrow[aria-pressed="true"] .lstate { color: inherit; }
   html.os26 #boot { background: #0b1220; }
   html.os26 #boot .bl { font: 300 clamp(30px, 5vw, 48px)/1 var(--m-font); font-style: normal; letter-spacing: 0; }
   html.os26 #boot .bl b { color: #fff; font-weight: 600; } html.os26 #boot .bl em { color: #5aa6f0; }
@@ -645,11 +668,11 @@
     <div class="tb"><svg class="i16"><use href="#ic-globe"/></svg><span class="t" id="t-lang">Regional Settings Properties</span><span class="ctl"><button class="mn" aria-label="Minimise">_</button><button class="mx" aria-label="Maximise">□</button><button class="x" aria-label="Close">×</button></span></div>
     <div class="body">
       <fieldset><legend>Installed languages</legend>
-        <div class="langrow"><span class="flag se" aria-hidden="true"></span><b>Svenska</b><span>Swedish</span></div>
-        <div class="langrow"><span class="flag pl" aria-hidden="true"></span><b>Polski</b><span>Polish</span></div>
-        <div class="langrow"><span class="flag en" aria-hidden="true"></span><b>English</b><span>English</span></div>
+        <button class="langrow" data-lang="sv" aria-pressed="false"><span class="flag se" aria-hidden="true"></span><b>Svenska</b><span class="lstate"></span></button>
+        <button class="langrow" data-lang="pl" aria-pressed="false"><span class="flag pl" aria-hidden="true"></span><b>Polski</b><span class="lstate"></span></button>
+        <button class="langrow" data-lang="en" aria-pressed="false"><span class="flag en" aria-hidden="true"></span><b>English</b><span class="lstate"></span></button>
       </fieldset>
-      <p style="margin:0 0 10px;font-size:14.5px">Three languages installed. Meetings can switch between them without a restart.</p>
+      <p style="margin:0 0 10px;font-size:14.5px">Three languages installed. Pick one and MikaelOS switches without a restart, just like Mikael's meetings.</p>
       <div style="text-align:right"><button class="btn" data-hello>Say hello</button> <button class="btn" data-close>OK</button></div>
     </div>
   </section>
@@ -679,7 +702,7 @@ I have a team that needs leading where engineering meets product...</textarea>
     <div class="tb"><svg class="i16"><use href="#ic-doc"/></svg><span class="t" id="t-readme">README.TXT - Notepad</span><span class="ctl"><button class="mn" aria-label="Minimise">_</button><button class="mx" aria-label="Maximise">□</button><button class="x" aria-label="Close">×</button></span></div>
     <div class="menu"><span><u>F</u>ile</span><span><u>E</u>dit</span><span><u>S</u>earch</span><span><u>H</u>elp</span></div>
     <div class="body sunk" style="padding:0;margin:0 3px 3px">
-<pre class="notepad">MIKAEL WILKON - README.TXT
+<pre class="notepad" data-i18n="@readme">MIKAEL WILKON - README.TXT
 ==========================
 
 Welcome! This is my home page, dressed up as
@@ -804,11 +827,18 @@ JavaScript. No frameworks, no trackers.</pre>
   <button class="start bevel" id="startbtn" aria-haspopup="menu" aria-expanded="false"><span class="logo4"><i></i><i></i><i></i><i></i></span>Start</button>
   <div id="tasks"></div>
   <div class="tray">
-    <button id="sound" aria-label="Sound off" title="Sound: off"><svg class="i16"><use href="#ic-mute"/></svg></button>
+    <button id="sound" aria-label="Sound: off" title="Sound: off"><svg class="i16"><use href="#ic-mute"/></svg></button>
     <svg class="i16 net95" aria-hidden="true"><use href="#ic-net"/></svg>
+    <button id="langbtn" aria-haspopup="menu" aria-expanded="false" aria-label="Language" title="Language">EN</button>
     <button id="clockbtn" title="Malmö time"><span id="clock">--:--</span><span id="datebox" class="clk-date"></span></button>
     <button id="bell" aria-label="Notifications"><svg class="i16"><use href="#ic-bell"/></svg><span class="badge" id="badge"></span></button>
   </div>
+</div>
+
+<div id="langmenu" class="bevel" role="menu" aria-label="Language">
+  <button role="menuitemradio" aria-checked="false" data-lang="en"><span class="lcode">EN</span>English</button>
+  <button role="menuitemradio" aria-checked="false" data-lang="sv"><span class="lcode">SV</span>Svenska</button>
+  <button role="menuitemradio" aria-checked="false" data-lang="pl"><span class="lcode">PL</span>Polski</button>
 </div>
 
 <!-- MikaelOS 26: Start -->
@@ -817,17 +847,17 @@ JavaScript. No frameworks, no trackers.</pre>
     <input id="s26q" type="search" placeholder="Search apps, roles and skills, or type a command" autocomplete="off" aria-label="Search">
     <h4>Pinned <small>Press Enter to run</small></h4>
     <div class="pins" id="pins">
-      <button data-open="w-about" data-k="about mikael profile me"><svg class="i32"><use href="#m-pc"/></svg>About Mikael</button>
-      <button data-open="w-now" data-k="now tetra pak pim scrum current"><svg class="i32"><use href="#m-run"/></svg>Now</button>
-      <button data-open="w-career" data-k="career cv roles experience jobs"><svg class="i32"><use href="#m-folder"/></svg>Career</button>
-      <button data-open="w-skills" data-k="skills settings azure .net c# scrum leadership"><svg class="i32"><use href="#m-cp"/></svg>Skills</button>
-      <button data-open="w-lang" data-k="languages svenska polski english swedish polish"><svg class="i32"><use href="#m-globe"/></svg>Languages</button>
-      <button data-open="w-mail" data-k="contact mail email hire message"><svg class="i32"><use href="#m-mail"/></svg>Mail</button>
+      <button data-open="w-about" data-k="about mikael profile me om profil o mnie"><svg class="i32"><use href="#m-pc"/></svg>About Mikael</button>
+      <button data-open="w-now" data-k="now tetra pak pim scrum current nu teraz"><svg class="i32"><use href="#m-run"/></svg>Now</button>
+      <button data-open="w-career" data-k="career cv roles experience jobs karriär roller erfarenhet kariera doświadczenie"><svg class="i32"><use href="#m-folder"/></svg>Career</button>
+      <button data-open="w-skills" data-k="skills settings azure .net c# scrum leadership färdigheter kompetens ledarskap umiejętności przywództwo"><svg class="i32"><use href="#m-cp"/></svg>Skills</button>
+      <button data-open="w-lang" data-k="languages svenska polski english swedish polish språk svenska polska engelska języki szwedzki polski angielski"><svg class="i32"><use href="#m-globe"/></svg>Languages</button>
+      <button data-open="w-mail" data-k="contact mail email hire message kontakt e-post mejl anställ poczta wiadomość zatrudnij"><svg class="i32"><use href="#m-mail"/></svg>Mail</button>
       <button data-open="w-readme" data-k="readme notes notepad"><svg class="i32"><use href="#m-doc"/></svg>README</button>
-      <button data-open="w-sweep" data-k="game sweeper blocker minesweeper"><svg class="i32"><use href="#m-mine"/></svg>Sweeper</button>
-      <button data-open="w-bin" data-k="recycle bin excuses"><svg class="i32"><use href="#m-bin"/></svg>Recycle Bin</button>
+      <button data-open="w-sweep" data-k="game sweeper blocker minesweeper spel röj hinder gra saper"><svg class="i32"><use href="#m-mine"/></svg>Sweeper</button>
+      <button data-open="w-bin" data-k="recycle bin excuses papperskorg ursäkter kosz wymówki"><svg class="i32"><use href="#m-bin"/></svg>Recycle Bin</button>
       <button data-link="https://se.linkedin.com/in/mikael-wilkon-38413aa0" data-k="linkedin profile"><svg class="i32"><use href="#m-web"/></svg>LinkedIn</button>
-      <button data-classic data-k="classic 95 old retro downgrade"><svg class="i32"><use href="#m-classic"/></svg>MikaelOS 95</button>
+      <button data-classic data-k="classic 95 old retro downgrade klassisk klasyczny"><svg class="i32"><use href="#m-classic"/></svg>MikaelOS 95</button>
       <button data-bsod data-k="legacy code exe"><svg class="i32"><use href="#m-exe"/></svg>legacy_code</button>
     </div>
     <p id="s26none" hidden>No matches. Try "career", "contact" or "hire mikael".</p>
@@ -909,7 +939,7 @@ JavaScript. No frameworks, no trackers.</pre>
   $('#sound').addEventListener('click', function () {
     soundOn = !soundOn;
     this.innerHTML = '<svg class="i16"><use href="#ic-' + (soundOn ? 'speaker' : 'mute') + '"/></svg>';
-    this.title = 'Sound: ' + (soundOn ? 'on' : 'off'); this.setAttribute('aria-label', this.title);
+    this.title = t(soundOn ? 'Sound: on' : 'Sound: off'); this.setAttribute('aria-label', this.title);
     sfx.chime();
   });
 
@@ -1013,14 +1043,14 @@ JavaScript. No frameworks, no trackers.</pre>
 
   /* ---------- start menu + context menu ---------- */
   var sm = $('#startmenu'), sb = $('#startbtn'), ctx = $('#ctx');
-  function closeMenus() { sm.classList.remove('open'); sb.classList.remove('on'); sb.setAttribute('aria-expanded', 'false'); ctx.classList.remove('open'); var a = document.getElementById('start26'), b = document.getElementById('ncenter'); if (a) a.classList.remove('open'); if (b) b.classList.remove('open'); }
+  function closeMenus() { sm.classList.remove('open'); sb.classList.remove('on'); sb.setAttribute('aria-expanded', 'false'); ctx.classList.remove('open'); var a = document.getElementById('start26'), b = document.getElementById('ncenter'); if (a) a.classList.remove('open'); if (b) b.classList.remove('open'); var lm = document.getElementById('langmenu'); if (lm) { lm.classList.remove('open'); document.getElementById('langbtn').setAttribute('aria-expanded', 'false'); } }
   sb.addEventListener('click', function (e) {
     e.stopPropagation();
     if (root.classList.contains('os26')) { var s2 = $('#start26'), o2 = !s2.classList.contains('open'); closeMenus(); if (o2) { s2.classList.add('open'); sb.classList.add('on'); sb.setAttribute('aria-expanded', 'true'); var qq = $('#s26q'); qq.value = ''; qq.dispatchEvent(new Event('input')); if (!mobile.matches) qq.focus({ preventScroll: true }); } return; }
     var on = !sm.classList.contains('open'); closeMenus();
     if (on) { sm.classList.add('open'); sb.classList.add('on'); sb.setAttribute('aria-expanded', 'true'); var f = $('button', sm); if (f) f.focus({ preventScroll: true }); }
   });
-  document.addEventListener('pointerdown', function (e) { if (!e.target.closest('#startmenu, #startbtn, #ctx, #start26, #ncenter, #bell, #clockbtn, .toast, #balloon')) closeMenus(); });
+  document.addEventListener('pointerdown', function (e) { if (!e.target.closest('#startmenu, #startbtn, #ctx, #start26, #ncenter, #bell, #clockbtn, .toast, #balloon, #langmenu, #langbtn')) closeMenus(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenus(); });
   $('#desk').addEventListener('contextmenu', function (e) {
     if (e.target.closest('.win')) return;
@@ -1054,7 +1084,7 @@ JavaScript. No frameworks, no trackers.</pre>
     if (progTimer) return;
     var i = 0, bar = $('#nowbar'), txt = $('#nowtxt');
     function step() {
-      bar.style.width = Math.round((i + 1) / steps.length * 100) + '%'; txt.textContent = steps[i];
+      bar.style.width = Math.round((i + 1) / steps.length * 100) + '%'; txt.textContent = t(steps[i]);
       i++;
       if (i >= steps.length) { setTimeout(function () { bar.style.width = '0'; i = 0; }, 1600); }
     }
@@ -1062,17 +1092,21 @@ JavaScript. No frameworks, no trackers.</pre>
   }
 
   /* ---------- career → role properties ---------- */
-  function showRole(tr) {
-    $$('#jobs tr').forEach(function (o) { o.classList.toggle('sel', o === tr); });
+  var lastRole = null;
+  function fillRole(tr) {
     var cells = tr.children;
     $('#role-name').textContent = cells[0].textContent.trim();
-    $('#role-co').textContent = cells[1].textContent.trim() + (tr.classList.contains('lead') ? ' · ★ leadership role' : '');
-    $('#role-meta').textContent = tr.dataset.meta;
-    $('#role-desc').textContent = tr.dataset.desc;
+    $('#role-co').textContent = cells[1].textContent.trim() + (tr.classList.contains('lead') ? ' · ' + t('★ leadership role') : '');
+    $('#role-meta').textContent = t(tr.dataset.meta);
+    $('#role-desc').textContent = t(tr.dataset.desc);
     var tags = $('#role-tags'); tags.innerHTML = '';
-    tr.dataset.tags.split('|').forEach(function (t) { var s = document.createElement('span'); s.textContent = t; tags.appendChild(s); });
-    $('#t-role').textContent = cells[0].textContent.trim() + ' - Properties';
+    tr.dataset.tags.split('|').forEach(function (g) { var s = document.createElement('span'); s.textContent = t(g); tags.appendChild(s); });
+    $('#t-role').textContent = tf('{0} - Properties', cells[0].textContent.trim());
     var b = taskBtn($('#w-role')); if (b) b.querySelector('span').textContent = $('#t-role').textContent;
+  }
+  function showRole(tr) {
+    $$('#jobs tr').forEach(function (o) { o.classList.toggle('sel', o === tr); });
+    lastRole = tr; fillRole(tr);
     open('w-role');
   }
   $$('#jobs tr').forEach(function (tr) {
@@ -1083,33 +1117,34 @@ JavaScript. No frameworks, no trackers.</pre>
   });
 
   /* ---------- skills ---------- */
+  var lastSkill = null;
   $$('#w-skills [data-skill]').forEach(function (b) {
-    b.addEventListener('click', function () { $('#skilltxt').textContent = b.dataset.skill; });
+    b.addEventListener('click', function () { lastSkill = b; $('#skilltxt').textContent = t(b.dataset.skill); });
   });
 
   /* ---------- languages ---------- */
   var hellos = ['Hej!', 'Cześć!', 'Hello!'], hi = 0;
-  $('[data-hello]').addEventListener('click', function () { alertBox(hellos[hi++ % 3] + ' That greeting was brought to you in one of Mikael\'s three languages.'); });
+  $('[data-hello]').addEventListener('click', function () { alertBox(tf('{0} That greeting was brought to you in one of Mikael\'s three languages.', hellos[hi++ % 3])); });
 
   /* ---------- mail ---------- */
   $('#send').addEventListener('click', function () {
     var s = encodeURIComponent($('#m-sub').value), b = encodeURIComponent($('#m-body').value);
     window.location.href = 'mailto:MikaelWilkon@gmail.com?subject=' + s + '&body=' + b;
-    $('#mailtxt').textContent = 'Message handed to your mail program.';
+    $('#mailtxt').textContent = t('Message handed to your mail program.');
   });
   $('#copy').addEventListener('click', function () {
-    var done = function () { $('#mailtxt').textContent = 'Address copied to the clipboard.'; notify({ app: 'Mail', icon: 'm-mail', title: 'Address copied', body: 'MikaelWilkon@gmail.com is on your clipboard.', actions: [] }); };
+    var done = function () { $('#mailtxt').textContent = t('Address copied to the clipboard.'); notify({ app: 'Mail', icon: 'm-mail', title: 'Address copied', body: 'MikaelWilkon@gmail.com is on your clipboard.', actions: [] }); };
     try { navigator.clipboard.writeText('MikaelWilkon@gmail.com').then(done, function () { $('#m-to').select(); }); } catch (e) { $('#m-to').select(); }
   });
 
   /* ---------- alert ---------- */
-  function alertBox(msg, ttl) { $('#alerttxt').textContent = msg; $('#t-alert').textContent = ttl || 'MikaelOS'; var w = $('#w-alert'); w.dataset.placed = ''; w.dataset.x = Math.max(10, (window.innerWidth - 380) / 2); w.dataset.y = Math.max(10, window.innerHeight / 2 - 120); open('w-alert'); sfx.ding(); }
+  function alertBox(msg, ttl) { $('#alerttxt').textContent = t(msg); $('#t-alert').textContent = t(ttl || 'MikaelOS'); var w = $('#w-alert'); w.dataset.placed = ''; w.dataset.x = Math.max(10, (window.innerWidth - 380) / 2); w.dataset.y = Math.max(10, window.innerHeight / 2 - 120); open('w-alert'); sfx.ding(); }
 
   /* ---------- recycle bin ---------- */
   $('#emptybin').addEventListener('click', function () {
     var list = $('#binlist');
     if (!list.children.length) { alertBox('The Recycle Bin is already empty. No excuses left.'); return; }
-    list.innerHTML = ''; $('#bintxt').textContent = '0 object(s)';
+    list.innerHTML = ''; $('#bintxt').textContent = t('0 object(s)');
     alertBox('All excuses permanently deleted. The team can now focus on the sprint goal.', 'Recycle Bin');
   });
 
@@ -1122,9 +1157,11 @@ JavaScript. No frameworks, no trackers.</pre>
     'A good sprint goal fits on a sticky note. Mikael\'s: build the right thing, not just a working thing.',
     'You can drag windows by their title bar, and right-click the desktop for more options.',
     'Mikael became a Certified ScrumMaster® in October 2018.',
-    'Leave the computer alone for a minute and see what happens.'
-  ], ti = Math.floor(Math.random() * tips.length);
-  function nextTip() { $('#tiptxt').textContent = tips[ti % tips.length]; ti++; }
+    'Leave the computer alone for a minute and see what happens.',
+    'Click {0} in the taskbar to switch between English, Swedish and Polish.'
+  ], ti = Math.floor(Math.random() * tips.length), curTip = null;
+  function showTip() { $('#tiptxt').textContent = tf(tips[curTip], LANGS[lang].code); }
+  function nextTip() { curTip = ti % tips.length; ti++; showTip(); }
   $('#tipnext').addEventListener('click', nextTip);
   $('#tipshow').checked = store('mw-tips') !== 'off';
   $('#tipshow').addEventListener('change', function () { store('mw-tips', this.checked ? 'on' : 'off'); });
@@ -1134,16 +1171,19 @@ JavaScript. No frameworks, no trackers.</pre>
     e.preventDefault();
     close($('#w-run')); runCommand($('#runinput').value);
   });
+  var HIRE = /hire|recruit|job|offer|anställ|rekryt|jobb|zatrudnij|rekrut|prac/i;
   function runCommand(raw) {
     var v = String(raw || '').trim().toLowerCase().replace(/\.exe$/, '');
-    var map = { about: 'w-about', mikael: 'w-about', career: 'w-career', cv: 'w-career', now: 'w-now', 'tetra pak': 'w-now', skills: 'w-skills', control: 'w-skills', languages: 'w-lang', lang: 'w-lang', contact: 'w-mail', mail: 'w-mail', email: 'w-mail', readme: 'w-readme', notepad: 'w-readme', sweeper: 'w-sweep', minesweeper: 'w-sweep', game: 'w-sweep', bin: 'w-bin', tip: 'w-tip' };
-    if (/upgrade|26|modern|new/.test(v)) { upgrade('26'); return; }
-    if (/classic|95|retro|downgrade/.test(v)) { upgrade('95'); return; }
-    if (/hire|recruit|job|offer/.test(v)) { open('w-mail'); $('#m-sub').value = 'Let\'s work together'; return; }
+    var map = { about: 'w-about', mikael: 'w-about', career: 'w-career', cv: 'w-career', now: 'w-now', 'tetra pak': 'w-now', skills: 'w-skills', control: 'w-skills', languages: 'w-lang', lang: 'w-lang', contact: 'w-mail', mail: 'w-mail', email: 'w-mail', readme: 'w-readme', notepad: 'w-readme', sweeper: 'w-sweep', minesweeper: 'w-sweep', game: 'w-sweep', bin: 'w-bin', tip: 'w-tip',
+      om: 'w-about', 'o mnie': 'w-about', 'karriär': 'w-career', kariera: 'w-career', nu: 'w-now', teraz: 'w-now', 'färdigheter': 'w-skills', 'umiejętności': 'w-skills', 'språk': 'w-lang', 'języki': 'w-lang', kontakt: 'w-mail', 'e-post': 'w-mail', mejl: 'w-mail', poczta: 'w-mail', spel: 'w-sweep', 'röj': 'w-sweep', gra: 'w-sweep', saper: 'w-sweep', papperskorg: 'w-bin', papperskorgen: 'w-bin', kosz: 'w-bin', tips: 'w-tip', porada: 'w-tip' };
+    if (LANGS[v] || v === 'english' || v === 'svenska' || v === 'polski') { setLang(LANGS[v] ? v : { english: 'en', svenska: 'sv', polski: 'pl' }[v], true); return; }
+    if (/upgrade|26|modern|new|uppgradera|aktualizuj/.test(v)) { upgrade('26'); return; }
+    if (/classic|95|retro|downgrade|klassisk|klasyczny/.test(v)) { upgrade('95'); return; }
+    if (HIRE.test(v)) { open('w-mail'); $('#m-sub').value = t('Let\'s work together'); return; }
     if (v === 'legacy_code' || v === 'legacy') { bsod(); return; }
     if (v === 'linkedin') { window.open('https://se.linkedin.com/in/mikael-wilkon-38413aa0', '_blank', 'noopener'); return; }
     if (map[v]) { open(map[v]); return; }
-    alertBox('Cannot find \'' + (v || '(nothing)') + '\'. Make sure the name is right, or try "career", "contact" or "hire mikael".', 'Run');
+    alertBox(tf('Cannot find \'{0}\'. Make sure the name is right, or try "career", "contact" or "hire mikael".', v || t('(nothing)')), 'Run');
   }
   document.addEventListener('click', function (e) { if (e.target.closest('[data-open="w-run"]')) setTimeout(function () { $('#runinput').focus(); }, 30); });
 
@@ -1155,7 +1195,7 @@ JavaScript. No frameworks, no trackers.</pre>
     $('#sw-time').textContent = '000'; $('#sw-left').textContent = pad(SW.left); $('#sw-face').textContent = '🙂';
     var g = $('#sw-grid'); g.innerHTML = ''; SW.cells = [];
     for (var i = 0; i < SW.n * SW.n; i++) {
-      var b = document.createElement('button'); b.dataset.i = i; b.setAttribute('aria-label', 'Cell');
+      var b = document.createElement('button'); b.dataset.i = i; b.setAttribute('aria-label', t('Cell'));
       g.appendChild(b); SW.cells.push({ el: b, mine: false, open: false, flag: false, n: 0 });
     }
   }
@@ -1180,7 +1220,7 @@ JavaScript. No frameworks, no trackers.</pre>
   function checkWin() {
     if (SW.cells.every(function (c) { return c.mine || c.open; })) {
       SW.over = true; clearInterval(SW.timer); $('#sw-face').textContent = '😎'; sfx.chime();
-      setTimeout(function () { alertBox('Sprint completed in ' + SW.t + ' seconds with zero blockers. Velocity: excellent.', 'Blocker Sweeper'); }, 200);
+      setTimeout(function () { alertBox(tf('Sprint completed in {0} seconds with zero blockers. Velocity: excellent.', SW.t), 'Blocker Sweeper'); }, 200);
     }
   }
   function toggleFlag(c) {
@@ -1199,7 +1239,7 @@ JavaScript. No frameworks, no trackers.</pre>
   $('#sw-grid').addEventListener('pointerdown', function () { if (!SW.over) $('#sw-face').textContent = '😮'; });
   document.addEventListener('pointerup', function () { if (!SW.over && $('#sw-face').textContent === '😮') $('#sw-face').textContent = '🙂'; });
   $('#sw-face').addEventListener('click', swNew);
-  $('#sw-flag').addEventListener('click', function () { SW.flagMode = !SW.flagMode; this.textContent = 'Flag mode: ' + (SW.flagMode ? 'on' : 'off'); });
+  $('#sw-flag').addEventListener('click', function () { SW.flagMode = !SW.flagMode; this.textContent = t(SW.flagMode ? 'Flag mode: on' : 'Flag mode: off'); });
   swNew();
 
   /* ---------- overlays: boot, bsod, shutdown, screensaver ---------- */
@@ -1270,7 +1310,7 @@ JavaScript. No frameworks, no trackers.</pre>
       var d = new Date();
       $('#clock').textContent = d.toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Stockholm' });
       $('#datebox').textContent = d.toLocaleDateString('sv-SE', { timeZone: 'Europe/Stockholm' });
-      $('#caldate').textContent = d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'Europe/Stockholm' });
+      $('#caldate').textContent = d.toLocaleDateString(LANGS[lang].locale, { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'Europe/Stockholm' });
       if ($('#ncenter').classList.contains('open')) renderCenter();
     } catch (e) {}
   }
@@ -1278,6 +1318,114 @@ JavaScript. No frameworks, no trackers.</pre>
 
   window.addEventListener('resize', function () {
     wins.forEach(function (w) { if (w.classList.contains('open') && !mobile.matches) { var r = w.getBoundingClientRect(); if (r.left > window.innerWidth - 60 || r.top > window.innerHeight - 80) { w.dataset.placed = ''; place(w); } } });
+  });
+
+
+  /* ---------- languages: English, Svenska, Polski ---------- */
+  var I18N = {"sv":{"My Mikael":"Min Mikael","Career":"Karriär","Now running":"Pågår nu","Control Panel":"Kontrollpanelen","Inbox":"Inkorgen","Blocker Sweeper":"Hinderröj","Upgrade to MikaelOS 26":"Uppgradera till MikaelOS 26","MikaelOS 95 (classic)":"MikaelOS 95 (klassisk)","Recycle Bin":"Papperskorgen","My Mikael - Properties":"Min Mikael - Egenskaper","General":"Allmänt","Leadership":"Ledarskap","Device Manager":"Enhetshanteraren","<b>Senior Lead Consultant</b> · Sundet · Malmö, Sweden":"<b>Senior Lead Consultant</b> · Sundet · Malmö, Sverige","I lead teams where engineering meets product. Scrum Master, Product Owner and hands-on .NET engineer, focused on <b>what</b> gets built and <b>why</b>.":"Jag leder team där teknik möter produkt. Scrum Master, Product Owner och praktiskt arbetande .NET-utvecklare, med fokus på <b>vad</b> som byggs och <b>varför</b>.","Registered to:":"Registrerad på:","Current task:":"Aktuell uppgift:","Scrum Master, PIM Service Team at Tetra Pak":"Scrum Master, PIM Service Team på Tetra Pak","Experience:":"Erfarenhet:","11+ years in tech, leading since 2018":"11+ år inom tech, ledare sedan 2018","Languages:":"Språk:","\"I do my best work in the space between the code and the product.\"":"\"Jag gör mitt bästa arbete i mellanrummet mellan koden och produkten.\"","I've spent over a decade in tech, starting in frontline IT support and growing into senior .NET consulting. That technical grounding stays with me as I focus more on the product side.":"Jag har arbetat i över tio år inom tech, från IT-support i första linjen till seniorkonsult inom .NET. Den tekniska grunden följer med mig när jag nu fokuserar mer på produktsidan.","That's where my focus is now: owning <b>what gets built and why</b>, not just how. I've run product backlogs and sprints and sat between the business and the engineers to make sure we build the right thing, not just a working thing.":"Där ligger mitt fokus nu: att äga <b>vad som byggs och varför</b>, inte bara hur. Jag har drivit produktbackloggar och sprintar och suttit mellan verksamheten och utvecklarna för att se till att vi bygger rätt sak, inte bara något som fungerar.","My depth is in <b>product data and digital commerce</b>: five years building inriver's PIM platform, and now helping a large company put one into practice. Both vendor and implementer.":"Mitt djup finns inom <b>produktdata och digital handel</b>: fem år med att bygga inrivers PIM-plattform, och nu hjälper jag ett stort företag att använda en i praktiken. Både leverantör och implementerare.","Installed components":"Installerade komponenter","Team leadership":"Teamledarskap","Product ownership":"Produktägarskap","Stakeholder collaboration":"Samarbete med intressenter","Azure, integrations, inRiver PIM":"Azure, integrationer, inRiver PIM","All devices are working properly. No conflicts with stakeholders detected.":"Alla enheter fungerar som de ska. Inga konflikter med intressenter hittades.","Contact...":"Kontakt...","Now running...":"Pågår nu...","<b>PIM Service Support Engineer</b> at <b>Tetra Pak</b><br>Jan 2026 – present · Lund · hybrid":"<b>PIM Service Support Engineer</b> på <b>Tetra Pak</b><br>jan 2026 – nu · Lund · hybrid","Scrum Master of the PIM Service Team, helping drive the implementation of a new <b>inRiver PIM</b> solution. I turn business needs into priorities, coordinate the team's work, collaborate with stakeholders, support the solution and its users, and do hands-on work on the integrations.":"Scrum Master för PIM Service Team, där jag hjälper till att driva införandet av en ny <b>inRiver PIM</b>-lösning. Jag gör om verksamhetens behov till prioriteringar, samordnar teamets arbete, samarbetar med intressenter, stöttar lösningen och dess användare och arbetar praktiskt med integrationerna.","Implementing inRiver PIM...":"Inför inRiver PIM...","Details >>":"Detaljer >>","Contact":"Kontakt","C:\\Career":"C:\\Karriär","<u>F</u>ile":"<u>A</u>rkiv","<u>E</u>dit":"<u>R</u>edigera","<u>V</u>iew":"<u>V</u>isa","<u>H</u>elp":"<u>H</u>jälp","<u>S</u>earch":"<u>S</u>ök","<u>G</u>ame":"<u>S</u>pel","Name":"Namn","Company":"Företag","Modified":"Ändrad","Software Developer":"Mjukvaruutvecklare","Software Developer / Scrum Master":"Mjukvaruutvecklare / Scrum Master","Service Center Specialist (2nd line)":"Service Center-specialist (2:a linjen)","Service Desk Agent (1st line)":"Service Desk-agent (1:a linjen)","Double-click (or tap) a role to open its properties.":"Dubbelklicka (eller tryck) på en roll för att öppna dess egenskaper.","10 object(s), 4 leadership roles ★":"10 objekt, 4 ledarroller ★","11+ years":"11+ år","Properties":"Egenskaper","Lead: setting direction and leading the people who build it":"Leda: sätta riktning och leda de som bygger","Stakeholders":"Intressenter","Architecture":"Arkitektur","Working with AI":"Arbete med AI","Build: the code itself":"Bygga: själva koden","Ship & run: getting it live and keeping it there":"Leverera och drifta: få ut det live och hålla det igång","Integrations & APIs":"Integrationer och API:er","Select an item to see a description.":"Välj ett objekt för att se en beskrivning.","Regional Settings Properties":"Egenskaper för Nationella inställningar","Installed languages":"Installerade språk","Three languages installed. Pick one and MikaelOS switches without a restart, just like Mikael's meetings.":"Tre språk installerade. Välj ett så byter MikaelOS utan omstart, precis som Mikaels möten.","Say hello":"Säg hej","In use":"Används","Switch":"Byt","New Message":"Nytt meddelande","Send":"Skicka","Copy address":"Kopiera adress","To:":"Till:","Subject:":"Ämne:","Malmö, Sweden · Open to opportunities":"Malmö, Sverige · Öppen för nya möjligheter","README.TXT - Notepad":"README.TXT - Anteckningar","\"It works on my machine\".txt":"\"Det funkar på min dator\".txt","\"We'll document it later\".doc":"\"Vi dokumenterar det sen\".doc","\"That's not my team's problem\".txt":"\"Det är inte mitt teams problem\".txt","\"Let's skip the retro this sprint\".txt":"\"Vi skippar retron den här sprinten\".txt","\"The business will understand\".doc":"\"Verksamheten kommer att förstå\".doc","Gantt_chart_FINAL_v7_REAL.xls":"Gantt_schema_SLUTGILTIG_v7_PÅRIKTIGT.xls","Empty Recycle Bin":"Töm papperskorgen","6 object(s): excuses a good team leaves behind":"6 objekt: ursäkter som ett bra team lämnar bakom sig","0 object(s)":"0 objekt","Clear the sprint without hitting a blocker. Right-click to flag.":"Klara sprinten utan att stöta på ett hinder. Högerklicka för att flagga.","Flag mode: off":"Flaggläge: av","Flag mode: on":"Flaggläge: på","Welcome":"Välkommen","Did you know...":"Visste du att...","Show tips at startup":"Visa tips vid start","Next Tip":"Nästa tips","Close":"Stäng","Run":"Kör","Type the name of a program, folder or document, and MikaelOS will open it for you. Try <i>career</i>, <i>contact</i> or <i>hire mikael</i>.":"Skriv namnet på ett program, en mapp eller ett dokument så öppnar MikaelOS det åt dig. Prova <i>karriär</i>, <i>kontakt</i> eller <i>anställ mikael</i>.","Open:":"Öppna:","Cancel":"Avbryt","About Mikael":"Om Mikael","Skills (Control Panel)":"Färdigheter (Kontrollpanelen)","Languages":"Språk","Tip of the Day":"Dagens tips","Contact Mikael...":"Kontakta Mikael...","Run...":"Kör...","Upgrade to MikaelOS 26...":"Uppgradera till MikaelOS 26...","Shut Down...":"Stäng av...","Arrange Icons":"Ordna ikoner","Change Wallpaper":"Byt bakgrund","Close All Windows":"Stäng alla fönster","Switch light / dark":"Växla ljust / mörkt","Pinned <small>Press Enter to run</small>":"Fäst <small>Tryck Enter för att köra</small>","Now":"Nu","Skills":"Färdigheter","Mail":"E-post","Sweeper":"Röj","No matches. Try \"career\", \"contact\" or \"hire mikael\".":"Inga träffar. Prova \"karriär\", \"kontakt\" eller \"anställ mikael\".","Recommended":"Rekommenderat","PIM Service Support Engineer<small>Tetra Pak · since Jan 2026</small>":"PIM Service Support Engineer<small>Tetra Pak · sedan jan 2026</small>","Senior Lead Consultant<small>Sundet · since Jan 2026</small>":"Senior Lead Consultant<small>Sundet · sedan jan 2026</small>","Classic mode":"Klassiskt läge","Notifications":"Aviseringar","Clear all":"Rensa alla","You're all caught up.":"Inget nytt just nu.","<b>☾</b>Do not disturb":"<b>☾</b>Stör ej","<b>◐</b>Dark mode":"<b>◐</b>Mörkt läge","<b>♫</b>Sound":"<b>♫</b>Ljud","<b>95</b>Classic mode":"<b>95</b>Klassiskt läge","<b>✉</b>Contact":"<b>✉</b>Kontakt","Malmö, Sweden":"Malmö, Sverige","Open to opportunities":"Öppen för nya möjligheter","Life moves on, so does technology.":"Livet går vidare, och det gör tekniken också.","Life moves on, so does technology. Please don't turn off your stakeholders.":"Livet går vidare, och det gör tekniken också. Stäng inte av dina intressenter.","Starting MikaelOS... loading leadership drivers":"Startar MikaelOS... laddar drivrutiner för ledarskap","Getting things ready":"Förbereder","Your PC ran into a problem: legacy_code.exe has accumulated too much technical debt. We're collecting some error info, and then we'll add it to the backlog.":"Datorn stötte på ett problem: legacy_code.exe har samlat på sig för mycket teknisk skuld. Vi samlar in lite felinformation och lägger sedan till den i backloggen.","100% complete":"100 % klart","Stop code: TECH_DEBT_OVERFLOW · Press any key to continue":"Stoppkod: TECH_DEBT_OVERFLOW · Tryck på valfri tangent för att fortsätta","A fatal exception 0E has occurred at 0028:C0FFEE42 in VXD LEGACY(01). The current application has accumulated too much technical debt.":"Ett allvarligt undantag 0E har inträffat vid 0028:C0FFEE42 i VXD LEGACY(01). Det aktuella programmet har samlat på sig för mycket teknisk skuld.","*&nbsp; Press any key to put it in the backlog.<br>*&nbsp; Press CTRL+ALT+DEL to call a Scrum Master. You will lose any unsaved estimates.":"*&nbsp; Tryck på valfri tangent för att lägga det i backloggen.<br>*&nbsp; Tryck CTRL+ALT+DEL för att ringa en Scrum Master. Alla osparade estimat går förlorade.","Press any key to continue _":"Tryck på valfri tangent för att fortsätta _","It's now safe to turn off<br>your computer.<small>Click anywhere to restart MikaelOS</small>":"Nu kan du stänga av<br>datorn.<small>Klicka var som helst för att starta om MikaelOS</small>","Desktop":"Skrivbord","Minimise":"Minimera","Maximise":"Maximera","Photo of Mikael Wilkon":"Foto av Mikael Wilkon","Message":"Meddelande","New game":"Nytt spel","Cell":"Ruta","Taskbar":"Aktivitetsfält","Sound: off":"Ljud: av","Sound: on":"Ljud: på","Malmö time":"Tid i Malmö","Search":"Sök","Search apps, roles and skills, or type a command":"Sök appar, roller och färdigheter, eller skriv ett kommando","Switch to MikaelOS 95":"Byt till MikaelOS 95","Shut down":"Stäng av","Notifications and quick settings":"Aviseringar och snabbinställningar","Blue screen":"Blåskärm","Dismiss":"Stäng","Language":"Språk","Turning business needs into priorities...":"Gör om verksamhetens behov till prioriteringar...","Aligning stakeholders...":"Synkar intressenter...","Removing blockers...":"Tar bort hinder...","Improving integrations...":"Förbättrar integrationer...","Running sprint review...":"Håller sprint review...","Done. Starting next sprint...":"Klart. Startar nästa sprint...","★ leadership role":"★ ledarroll","{0} - Properties":"{0} - Egenskaper","{0} That greeting was brought to you in one of Mikael's three languages.":"{0} Den hälsningen kom till dig på ett av Mikaels tre språk.","Message handed to your mail program.":"Meddelandet har lämnats över till ditt e-postprogram.","Address copied to the clipboard.":"Adressen har kopierats till urklipp.","Address copied":"Adressen kopierad","MikaelWilkon@gmail.com is on your clipboard.":"MikaelWilkon@gmail.com finns nu i urklipp.","The Recycle Bin is already empty. No excuses left.":"Papperskorgen är redan tom. Inga ursäkter kvar.","All excuses permanently deleted. The team can now focus on the sprint goal.":"Alla ursäkter har raderats permanent. Teamet kan nu fokusera på sprintmålet.","Mikael has been a Scrum Master, a Product Owner and a .NET developer. Sometimes all three before lunch.":"Mikael har varit Scrum Master, Product Owner och .NET-utvecklare. Ibland alla tre före lunch.","The best stand-ups are short. This tip is short too.":"De bästa stand-upparna är korta. Det här tipset också.","Mikael works in Swedish, Polish and English. Ask him to explain a backlog in any of them.":"Mikael arbetar på svenska, polska och engelska. Be honom förklara en backlogg på vilket som helst av dem.","Mikael spent five years building a PIM platform as the vendor, and now helps a large company use one as the implementer.":"Mikael byggde en PIM-plattform i fem år på leverantörssidan och hjälper nu ett stort företag att använda en som implementerare.","A good sprint goal fits on a sticky note. Mikael's: build the right thing, not just a working thing.":"Ett bra sprintmål får plats på en post-it-lapp. Mikaels: bygg rätt sak, inte bara något som fungerar.","You can drag windows by their title bar, and right-click the desktop for more options.":"Du kan dra fönster i namnlisten och högerklicka på skrivbordet för fler alternativ.","Mikael became a Certified ScrumMaster® in October 2018.":"Mikael blev Certified ScrumMaster® i oktober 2018.","Leave the computer alone for a minute and see what happens.":"Låt datorn vara i en minut och se vad som händer.","Click {0} in the taskbar to switch between English, Swedish and Polish.":"Klicka på {0} i aktivitetsfältet för att byta mellan engelska, svenska och polska.","Let's work together":"Låt oss jobba tillsammans","Cannot find '{0}'. Make sure the name is right, or try \"career\", \"contact\" or \"hire mikael\".":"Hittar inte '{0}'. Kontrollera att namnet är rätt, eller prova \"karriär\", \"kontakt\" eller \"anställ mikael\".","(nothing)":"(ingenting)","You hit a blocker! A good Scrum Master would have raised it at stand-up. Click the face to start a new sprint.":"Du stötte på ett hinder! En bra Scrum Master hade lyft det på stand-upen. Klicka på ansiktet för att starta en ny sprint.","Sprint completed in {0} seconds with zero blockers. Velocity: excellent.":"Sprinten klar på {0} sekunder utan ett enda hinder. Velocity: utmärkt.","Backing up 1995 memories":"Säkerhetskopierar minnen från 1995","Installing Certified ScrumMaster® (2018)":"Installerar Certified ScrumMaster® (2018)","Migrating Product Owner settings (2021)":"Migrerar Product Owner-inställningar (2021)","Updating .NET, Azure and integrations":"Uppdaterar .NET, Azure och integrationer","Configuring calmer notifications":"Konfigurerar lugnare aviseringar","Installing Senior Lead Consultant (2026)":"Installerar Senior Lead Consultant (2026)","Almost there":"Nästan klart","Restoring the teal":"Återställer det blågröna","Re-installing beveled buttons":"Installerar om fasade knappar","Finding the Start button":"Letar efter Start-knappen","Some things are worth keeping. Rolling back to MikaelOS 95.":"Vissa saker är värda att behålla. Återgår till MikaelOS 95.","Working on updates {0}%":"Arbetar med uppdateringar {0} %","Restoring {0}%":"Återställer {0} %","Welcome to MikaelOS 26":"Välkommen till MikaelOS 26","Same Mikael, newer stack. Notifications now wait their turn, and Do not disturb holds them for later.":"Samma Mikael, nyare stack. Aviseringar väntar nu på sin tur, och Stör ej sparar dem till senare.","Show me":"Visa mig","Open profile":"Öppna profil","Welcome back to MikaelOS 95":"Välkommen tillbaka till MikaelOS 95","Life moves on, but the teal stays. You can upgrade again from the Start menu any time.":"Livet går vidare, men det blågröna består. Du kan uppgradera igen från Start-menyn när du vill.","{0} min ago":"för {0} min sedan","MikaelOS Update":"MikaelOS-uppdatering","{0} unread":"{0} olästa","Do not disturb is on":"Stör ej är på","You have 1 unread notification":"Du har 1 oläst avisering","You have {0} unread notifications":"Du har {0} olästa aviseringar","They waited quietly while Do not disturb was on.":"De väntade tyst medan Stör ej var på.","View":"Visa","A new version of MikaelOS is available":"En ny version av MikaelOS finns tillgänglig","Life moves on, so does technology. Upgrade to MikaelOS 26 for a modern desktop and calmer notifications.":"Livet går vidare, och det gör tekniken också. Uppgradera till MikaelOS 26 för ett modernt skrivbord och lugnare aviseringar.","Upgrade now":"Uppgradera nu","Later":"Senare","Now: Scrum Master, PIM Service Team":"Nu: Scrum Master, PIM Service Team","Tetra Pak, Lund. Driving a new inRiver PIM solution into the business.":"Tetra Pak, Lund. Driver in en ny inRiver PIM-lösning i verksamheten.","Open":"Öppna","Mikael is open to new opportunities":"Mikael är öppen för nya möjligheter","Have a team that needs leading where engineering meets product?":"Har du ett team som behöver ledas där teknik möter produkt?","Send a message":"Skicka ett meddelande","Tip: notifications wait their turn":"Tips: aviseringar väntar på sin tur","Only one shows at a time. Turn on Do not disturb in the bell menu and they will wait for you there.":"Bara en visas åt gången. Slå på Stör ej i klockmenyn så väntar de på dig där.","Open bell menu":"Öppna klockmenyn","Technical leadership":"Tekniskt ledarskap","Integrations":"Integrationer","System architecture":"Systemarkitektur","Agile":"Agilt","Infrastructure":"Infrastruktur","Incident management":"Incidenthantering","IT support":"IT-support","Systems design":"Systemdesign","Databases":"Databaser","Full-time · Hybrid · Malmö, Sweden · Jan 2026 – present":"Heltid · Hybrid · Malmö, Sverige · jan 2026 – nu","Assignment · Fixed-term · Hybrid · Lund, Sweden · Jan 2026 – present":"Uppdrag · Visstid · Hybrid · Lund, Sverige · jan 2026 – nu","Full-time · On-site · Malmö, Sweden · May 2023 – Dec 2025":"Heltid · På plats · Malmö, Sverige · maj 2023 – dec 2025","Malmö, Sweden · Sep 2022 – May 2023":"Malmö, Sverige · sep 2022 – maj 2023","Malmö, Sweden · Mar 2021 – Oct 2022":"Malmö, Sverige · mar 2021 – okt 2022","Malmö, Sweden · Apr 2020 – Sep 2020":"Malmö, Sverige · apr 2020 – sep 2020","Malmö, Sweden · Jan 2018 – Mar 2021":"Malmö, Sverige · jan 2018 – mar 2021","Malmö, Sweden · May 2016 – Jan 2018":"Malmö, Sverige · maj 2016 – jan 2018","Malmö, Sweden · Jul 2015 – May 2016":"Malmö, Sverige · jul 2015 – maj 2016","Vocational higher education · 2013 – 2015":"Yrkeshögskoleutbildning · 2013 – 2015",".NET consulting at a niche firm: building integrations, Azure-based solutions and solid backend architecture for clients in the Microsoft ecosystem. Hands-on coding, and sitting close to the business to make sure what gets built actually solves the right problem.":".NET-konsult på ett nischat bolag: bygger integrationer, Azure-baserade lösningar och stabil backend-arkitektur för kunder i Microsofts ekosystem. Praktisk kodning, nära verksamheten, för att se till att det som byggs faktiskt löser rätt problem.","Helping drive the implementation of a new inRiver PIM solution as part of the PIM Service Team. The role combines Scrum Master responsibilities, stakeholder collaboration, support for the PIM solution and its users, and hands-on technical work: turning business needs into priorities, coordinating the team's work, resolving issues, and improving the solution and its integrations.":"Hjälper till att driva införandet av en ny inRiver PIM-lösning som en del av PIM Service Team. Rollen kombinerar Scrum Master-ansvar, samarbete med intressenter, stöd för PIM-lösningen och dess användare samt praktiskt tekniskt arbete: att göra om verksamhetens behov till prioriteringar, samordna teamets arbete, lösa problem och förbättra lösningen och dess integrationer.","C# / .NET developer building internal CRM software used by customer service. Improved existing services and drove the migration to a modern web-based solution.":"C# / .NET-utvecklare som byggde internt CRM-system för kundservice. Förbättrade befintliga tjänster och drev migreringen till en modern webbaserad lösning.","Backend development of new features in the inriver Product Marketing Cloud, a SaaS PIM platform, with Cosmos DB, Azure Functions, .NET Core and MediatR.":"Backendutveckling av nya funktioner i inriver Product Marketing Cloud, en SaaS-baserad PIM-plattform, med Cosmos DB, Azure Functions, .NET Core och MediatR.","Drove the development of the integrations and secured the quality of stories and epics: the communication link between product management and the development team.":"Drev utvecklingen av integrationerna och säkrade kvaliteten på stories och epics: länken mellan produktledningen och utvecklingsteamet.","Scrum Master within the inriver development team: running ceremonies and keeping the process healthy, while still jumping into development when needed.":"Scrum Master i inrivers utvecklingsteam: höll i ceremonierna och höll processen frisk, och hoppade fortfarande in i utvecklingen vid behov.","Full-stack development on the inriver platform: new features, internal tooling and Azure infrastructure. Also got customer environments set up and running correctly in the cloud.":"Fullstackutveckling på inriver-plattformen: nya funktioner, interna verktyg och Azure-infrastruktur. Satte också upp kundmiljöer och fick dem att fungera korrekt i molnet.","Managed customer infrastructure and resolved escalated 2nd-line cases. Automated daily tasks with PowerShell and built a PowerShell support tool that sped up issue resolution. Included incident management.":"Förvaltade kunders infrastruktur och löste eskalerade ärenden i andra linjen. Automatiserade dagliga uppgifter med PowerShell och byggde ett supportverktyg i PowerShell som snabbade upp felsökningen. Inkluderade incidenthantering.","Fast-paced 1st-line service desk support, helping clients with their IT problems and requests.":"Service desk-support i första linjen i högt tempo, där jag hjälpte kunder med deras IT-problem och förfrågningar.","Systems development with a specialisation in Microsoft Azure, covering software engineering, .NET, cloud architecture and database management.":"Systemutveckling med inriktning mot Microsoft Azure, med mjukvaruutveckling, .NET, molnarkitektur och databashantering.","Team leadership: leading teams where engineering meets product.":"Teamledarskap: leder team där teknik möter produkt.","Certified ScrumMaster® since 2018. Scrum Master at inriver and Tetra Pak.":"Certified ScrumMaster® sedan 2018. Scrum Master på inriver och Tetra Pak.","Product Owner for integrations at inriver, 2021–22.":"Product Owner för integrationer på inriver, 2021–22.","Turning business needs into priorities, keeping stakeholders and engineers aligned.":"Gör om verksamhetens behov till prioriteringar och håller intressenter och utvecklare samspelta.","System architecture for integrations and Azure-based solutions.":"Systemarkitektur för integrationer och Azure-baserade lösningar.","Working with AI as part of everyday engineering and delivery.":"Arbetar med AI som en del av vardaglig utveckling och leverans.","C# and .NET since 2013.":"C# och .NET sedan 2013.","ASP.NET Core and Blazor, including a CRM migration to Blazor at Trygg-Hansa.":"ASP.NET Core och Blazor, bland annat en CRM-migrering till Blazor på Trygg-Hansa.","WPF desktop apps for customer service.":"WPF-skrivbordsappar för kundservice.","PowerShell automation and support tooling at Atea.":"Automatisering och supportverktyg i PowerShell på Atea.","Microsoft Azure: Functions, infrastructure, cloud environments.":"Microsoft Azure: Functions, infrastruktur, molnmiljöer.","SQL and Cosmos DB.":"SQL och Cosmos DB.","DevOps and CI/CD with Azure Pipelines.":"DevOps och CI/CD med Azure Pipelines.","Integrations and APIs between PIM, ERP and commerce systems.":"Integrationer och API:er mellan PIM-, ERP- och e-handelssystem.","inRiver PIM: five years as the vendor, now as the implementer.":"inRiver PIM: fem år på leverantörssidan, nu som implementerare.","@mailbody":"Hej Mikael,\n\nJag har ett team som behöver ledas där teknik möter produkt...","@readme":"MIKAEL WILKON - README.TXT\n==========================\n\nVälkommen! Det här är min hemsida, utklädd\ntill datorn jag växte upp med.\n\nVEM:   Senior Lead Consultant, Sundet (Malmö)\nNU:    Scrum Master, PIM Service Team, Tetra Pak\nGÖR:   Leder team där teknik möter produkt\n\nTIPS\n- Dubbelklicka på ikoner för att öppna dem.\n- Dra fönster i namnlisten.\n- Högerklicka på skrivbordet för fler val.\n- Låt musen vara i en minut...\n- Kör INTE legacy_code.exe.\n\nKONTAKT\nMikaelWilkon@gmail.com\n\nByggd med vanlig HTML, CSS och lite\nJavaScript. Inga ramverk, ingen spårning."},"pl":{"My Mikael":"Mój Mikael","Career":"Kariera","Now running":"W toku","Control Panel":"Panel sterowania","Inbox":"Odebrane","Blocker Sweeper":"Saper blokerów","Upgrade to MikaelOS 26":"Aktualizuj do MikaelOS 26","MikaelOS 95 (classic)":"MikaelOS 95 (klasyczny)","Recycle Bin":"Kosz","My Mikael - Properties":"Mój Mikael - Właściwości","General":"Ogólne","Leadership":"Przywództwo","Device Manager":"Menedżer urządzeń","<b>Senior Lead Consultant</b> · Sundet · Malmö, Sweden":"<b>Senior Lead Consultant</b> · Sundet · Malmö, Szwecja","I lead teams where engineering meets product. Scrum Master, Product Owner and hands-on .NET engineer, focused on <b>what</b> gets built and <b>why</b>.":"Prowadzę zespoły tam, gdzie technologia spotyka się z produktem. Scrum Master, Product Owner i praktykujący inżynier .NET, skupiony na tym, <b>co</b> powstaje i <b>dlaczego</b>.","Registered to:":"Właściciel:","Current task:":"Obecnie:","Scrum Master, PIM Service Team at Tetra Pak":"Scrum Master, PIM Service Team w Tetra Pak","Experience:":"Doświadczenie:","11+ years in tech, leading since 2018":"11+ lat w IT, lider od 2018","Languages:":"Języki:","\"I do my best work in the space between the code and the product.\"":"„Najlepiej pracuję na styku kodu i produktu.”","I've spent over a decade in tech, starting in frontline IT support and growing into senior .NET consulting. That technical grounding stays with me as I focus more on the product side.":"Od ponad dziesięciu lat pracuję w IT: zaczynałem od wsparcia pierwszej linii, a doszedłem do roli starszego konsultanta .NET. To techniczne zaplecze zostaje ze mną, gdy coraz bardziej skupiam się na produkcie.","That's where my focus is now: owning <b>what gets built and why</b>, not just how. I've run product backlogs and sprints and sat between the business and the engineers to make sure we build the right thing, not just a working thing.":"Na tym skupiam się teraz: odpowiadam za to, <b>co powstaje i dlaczego</b>, a nie tylko jak. Prowadziłem backlogi produktowe i sprinty, łącząc biznes z inżynierami, żeby budować właściwą rzecz, a nie tylko działającą.","My depth is in <b>product data and digital commerce</b>: five years building inriver's PIM platform, and now helping a large company put one into practice. Both vendor and implementer.":"Moja specjalizacja to <b>dane produktowe i handel cyfrowy</b>: pięć lat budowania platformy PIM w inriver, a teraz pomagam dużej firmie wdrożyć ją w praktyce. Zarówno po stronie dostawcy, jak i wdrożeniowca.","Installed components":"Zainstalowane składniki","Team leadership":"Przywództwo zespołu","Product ownership":"Odpowiedzialność za produkt","Stakeholder collaboration":"Współpraca z interesariuszami","Azure, integrations, inRiver PIM":"Azure, integracje, inRiver PIM","All devices are working properly. No conflicts with stakeholders detected.":"Wszystkie urządzenia działają poprawnie. Nie wykryto konfliktów z interesariuszami.","Contact...":"Kontakt...","Now running...":"W toku...","<b>PIM Service Support Engineer</b> at <b>Tetra Pak</b><br>Jan 2026 – present · Lund · hybrid":"<b>PIM Service Support Engineer</b> w <b>Tetra Pak</b><br>sty 2026 – obecnie · Lund · hybrydowo","Scrum Master of the PIM Service Team, helping drive the implementation of a new <b>inRiver PIM</b> solution. I turn business needs into priorities, coordinate the team's work, collaborate with stakeholders, support the solution and its users, and do hands-on work on the integrations.":"Scrum Master zespołu PIM Service Team, współtworzę wdrożenie nowego rozwiązania <b>inRiver PIM</b>. Zamieniam potrzeby biznesu na priorytety, koordynuję pracę zespołu, współpracuję z interesariuszami, wspieram rozwiązanie i jego użytkowników oraz pracuję bezpośrednio nad integracjami.","Implementing inRiver PIM...":"Wdrażanie inRiver PIM...","Details >>":"Szczegóły >>","Contact":"Kontakt","C:\\Career":"C:\\Kariera","<u>F</u>ile":"<u>P</u>lik","<u>E</u>dit":"<u>E</u>dycja","<u>V</u>iew":"<u>W</u>idok","<u>H</u>elp":"Pomo<u>c</u>","<u>S</u>earch":"<u>S</u>zukaj","<u>G</u>ame":"<u>G</u>ra","Name":"Nazwa","Company":"Firma","Modified":"Zmodyfikowano","Software Developer":"Programista","Software Developer / Scrum Master":"Programista / Scrum Master","Service Center Specialist (2nd line)":"Specjalista Service Center (2. linia)","Service Desk Agent (1st line)":"Konsultant Service Desk (1. linia)","Double-click (or tap) a role to open its properties.":"Kliknij dwukrotnie (lub stuknij) rolę, aby otworzyć jej właściwości.","10 object(s), 4 leadership roles ★":"Obiekty: 10, role przywódcze: 4 ★","11+ years":"11+ lat","Properties":"Właściwości","Lead: setting direction and leading the people who build it":"Prowadzenie: wyznaczanie kierunku i prowadzenie ludzi, którzy budują","Stakeholders":"Interesariusze","Architecture":"Architektura","Working with AI":"Praca z AI","Build: the code itself":"Budowanie: sam kod","Ship & run: getting it live and keeping it there":"Wdrażanie i utrzymanie: uruchomić i utrzymać w działaniu","Integrations & APIs":"Integracje i API","Select an item to see a description.":"Wybierz element, aby zobaczyć opis.","Regional Settings Properties":"Właściwości: Ustawienia regionalne","Installed languages":"Zainstalowane języki","Three languages installed. Pick one and MikaelOS switches without a restart, just like Mikael's meetings.":"Zainstalowano trzy języki. Wybierz jeden, a MikaelOS przełączy się bez restartu, tak jak spotkania Mikaela.","Say hello":"Przywitaj się","In use":"W użyciu","Switch":"Przełącz","New Message":"Nowa wiadomość","Send":"Wyślij","Copy address":"Kopiuj adres","To:":"Do:","Subject:":"Temat:","Malmö, Sweden · Open to opportunities":"Malmö, Szwecja · Otwarty na nowe możliwości","README.TXT - Notepad":"README.TXT - Notatnik","\"It works on my machine\".txt":"\"U mnie działa\".txt","\"We'll document it later\".doc":"\"Udokumentujemy to później\".doc","\"That's not my team's problem\".txt":"\"To nie problem mojego zespołu\".txt","\"Let's skip the retro this sprint\".txt":"\"Pomińmy retro w tym sprincie\".txt","\"The business will understand\".doc":"\"Biznes zrozumie\".doc","Gantt_chart_FINAL_v7_REAL.xls":"Wykres_Gantta_FINAL_v7_NAPRAWDE.xls","Empty Recycle Bin":"Opróżnij kosz","6 object(s): excuses a good team leaves behind":"Obiekty: 6. Wymówki, które dobry zespół zostawia za sobą","0 object(s)":"Obiekty: 0","Clear the sprint without hitting a blocker. Right-click to flag.":"Ukończ sprint, nie trafiając na bloker. Kliknij prawym przyciskiem, aby oznaczyć.","Flag mode: off":"Tryb flag: wył.","Flag mode: on":"Tryb flag: wł.","Welcome":"Witaj","Did you know...":"Czy wiesz, że...","Show tips at startup":"Pokazuj porady przy uruchomieniu","Next Tip":"Następna porada","Close":"Zamknij","Run":"Uruchom","Type the name of a program, folder or document, and MikaelOS will open it for you. Try <i>career</i>, <i>contact</i> or <i>hire mikael</i>.":"Wpisz nazwę programu, folderu lub dokumentu, a MikaelOS go otworzy. Spróbuj <i>kariera</i>, <i>kontakt</i> lub <i>zatrudnij mikaela</i>.","Open:":"Otwórz:","Cancel":"Anuluj","About Mikael":"O Mikaelu","Skills (Control Panel)":"Umiejętności (Panel sterowania)","Languages":"Języki","Tip of the Day":"Porada dnia","Contact Mikael...":"Skontaktuj się z Mikaelem...","Run...":"Uruchom...","Upgrade to MikaelOS 26...":"Aktualizuj do MikaelOS 26...","Shut Down...":"Zamknij system...","Arrange Icons":"Rozmieść ikony","Change Wallpaper":"Zmień tapetę","Close All Windows":"Zamknij wszystkie okna","Switch light / dark":"Przełącz jasny / ciemny","Pinned <small>Press Enter to run</small>":"Przypięte <small>Naciśnij Enter, aby uruchomić</small>","Now":"Teraz","Skills":"Umiejętności","Mail":"Poczta","Sweeper":"Saper","No matches. Try \"career\", \"contact\" or \"hire mikael\".":"Brak wyników. Spróbuj \"kariera\", \"kontakt\" lub \"zatrudnij mikaela\".","Recommended":"Polecane","PIM Service Support Engineer<small>Tetra Pak · since Jan 2026</small>":"PIM Service Support Engineer<small>Tetra Pak · od stycznia 2026</small>","Senior Lead Consultant<small>Sundet · since Jan 2026</small>":"Senior Lead Consultant<small>Sundet · od stycznia 2026</small>","Classic mode":"Tryb klasyczny","Notifications":"Powiadomienia","Clear all":"Wyczyść wszystko","You're all caught up.":"Brak nowych powiadomień.","<b>☾</b>Do not disturb":"<b>☾</b>Nie przeszkadzać","<b>◐</b>Dark mode":"<b>◐</b>Tryb ciemny","<b>♫</b>Sound":"<b>♫</b>Dźwięk","<b>95</b>Classic mode":"<b>95</b>Tryb klasyczny","<b>✉</b>Contact":"<b>✉</b>Kontakt","Malmö, Sweden":"Malmö, Szwecja","Open to opportunities":"Otwarty na nowe możliwości","Life moves on, so does technology.":"Życie idzie naprzód, technologia też.","Life moves on, so does technology. Please don't turn off your stakeholders.":"Życie idzie naprzód, technologia też. Nie wyłączaj swoich interesariuszy.","Starting MikaelOS... loading leadership drivers":"Uruchamianie MikaelOS... ładowanie sterowników przywództwa","Getting things ready":"Przygotowywanie","Your PC ran into a problem: legacy_code.exe has accumulated too much technical debt. We're collecting some error info, and then we'll add it to the backlog.":"Na komputerze wystąpił problem: legacy_code.exe zgromadził za dużo długu technicznego. Zbieramy informacje o błędzie, a potem dodamy go do backlogu.","100% complete":"Ukończono: 100%","Stop code: TECH_DEBT_OVERFLOW · Press any key to continue":"Kod zatrzymania: TECH_DEBT_OVERFLOW · Naciśnij dowolny klawisz, aby kontynuować","A fatal exception 0E has occurred at 0028:C0FFEE42 in VXD LEGACY(01). The current application has accumulated too much technical debt.":"Wystąpił wyjątek krytyczny 0E w 0028:C0FFEE42 w VXD LEGACY(01). Bieżąca aplikacja zgromadziła za dużo długu technicznego.","*&nbsp; Press any key to put it in the backlog.<br>*&nbsp; Press CTRL+ALT+DEL to call a Scrum Master. You will lose any unsaved estimates.":"*&nbsp; Naciśnij dowolny klawisz, aby dodać to do backlogu.<br>*&nbsp; Naciśnij CTRL+ALT+DEL, aby wezwać Scrum Mastera. Wszystkie niezapisane estymaty zostaną utracone.","Press any key to continue _":"Naciśnij dowolny klawisz, aby kontynuować _","It's now safe to turn off<br>your computer.<small>Click anywhere to restart MikaelOS</small>":"Teraz możesz bezpiecznie<br>wyłączyć komputer.<small>Kliknij w dowolnym miejscu, aby ponownie uruchomić MikaelOS</small>","Desktop":"Pulpit","Minimise":"Minimalizuj","Maximise":"Maksymalizuj","Photo of Mikael Wilkon":"Zdjęcie Mikaela Wilkona","Message":"Wiadomość","New game":"Nowa gra","Cell":"Pole","Taskbar":"Pasek zadań","Sound: off":"Dźwięk: wył.","Sound: on":"Dźwięk: wł.","Malmö time":"Czas w Malmö","Search":"Szukaj","Search apps, roles and skills, or type a command":"Szukaj aplikacji, ról i umiejętności lub wpisz polecenie","Switch to MikaelOS 95":"Przełącz na MikaelOS 95","Shut down":"Zamknij","Notifications and quick settings":"Powiadomienia i szybkie ustawienia","Blue screen":"Niebieski ekran","Dismiss":"Odrzuć","Language":"Język","Turning business needs into priorities...":"Zamiana potrzeb biznesu na priorytety...","Aligning stakeholders...":"Uzgadnianie z interesariuszami...","Removing blockers...":"Usuwanie blokerów...","Improving integrations...":"Ulepszanie integracji...","Running sprint review...":"Przegląd sprintu w toku...","Done. Starting next sprint...":"Gotowe. Start kolejnego sprintu...","★ leadership role":"★ rola przywódcza","{0} - Properties":"{0} - Właściwości","{0} That greeting was brought to you in one of Mikael's three languages.":"{0} To powitanie dotarło do Ciebie w jednym z trzech języków Mikaela.","Message handed to your mail program.":"Wiadomość przekazano do programu pocztowego.","Address copied to the clipboard.":"Adres skopiowano do schowka.","Address copied":"Adres skopiowany","MikaelWilkon@gmail.com is on your clipboard.":"MikaelWilkon@gmail.com jest w schowku.","The Recycle Bin is already empty. No excuses left.":"Kosz jest już pusty. Nie ma więcej wymówek.","All excuses permanently deleted. The team can now focus on the sprint goal.":"Wszystkie wymówki zostały trwale usunięte. Zespół może teraz skupić się na celu sprintu.","Mikael has been a Scrum Master, a Product Owner and a .NET developer. Sometimes all three before lunch.":"Mikael był Scrum Masterem, Product Ownerem i programistą .NET. Czasem wszystkimi trzema przed lunchem.","The best stand-ups are short. This tip is short too.":"Najlepsze stand-upy są krótkie. Ta porada też.","Mikael works in Swedish, Polish and English. Ask him to explain a backlog in any of them.":"Mikael pracuje po szwedzku, polsku i angielsku. Poproś go o wyjaśnienie backlogu w dowolnym z nich.","Mikael spent five years building a PIM platform as the vendor, and now helps a large company use one as the implementer.":"Mikael przez pięć lat budował platformę PIM po stronie dostawcy, a teraz pomaga dużej firmie z niej korzystać jako wdrożeniowiec.","A good sprint goal fits on a sticky note. Mikael's: build the right thing, not just a working thing.":"Dobry cel sprintu mieści się na karteczce. Cel Mikaela: budować właściwą rzecz, a nie tylko działającą.","You can drag windows by their title bar, and right-click the desktop for more options.":"Okna możesz przeciągać za pasek tytułu, a kliknięcie pulpitu prawym przyciskiem pokaże więcej opcji.","Mikael became a Certified ScrumMaster® in October 2018.":"Mikael uzyskał certyfikat Certified ScrumMaster® w październiku 2018.","Leave the computer alone for a minute and see what happens.":"Zostaw komputer w spokoju na minutę i zobacz, co się stanie.","Click {0} in the taskbar to switch between English, Swedish and Polish.":"Kliknij {0} na pasku zadań, aby przełączać między angielskim, szwedzkim i polskim.","Let's work together":"Popracujmy razem","Hej Mikael!":"Cześć Mikael!","Cannot find '{0}'. Make sure the name is right, or try \"career\", \"contact\" or \"hire mikael\".":"Nie można znaleźć '{0}'. Sprawdź nazwę lub spróbuj \"kariera\", \"kontakt\" albo \"zatrudnij mikaela\".","(nothing)":"(nic)","You hit a blocker! A good Scrum Master would have raised it at stand-up. Click the face to start a new sprint.":"Bloker! Dobry Scrum Master zgłosiłby go na stand-upie. Kliknij buźkę, aby zacząć nowy sprint.","Sprint completed in {0} seconds with zero blockers. Velocity: excellent.":"Sprint ukończony w {0} s bez żadnych blokerów. Velocity: znakomite.","Backing up 1995 memories":"Kopia zapasowa wspomnień z 1995","Installing Certified ScrumMaster® (2018)":"Instalowanie Certified ScrumMaster® (2018)","Migrating Product Owner settings (2021)":"Migracja ustawień Product Ownera (2021)","Updating .NET, Azure and integrations":"Aktualizacja .NET, Azure i integracji","Configuring calmer notifications":"Konfigurowanie spokojniejszych powiadomień","Installing Senior Lead Consultant (2026)":"Instalowanie Senior Lead Consultant (2026)","Almost there":"Prawie gotowe","Restoring the teal":"Przywracanie morskiego koloru","Re-installing beveled buttons":"Ponowna instalacja wypukłych przycisków","Finding the Start button":"Szukanie przycisku Start","Some things are worth keeping. Rolling back to MikaelOS 95.":"Niektóre rzeczy warto zachować. Powrót do MikaelOS 95.","Working on updates {0}%":"Trwa aktualizacja {0}%","Restoring {0}%":"Przywracanie {0}%","Welcome to MikaelOS 26":"Witaj w MikaelOS 26","Same Mikael, newer stack. Notifications now wait their turn, and Do not disturb holds them for later.":"Ten sam Mikael, nowszy stack. Powiadomienia czekają teraz na swoją kolej, a tryb Nie przeszkadzać zachowuje je na później.","Show me":"Pokaż","Open profile":"Otwórz profil","Welcome back to MikaelOS 95":"Witaj ponownie w MikaelOS 95","Life moves on, but the teal stays. You can upgrade again from the Start menu any time.":"Życie idzie naprzód, ale morski kolor zostaje. Możesz ponownie zaktualizować system z menu Start w dowolnej chwili.","{0} min ago":"{0} min temu","MikaelOS Update":"Aktualizacja MikaelOS","Tips":"Porady","{0} unread":"nieprzeczytane: {0}","Do not disturb is on":"Tryb Nie przeszkadzać jest włączony","You have 1 unread notification":"Masz 1 nieprzeczytane powiadomienie","You have {0} unread notifications":"Nieprzeczytane powiadomienia: {0}","They waited quietly while Do not disturb was on.":"Czekały cicho, gdy tryb Nie przeszkadzać był włączony.","View":"Pokaż","A new version of MikaelOS is available":"Dostępna jest nowa wersja MikaelOS","Life moves on, so does technology. Upgrade to MikaelOS 26 for a modern desktop and calmer notifications.":"Życie idzie naprzód, technologia też. Zaktualizuj do MikaelOS 26, aby mieć nowoczesny pulpit i spokojniejsze powiadomienia.","Upgrade now":"Aktualizuj teraz","Later":"Później","Now: Scrum Master, PIM Service Team":"Teraz: Scrum Master, PIM Service Team","Tetra Pak, Lund. Driving a new inRiver PIM solution into the business.":"Tetra Pak, Lund. Wdrażanie nowego rozwiązania inRiver PIM w firmie.","Open":"Otwórz","Mikael is open to new opportunities":"Mikael jest otwarty na nowe możliwości","Have a team that needs leading where engineering meets product?":"Masz zespół, który potrzebuje lidera na styku technologii i produktu?","Send a message":"Wyślij wiadomość","Tip: notifications wait their turn":"Porada: powiadomienia czekają na swoją kolej","Only one shows at a time. Turn on Do not disturb in the bell menu and they will wait for you there.":"Naraz wyświetla się tylko jedno. Włącz tryb Nie przeszkadzać w menu dzwonka, a poczekają tam na Ciebie.","Open bell menu":"Otwórz menu dzwonka","Technical leadership":"Przywództwo techniczne","Integrations":"Integracje","System architecture":"Architektura systemów","Infrastructure":"Infrastruktura","Incident management":"Zarządzanie incydentami","IT support":"Wsparcie IT","Systems design":"Projektowanie systemów","Databases":"Bazy danych","Full-time · Hybrid · Malmö, Sweden · Jan 2026 – present":"Pełny etat · Hybrydowo · Malmö, Szwecja · sty 2026 – obecnie","Assignment · Fixed-term · Hybrid · Lund, Sweden · Jan 2026 – present":"Zlecenie · Czas określony · Hybrydowo · Lund, Szwecja · sty 2026 – obecnie","Full-time · On-site · Malmö, Sweden · May 2023 – Dec 2025":"Pełny etat · Stacjonarnie · Malmö, Szwecja · maj 2023 – gru 2025","Malmö, Sweden · Sep 2022 – May 2023":"Malmö, Szwecja · wrz 2022 – maj 2023","Malmö, Sweden · Mar 2021 – Oct 2022":"Malmö, Szwecja · mar 2021 – paź 2022","Malmö, Sweden · Apr 2020 – Sep 2020":"Malmö, Szwecja · kwi 2020 – wrz 2020","Malmö, Sweden · Jan 2018 – Mar 2021":"Malmö, Szwecja · sty 2018 – mar 2021","Malmö, Sweden · May 2016 – Jan 2018":"Malmö, Szwecja · maj 2016 – sty 2018","Malmö, Sweden · Jul 2015 – May 2016":"Malmö, Szwecja · lip 2015 – maj 2016","Vocational higher education · 2013 – 2015":"Wyższe szkolnictwo zawodowe · 2013 – 2015",".NET consulting at a niche firm: building integrations, Azure-based solutions and solid backend architecture for clients in the Microsoft ecosystem. Hands-on coding, and sitting close to the business to make sure what gets built actually solves the right problem.":"Doradztwo .NET w niszowej firmie: budowa integracji, rozwiązań opartych na Azure i solidnej architektury backendu dla klientów z ekosystemu Microsoft. Praktyczne programowanie i bliska współpraca z biznesem, aby to, co powstaje, rozwiązywało właściwy problem.","Helping drive the implementation of a new inRiver PIM solution as part of the PIM Service Team. The role combines Scrum Master responsibilities, stakeholder collaboration, support for the PIM solution and its users, and hands-on technical work: turning business needs into priorities, coordinating the team's work, resolving issues, and improving the solution and its integrations.":"Współtworzenie wdrożenia nowego rozwiązania inRiver PIM w ramach PIM Service Team. Rola łączy obowiązki Scrum Mastera, współpracę z interesariuszami, wsparcie rozwiązania PIM i jego użytkowników oraz praktyczną pracę techniczną: zamianę potrzeb biznesu na priorytety, koordynację pracy zespołu, rozwiązywanie problemów oraz ulepszanie rozwiązania i jego integracji.","C# / .NET developer building internal CRM software used by customer service. Improved existing services and drove the migration to a modern web-based solution.":"Programista C# / .NET tworzący wewnętrzny system CRM dla obsługi klienta. Usprawniał istniejące usługi i prowadził migrację do nowoczesnego rozwiązania webowego.","Backend development of new features in the inriver Product Marketing Cloud, a SaaS PIM platform, with Cosmos DB, Azure Functions, .NET Core and MediatR.":"Rozwój backendu nowych funkcji w inriver Product Marketing Cloud, platformie PIM w modelu SaaS, z użyciem Cosmos DB, Azure Functions, .NET Core i MediatR.","Drove the development of the integrations and secured the quality of stories and epics: the communication link between product management and the development team.":"Prowadził rozwój integracji i dbał o jakość user stories i epików: łącznik między zarządzaniem produktem a zespołem deweloperskim.","Scrum Master within the inriver development team: running ceremonies and keeping the process healthy, while still jumping into development when needed.":"Scrum Master w zespole deweloperskim inriver: prowadzenie ceremonii i dbanie o zdrowy proces, a w razie potrzeby także programowanie.","Full-stack development on the inriver platform: new features, internal tooling and Azure infrastructure. Also got customer environments set up and running correctly in the cloud.":"Programowanie full-stack na platformie inriver: nowe funkcje, narzędzia wewnętrzne i infrastruktura Azure. Także konfiguracja środowisk klientów i ich poprawne działanie w chmurze.","Managed customer infrastructure and resolved escalated 2nd-line cases. Automated daily tasks with PowerShell and built a PowerShell support tool that sped up issue resolution. Included incident management.":"Zarządzanie infrastrukturą klientów i rozwiązywanie eskalowanych zgłoszeń drugiej linii. Automatyzacja codziennych zadań w PowerShell i stworzenie narzędzia wsparcia w PowerShell, które przyspieszyło rozwiązywanie problemów. Również zarządzanie incydentami.","Fast-paced 1st-line service desk support, helping clients with their IT problems and requests.":"Wsparcie service desk pierwszej linii w szybkim tempie: pomoc klientom w problemach i zgłoszeniach IT.","Systems development with a specialisation in Microsoft Azure, covering software engineering, .NET, cloud architecture and database management.":"Programowanie systemów ze specjalizacją Microsoft Azure: inżynieria oprogramowania, .NET, architektura chmurowa i zarządzanie bazami danych.","Team leadership: leading teams where engineering meets product.":"Przywództwo zespołu: prowadzenie zespołów na styku technologii i produktu.","Certified ScrumMaster® since 2018. Scrum Master at inriver and Tetra Pak.":"Certified ScrumMaster® od 2018. Scrum Master w inriver i Tetra Pak.","Product Owner for integrations at inriver, 2021–22.":"Product Owner integracji w inriver, 2021–22.","Turning business needs into priorities, keeping stakeholders and engineers aligned.":"Zamiana potrzeb biznesu na priorytety i utrzymywanie zgodności między interesariuszami a inżynierami.","System architecture for integrations and Azure-based solutions.":"Architektura systemów dla integracji i rozwiązań opartych na Azure.","Working with AI as part of everyday engineering and delivery.":"Praca z AI jako część codziennej inżynierii i dostarczania.","C# and .NET since 2013.":"C# i .NET od 2013.","ASP.NET Core and Blazor, including a CRM migration to Blazor at Trygg-Hansa.":"ASP.NET Core i Blazor, w tym migracja CRM do Blazora w Trygg-Hansa.","WPF desktop apps for customer service.":"Aplikacje desktopowe WPF dla obsługi klienta.","PowerShell automation and support tooling at Atea.":"Automatyzacja i narzędzia wsparcia w PowerShell w Atea.","Microsoft Azure: Functions, infrastructure, cloud environments.":"Microsoft Azure: Functions, infrastruktura, środowiska chmurowe.","SQL and Cosmos DB.":"SQL i Cosmos DB.","DevOps and CI/CD with Azure Pipelines.":"DevOps i CI/CD z Azure Pipelines.","Integrations and APIs between PIM, ERP and commerce systems.":"Integracje i API między systemami PIM, ERP i e-commerce.","inRiver PIM: five years as the vendor, now as the implementer.":"inRiver PIM: pięć lat po stronie dostawcy, teraz jako wdrożeniowiec.","@mailbody":"Cześć Mikael,\n\nMam zespół, który potrzebuje lidera na styku technologii i produktu...","@readme":"MIKAEL WILKON - README.TXT\n==========================\n\nWitaj! To moja strona domowa, przebrana\nza komputer, na którym dorastałem.\n\nKTO:   Senior Lead Consultant, Sundet (Malmö)\nTERAZ: Scrum Master, PIM Service Team, Tetra Pak\nCO:    Prowadzi zespoły na styku technologii\n       i produktu\n\nPORADY\n- Kliknij dwukrotnie ikonę, aby ją otworzyć.\n- Przeciągaj okna za pasek tytułu.\n- Kliknij pulpit prawym przyciskiem, by zobaczyć więcej.\n- Zostaw mysz w spokoju na minutę...\n- NIE uruchamiaj legacy_code.exe.\n\nKONTAKT\nMikaelWilkon@gmail.com\n\nZbudowane w czystym HTML, CSS i odrobinie\nJavaScriptu. Bez frameworków i śledzenia."}};
+  var LANGS = {
+    en: { code: 'EN', locale: 'en-GB', title: 'Language: English', body: 'MikaelOS now speaks English. Switch any time with EN in the taskbar.' },
+    sv: { code: 'SV', locale: 'sv-SE', title: 'Språk: svenska', body: 'MikaelOS pratar nu svenska. Byt när du vill med SV i aktivitetsfältet.' },
+    pl: { code: 'PL', locale: 'pl-PL', title: 'Język: polski', body: 'MikaelOS mówi teraz po polsku. Zmień język w dowolnej chwili przyciskiem PL na pasku zadań.' }
+  };
+  var lang = 'en', units = [];
+  function norm(s) { return String(s).replace(/\s+/g, ' ').trim(); }
+  function t(s) {
+    if (!I18N || !I18N[lang] || s == null) return s; /* English, or called before the dictionary loads */
+    var d = I18N[lang], k = norm(s);
+    return Object.prototype.hasOwnProperty.call(d, k) ? d[k] : s;
+  }
+  function tt(s) { return t(s); } /* for scopes where t is a local */
+  function tf(s) { var a = arguments; return t(s).replace(/\{(\d)\}/g, function (m, i) { return a[+i + 1]; }); }
+  function known(k) { return Object.prototype.hasOwnProperty.call(I18N.sv, k) || Object.prototype.hasOwnProperty.call(I18N.pl, k); }
+  function collectUnits() {
+    var INL = /^(B|I|EM|STRONG|U|A|CODE|BR|SMALL|SPAN)$/;
+    function rich(e) {
+      var txt = false;
+      for (var c = e.firstChild; c; c = c.nextSibling) {
+        if (c.nodeType === 3 && c.nodeValue.trim()) txt = true;
+        else if (c.nodeType === 1 && (!INL.test(c.tagName) || c.querySelector('*:not(b):not(i):not(em):not(strong):not(u):not(br)'))) return false;
+      }
+      return txt && e.children.length > 0;
+    }
+    function walk(e) {
+      if (/^(SCRIPT|STYLE|svg|TEXTAREA|CANVAS|INPUT)$/.test(e.tagName)) return;
+      if (e.hasAttribute('data-i18n')) { units.push({ el: e, k: e.getAttribute('data-i18n'), en: e.textContent, mode: 'text' }); return; }
+      if (rich(e)) { var rk = norm(e.innerHTML); if (known(rk)) units.push({ el: e, k: rk, en: e.innerHTML, mode: 'html' }); return; }
+      for (var c = e.firstChild; c; c = c.nextSibling) {
+        if (c.nodeType === 3) { var k = norm(c.nodeValue); if (k && known(k)) units.push({ node: c, k: k, en: c.nodeValue, mode: 'node' }); }
+        else if (c.nodeType === 1) walk(c);
+      }
+    }
+    walk(document.body);
+    ['aria-label', 'title', 'alt', 'placeholder'].forEach(function (a) {
+      $$('[' + a + ']').forEach(function (e) { var k = norm(e.getAttribute(a)); if (known(k)) units.push({ el: e, a: a, k: k, en: e.getAttribute(a), mode: 'attr' }); });
+    });
+    units.push({ el: $('#m-body'), k: '@mailbody', en: $('#m-body').value, mode: 'value' });
+    units.push({ el: $('#m-sub'), k: norm($('#m-sub').value), en: $('#m-sub').value, mode: 'value' });
+    units.forEach(function (u) { u.last = readUnit(u); });
+  }
+  function readUnit(u) { return u.mode === 'node' ? u.node.nodeValue : u.mode === 'html' ? u.el.innerHTML : u.mode === 'attr' ? u.el.getAttribute(u.a) : u.mode === 'value' ? u.el.value : u.el.textContent; }
+  function writeUnit(u, v) { if (u.mode === 'node') u.node.nodeValue = v; else if (u.mode === 'html') u.el.innerHTML = v; else if (u.mode === 'attr') u.el.setAttribute(u.a, v); else if (u.mode === 'value') u.el.value = v; else u.el.textContent = v; }
+  function applyUnits() {
+    units.forEach(function (u) {
+      if (readUnit(u) !== u.last) return; /* changed by the page or the visitor since: leave it */
+      var d = lang === 'en' ? undefined : I18N[lang][u.k], v = u.en;
+      if (d !== undefined) { if (u.mode === 'node') { var m = u.en.match(/^(\s*)[\s\S]*?(\s*)$/); v = m[1] + d + m[2]; } else v = d; }
+      writeUnit(u, v); u.last = readUnit(u);
+    });
+  }
+  function pickLang() {
+    var q = (location.search.match(/[?&]lang=(en|sv|pl)\b/) || [])[1]; if (q) return q;
+    var s = store('mw-lang'); if (LANGS[s]) return s;
+    var nav = (navigator.languages || [navigator.language || 'en']);
+    for (var i = 0; i < nav.length; i++) { var p = String(nav[i]).slice(0, 2).toLowerCase(); if (p === 'nb' || p === 'nn' || p === 'da') p = 'sv'; if (LANGS[p]) return p; }
+    return 'en';
+  }
+  function setLang(l, announce) {
+    if (!LANGS[l]) l = 'en';
+    var changed = l !== lang; lang = l; store('mw-lang', l); root.lang = l;
+    applyUnits();
+    $('#langbtn').textContent = LANGS[l].code;
+    $$('[data-lang]').forEach(function (b) {
+      var on = b.dataset.lang === l;
+      if (b.getAttribute('role') === 'menuitemradio') b.setAttribute('aria-checked', on ? 'true' : 'false'); else b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      var s = $('.lstate', b); if (s) s.textContent = on ? t('In use') : t('Switch');
+    });
+    refreshLang();
+    if (announce && changed) {
+      /* only the latest language change is worth a notification */
+      notes = notes.filter(function (x) { if (x.kind === 'lang') { if (x.dismiss) x.dismiss(); return false; } return true; });
+      toastQ = toastQ.filter(function (x) { return x.kind !== 'lang'; });
+      notify({ app: 'MikaelOS', icon: 'm-globe', kind: 'lang', title: LANGS[l].title, body: LANGS[l].body, actions: [] });
+    }
+  }
+  function refreshLang() {
+    $$('.task').forEach(function (b) { var w = document.getElementById(b.dataset.win); if (w) $('span', b).textContent = title(w); });
+    var snd = $('#sound'); snd.title = t(soundOn ? 'Sound: on' : 'Sound: off'); snd.setAttribute('aria-label', snd.title);
+    $('#sw-flag').textContent = t(SW.flagMode ? 'Flag mode: on' : 'Flag mode: off');
+    $$('#sw-grid button').forEach(function (b) { b.setAttribute('aria-label', t('Cell')); });
+    if (!$('#binlist').children.length) $('#bintxt').textContent = t('0 object(s)');
+    if (curTip !== null) showTip();
+    if (lastSkill) $('#skilltxt').textContent = t(lastSkill.dataset.skill);
+    if (lastRole) fillRole(lastRole);
+    $('#boot .bs').textContent = t(os === '26' ? 'Getting things ready' : 'Starting MikaelOS... loading leadership drivers');
+    tick(); renderCenter(); updateBadge();
+  }
+  var langmenu = $('#langmenu'), langbtn = $('#langbtn');
+  langbtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    var on = !langmenu.classList.contains('open'); closeMenus();
+    if (!on) return;
+    var r = langbtn.getBoundingClientRect();
+    langmenu.style.right = Math.max(4, window.innerWidth - r.right - 4) + 'px';
+    langmenu.style.bottom = (window.innerHeight - r.top + 6) + 'px';
+    langmenu.classList.add('open'); langbtn.setAttribute('aria-expanded', 'true');
+    var cur = $('[aria-checked="true"]', langmenu); if (cur) cur.focus({ preventScroll: true });
+  });
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-lang]'); if (!b) return;
+    closeMenus(); setLang(b.dataset.lang, true);
   });
 
   /* =====================================================================
@@ -1304,7 +1452,7 @@ JavaScript. No frameworks, no trackers.</pre>
     root.classList.toggle('os26', m === '26');
     swapIcons(m === '26');
     $('#boot .bl').innerHTML = '<b>Mikael</b>OS <em>' + m + '</em>';
-    $('#boot .bs').textContent = m === '26' ? 'Getting things ready' : 'Starting MikaelOS... loading leadership drivers';
+    $('#boot .bs').textContent = t(m === '26' ? 'Getting things ready' : 'Starting MikaelOS... loading leadership drivers');
     var meta = document.querySelector('meta[name="theme-color"]'); if (meta) meta.setAttribute('content', m === '26' ? '#0b5cad' : '#008080');
     applyDark(); closeMenus(); hideBalloon();
     $$('.toast').forEach(function (t) { t.remove(); }); toastQ = []; toastShowing = 0;
@@ -1320,13 +1468,13 @@ JavaScript. No frameworks, no trackers.</pre>
     var el = $('#update'), steps = to === '26' ? upSteps : downSteps, p = 0;
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     el.style.background = to === '26' ? '#0b5cad' : '#008080';
-    $('#u2').textContent = to === '26' ? 'Life moves on, so does technology. Please don\'t turn off your stakeholders.' : 'Some things are worth keeping. Rolling back to MikaelOS 95.';
-    $('#u1').textContent = (to === '26' ? 'Working on updates ' : 'Restoring ') + '0%'; $('#u3').textContent = steps[0];
+    $('#u2').textContent = t(to === '26' ? 'Life moves on, so does technology. Please don\'t turn off your stakeholders.' : 'Some things are worth keeping. Rolling back to MikaelOS 95.');
+    $('#u1').textContent = tf(to === '26' ? 'Working on updates {0}%' : 'Restoring {0}%', 0); $('#u3').textContent = t(steps[0]);
     el.classList.add('open');
     var iv = setInterval(function () {
       p = Math.min(100, p + (reduce ? 34 : 6 + Math.floor(Math.random() * 9)));
-      $('#u1').textContent = (to === '26' ? 'Working on updates ' : 'Restoring ') + p + '%';
-      $('#u3').textContent = steps[Math.min(steps.length - 1, Math.floor(p / 100 * steps.length))];
+      $('#u1').textContent = tf(to === '26' ? 'Working on updates {0}%' : 'Restoring {0}%', p);
+      $('#u3').textContent = t(steps[Math.min(steps.length - 1, Math.floor(p / 100 * steps.length))]);
       if (p >= 100) {
         clearInterval(iv);
         setTimeout(function () {
@@ -1345,10 +1493,10 @@ JavaScript. No frameworks, no trackers.</pre>
 
   /* ---------- notifications: one at a time, never lost, quiet when asked ---------- */
   var notes = [], toastQ = [], toastShowing = 0, noteId = 0;
-  function ago(d) { var m = Math.round((Date.now() - d) / 60000); return m < 1 ? 'Now' : m + ' min ago'; }
+  function ago(d) { var m = Math.round((Date.now() - d) / 60000); return m < 1 ? t('Now') : tf('{0} min ago', m); }
   function actionButtons(box, n, after) {
     (n.actions || []).forEach(function (a) {
-      var b = document.createElement('button'); b.textContent = a.label;
+      var b = document.createElement('button'); b.textContent = t(a.label);
       b.addEventListener('click', function (e) { e.stopPropagation(); n.read = true; updateBadge(); if (after) after(); if (a.run) a.run(); });
       box.appendChild(b);
     });
@@ -1358,7 +1506,7 @@ JavaScript. No frameworks, no trackers.</pre>
     notes.forEach(function (n) {
       var d = document.createElement('div'); d.className = 'nitem';
       d.innerHTML = '<svg aria-hidden="true"><use href="#' + (n.icon || 'm-info') + '"/></svg><span class="app"></span><span class="when"></span><b></b><p></p><div class="acts"></div>';
-      $('.app', d).textContent = n.app; $('.when', d).textContent = ago(n.time); $('b', d).textContent = n.title; $('p', d).textContent = n.body;
+      $('.app', d).textContent = t(n.app); $('.when', d).textContent = ago(n.time); $('b', d).textContent = t(n.title); $('p', d).textContent = t(n.body);
       actionButtons($('.acts', d), n, closeMenus);
       list.appendChild(d);
     });
@@ -1369,7 +1517,7 @@ JavaScript. No frameworks, no trackers.</pre>
     $('#badge').textContent = n ? String(n) : '';
     bell.classList.toggle('dnd', dnd);
     $('use', bell).setAttribute('href', dnd ? '#ic-bell-off' : '#ic-bell');
-    bell.setAttribute('aria-label', 'Notifications' + (n ? ', ' + n + ' unread' : '') + (dnd ? ', Do not disturb is on' : ''));
+    bell.setAttribute('aria-label', t('Notifications') + (n ? ', ' + tf('{0} unread', n) : '') + (dnd ? ', ' + t('Do not disturb is on') : ''));
     $('#qs-dnd').setAttribute('aria-pressed', dnd ? 'true' : 'false');
   }
   function notify(n) {
@@ -1389,12 +1537,12 @@ JavaScript. No frameworks, no trackers.</pre>
     var t = document.createElement('div'), timer = null, gone = false;
     t.className = 'toast'; t.setAttribute('role', 'status');
     t.innerHTML = '<svg aria-hidden="true"><use href="#' + (n.icon || 'm-info') + '"/></svg><span class="app"></span><button class="tx" aria-label="Dismiss">&#10005;</button><b></b><p></p><div class="acts"></div>';
-    $('.app', t).textContent = n.app; $('b', t).textContent = n.title; $('p', t).textContent = n.body;
+    $('.tx', t).setAttribute('aria-label', tt('Dismiss')); $('.app', t).textContent = tt(n.app); $('b', t).textContent = tt(n.title); $('p', t).textContent = tt(n.body);
     function dismiss() {
       if (gone) return; gone = true; clearTimeout(timer); t.classList.add('out');
       setTimeout(function () { t.remove(); toastShowing = 0; setTimeout(pump, 500); }, 230);
     }
-    actionButtons($('.acts', t), n, dismiss);
+    n.dismiss = dismiss; actionButtons($('.acts', t), n, dismiss);
     $('.tx', t).addEventListener('click', dismiss);
     t.addEventListener('mouseenter', function () { clearTimeout(timer); });
     t.addEventListener('mouseleave', function () { timer = setTimeout(dismiss, 3000); });
@@ -1413,7 +1561,7 @@ JavaScript. No frameworks, no trackers.</pre>
   $('#nclear').addEventListener('click', function () { notes = []; renderCenter(); updateBadge(); });
   $('#qs-dnd').addEventListener('click', function () {
     dnd = !dnd; store('mw-dnd', dnd ? 'on' : 'off'); updateBadge();
-    if (!dnd) { var missed = notes.filter(function (x) { return !x.read; }).length; if (missed) { closeMenus(); notify({ app: 'MikaelOS', title: 'You have ' + missed + ' unread notification' + (missed > 1 ? 's' : ''), body: 'They waited quietly while Do not disturb was on.', actions: [{ label: 'View', run: openCenter }] }); } }
+    if (!dnd) { var missed = notes.filter(function (x) { return !x.read; }).length; if (missed) { closeMenus(); notify({ app: 'MikaelOS', title: missed > 1 ? tf('You have {0} unread notifications', missed) : t('You have 1 unread notification'), body: 'They waited quietly while Do not disturb was on.', actions: [{ label: 'View', run: openCenter }] }); } }
   });
   $('#qs-dark').addEventListener('click', function () { dark = !dark; store('mw-dark', dark ? 'on' : 'off'); applyDark(); });
   $('#qs-sound').addEventListener('click', function () { $('#sound').click(); this.setAttribute('aria-pressed', soundOn ? 'true' : 'false'); });
@@ -1422,7 +1570,7 @@ JavaScript. No frameworks, no trackers.</pre>
   var bTimer = null;
   function hideBalloon() { $('#balloon').classList.remove('open'); clearTimeout(bTimer); }
   function balloon(n) {
-    $('#btitle').textContent = n.title; $('#bbody').textContent = n.body;
+    $('#btitle').textContent = t(n.title); $('#bbody').textContent = t(n.body);
     var acts = $('#bacts'); acts.innerHTML = ''; actionButtons(acts, n, hideBalloon);
     $('#balloon').classList.add('open'); sfx.ding();
     clearTimeout(bTimer); bTimer = setTimeout(hideBalloon, 12000);
@@ -1439,7 +1587,7 @@ JavaScript. No frameworks, no trackers.</pre>
   q.addEventListener('keydown', function (e) {
     if (e.key !== 'Enter') return; e.preventDefault();
     var v = q.value.trim(), first = $('#pins button:not(.hide)');
-    if (v && /hire|recruit|job|offer|legacy/i.test(v)) { closeMenus(); runCommand(v); }
+    if (v && (HIRE.test(v) || /legacy/i.test(v))) { closeMenus(); runCommand(v); }
     else if (first && v) first.click(); else if (v) { closeMenus(); runCommand(v); }
   });
   $('#power26').addEventListener('click', function () { $('#shutdown').click(); });
@@ -1475,6 +1623,7 @@ JavaScript. No frameworks, no trackers.</pre>
     }, 80000);
   }
 
+  collectUnits(); setLang(pickLang(), false);
   setOS(os); renderCenter(); updateBadge();
 
   boot(false);
