@@ -6,6 +6,12 @@
 <title>Mikael Wilkon — Senior Lead Consultant</title>
 <meta name="description" content="Mikael Wilkon — Senior Lead Consultant in Malmö, Sweden. Leads teams where engineering meets product: Scrum Master, Product Owner and .NET engineer with deep PIM and integration experience.">
 <meta name="theme-color" content="#008080">
+<meta name="author" content="Mikael Wilkon">
+<link rel="canonical" href="https://mikaelwilkon.tech/">
+<meta property="og:type" content="profile">
+<meta property="og:url" content="https://mikaelwilkon.tech/">
+<meta property="og:site_name" content="Mikael Wilkon">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Mikael Wilkon","jobTitle":"Senior Lead Consultant","url":"https://mikaelwilkon.tech/","image":"https://mikaelwilkon.tech/assets/profile.jpg","address":{"@type":"PostalAddress","addressLocality":"Malmö","addressCountry":"SE"},"knowsLanguage":["sv","pl","en"],"sameAs":["https://se.linkedin.com/in/mikael-wilkon-38413aa0"]}</script>
 <meta property="og:title" content="Mikael Wilkon — Senior Lead Consultant">
 <meta property="og:description" content="Leads teams where engineering meets product. Scrum Master, Product Owner and .NET engineer in Malmö, Sweden.">
 <meta property="og:image" content="https://mikaelwilkon.tech/assets/profile.jpg">
@@ -151,8 +157,7 @@
   html:not(.js) .taskbar { display:none; }
   .start { font-weight:bold; padding: 3px 7px; display:flex; align-items:center; gap: 5px; font-size: 15px; height: 32px; cursor:pointer; background: var(--face); }
   .start.on { border-color: var(--dk) var(--hi) var(--hi) var(--dk); box-shadow: inset 1px 1px 0 var(--lo); }
-  .logo4 { width: 20px; height: 18px; display:grid; grid-template-columns: 1fr 1fr; gap: 1px; transform: perspective(40px) rotateY(-14deg) skewY(-4deg); }
-  .logo4 i:nth-child(1){background:#e3342f}.logo4 i:nth-child(2){background:#38a33c}.logo4 i:nth-child(3){background:#2f6fd6}.logo4 i:nth-child(4){background:#f2b705}
+  .logo4 { min-width: 22px; height: 18px; padding: 0 2px; display:grid; place-items:center; background:#000080; color:#fff; font: 900 10px/1 "Arial Black", Arial, sans-serif; letter-spacing: -.5px; border: 1px solid #000; }
   #tasks { flex:1; display:flex; gap: 3px; min-width: 0; overflow: hidden; }
   .task { flex: 0 1 170px; min-width: 40px; height: 32px; padding: 0 8px; font-size: 13.5px; display:flex; align-items:center; gap: 5px; white-space:nowrap; overflow:hidden; cursor:pointer; background: var(--face); text-align: left; }
   .task span { overflow:hidden; text-overflow: ellipsis; }
@@ -186,7 +191,10 @@
   #boot .bar { width: min(320px, 70vw); height: 14px; border: 2px solid #888; padding: 2px; overflow:hidden; }
   #boot .bar i { display:block; height: 100%; width: 40%; background: linear-gradient(90deg, #000080, #1084d0, #38a33c, #f2b705, #000080); animation: slide 1.1s linear infinite; }
   @keyframes slide { from { transform: translateX(-100%); } to { transform: translateX(260%); } }
-  #bsod { background: #0000aa; color:#fff; font: 18px/1.6 "Courier New", "Liberation Mono", monospace; align-items:center; justify-content:center; padding: 24px; cursor: pointer; }
+  #bsod { background: rgba(0,0,0,.45); align-items:center; justify-content:center; padding: 16px; cursor: pointer; }
+  #bsod .scr { background: #0000aa; color:#fff; font: 17px/1.6 "Courier New", "Liberation Mono", monospace; padding: 28px 28px 18px; max-width: 720px; width: 100%; max-height: calc(100vh - 32px); overflow: auto; border: 3px solid #c0c0c0; box-shadow: 4px 4px 0 rgba(0,0,0,.4); }
+  .joke { display:flex; gap: 12px; align-items:center; justify-content: space-between; flex-wrap: wrap; margin-top: 20px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,.35); font: 14px/1.4 Tahoma, "Segoe UI", Arial, sans-serif; }
+  .joke button { font: 14px Tahoma, "Segoe UI", Arial, sans-serif; padding: 5px 16px; background: #fff; color: #000; border: 0; cursor: pointer; }
   #bsod .in { max-width: 680px; }
   #bsod .h { display:table; margin: 0 auto 22px; background:#aaa; color:#0000aa; padding: 0 8px; font-weight: bold; }
   #bsod .c { text-align:center; margin-top: 22px; }
@@ -222,7 +230,9 @@
   #balloon .acts { margin-top: 6px; display: flex; gap: 10px; flex-wrap: wrap; }
   #balloon .acts button { background: none; border: 0; padding: 0; color: #0000ee; text-decoration: underline; cursor: pointer; font-size: 14.5px; }
   #bell, #datebox { display: none; }
-  #update { background: #0b5cad; color: #fff; flex-direction: column; align-items: center; justify-content: center; gap: 22px; text-align: center; padding: 24px; font-family: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, sans-serif; }
+  #update { background: rgba(0,0,0,.45); align-items: center; justify-content: center; padding: 16px; font-family: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, sans-serif; }
+  #update .card { background: linear-gradient(135deg, #3a2f8f, #0f6f78); color: #fff; display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; padding: 30px 26px 22px; width: min(520px, 100%); border-radius: 14px; box-shadow: 0 18px 50px rgba(0,0,0,.35); }
+  #update .card button { font: inherit; font-size: 14px; background: rgba(255,255,255,.18); color: #fff; border: 1px solid rgba(255,255,255,.5); border-radius: 6px; padding: 5px 16px; cursor: pointer; }
   #update .spin { width: 46px; height: 46px; position: relative; }
   #update .spin i { position: absolute; inset: 0; animation: orbit 1.6s cubic-bezier(.5,.15,.5,.85) infinite; }
   #update .spin i::before { content: ""; position: absolute; left: 50%; top: 0; width: 6px; height: 6px; margin-left: -3px; border-radius: 50%; background: #fff; }
@@ -232,10 +242,10 @@
   #update .u2 { font-size: 16px; opacity: .85; max-width: 520px; }
   #update .u3 { font-size: 14px; opacity: .7; min-height: 20px; }
   #bsod .bs26 { display: none; }
-  html.os26 #bsod { background: #0b5cad; font-family: "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif; justify-content: flex-start; padding: 10vh 8vw; }
+  html.os26 #bsod .scr { background: #2b3a67; font-family: "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif; border: 0; border-radius: 14px; padding: 32px 32px 18px; }
   html.os26 #bsod .bs95 { display: none; }
   html.os26 #bsod .bs26 { display: block; max-width: 720px; }
-  #bsod .bs26 .sad { font-size: clamp(80px, 14vw, 140px); line-height: 1; margin: 0 0 24px; font-weight: 300; }
+  #bsod .bs26 .sad { font-size: clamp(60px, 10vw, 96px); line-height: 1; margin: 0 0 24px; font-weight: 300; }
   #bsod .bs26 p { font-size: clamp(18px, 2.2vw, 24px); line-height: 1.4; margin: 0 0 18px; font-weight: 300; }
   #bsod .bs26 small { display: block; font-size: 14px; opacity: .85; margin-top: 30px; }
 
@@ -327,9 +337,7 @@
   html.os26 .taskbar { height: 48px; background: var(--m-bar); -webkit-backdrop-filter: blur(28px) saturate(1.5); backdrop-filter: blur(28px) saturate(1.5); border-top: 1px solid var(--m-line); box-shadow: none; justify-content: center; gap: 4px; padding: 0 8px; }
   html.os26 .start { border: 0; box-shadow: none; background: transparent; width: 44px; height: 40px; padding: 0; justify-content: center; border-radius: 6px; font-size: 0; }
   html.os26 .start:hover, html.os26 .start.on { background: var(--m-hover); }
-  html.os26 .logo4 { transform: none; width: 22px; height: 22px; gap: 2px; }
-  html.os26 .logo4 i { border-radius: 1px; background: var(--m-accent) !important; }
-  html.os26 .logo4 i:nth-child(2), html.os26 .logo4 i:nth-child(3) { opacity: .75; }
+  html.os26 .logo4 { width: 24px; height: 24px; border: 0; border-radius: 7px; background: var(--m-accent); font: 700 11px/1 var(--m-font); letter-spacing: 0; }
   html.os26 #tasks { flex: 0 1 auto; gap: 4px; }
   html.os26 .task { flex: 0 0 44px; width: 44px; min-width: 44px; height: 40px; padding: 0; justify-content: center; border: 0; box-shadow: none; background: transparent; border-radius: 6px; position: relative; }
   html.os26 .task span { display: none; }
@@ -801,7 +809,7 @@ JavaScript. No frameworks, no trackers.</pre>
 </div>
 
 <div class="taskbar" role="toolbar" aria-label="Taskbar">
-  <button class="start bevel" id="startbtn" aria-haspopup="menu" aria-expanded="false"><span class="logo4"><i></i><i></i><i></i><i></i></span>Start</button>
+  <button class="start bevel" id="startbtn" aria-haspopup="menu" aria-expanded="false"><span class="logo4" aria-hidden="true">MW</span>Start</button>
   <div id="tasks"></div>
   <div class="tray">
     <button id="sound" aria-label="Sound off" title="Sound: off"><svg class="i16"><use href="#ic-mute"/></svg></button>
@@ -868,15 +876,14 @@ JavaScript. No frameworks, no trackers.</pre>
 <!-- MikaelOS 95: balloon tip -->
 <div id="balloon" role="status"><button class="bx" aria-label="Close">&times;</button><b><svg class="i16"><use href="#ic-info"/></svg><span id="btitle"></span></b><span id="bbody"></span><div class="acts" id="bacts"></div></div>
 
-<div class="overlay" id="update" role="status" aria-live="polite"><div class="spin" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div><div class="u1" id="u1">Working on updates 0%</div><div class="u2" id="u2">Life moves on, so does technology. Please don't turn off your stakeholders.</div><div class="u3" id="u3"></div></div>
-<div class="overlay" id="boot" aria-hidden="true"><div class="bl"><b>Mikael</b>OS <em>95</em></div><div class="bar"><i></i></div><div class="bs">Starting MikaelOS... loading leadership drivers</div></div>
-<div class="overlay" id="bsod" role="alertdialog" aria-label="Blue screen"><div class="bs26"><p class="sad">:(</p><p>Your PC ran into a problem: legacy_code.exe has accumulated too much technical debt. We're collecting some error info, and then we'll add it to the backlog.</p><p>100% complete</p><small>Stop code: TECH_DEBT_OVERFLOW &middot; Press any key to continue</small></div><div class="in bs95">
-  <div class="h">MikaelOS</div>
-  <p>A fatal exception 0E has occurred at 0028:C0FFEE42 in VXD LEGACY(01). The current application has accumulated too much technical debt.</p>
-  <p>*&nbsp; Press any key to put it in the backlog.<br>*&nbsp; Press CTRL+ALT+DEL to call a Scrum Master. You will lose any unsaved estimates.</p>
-  <p class="c">Press any key to continue _</p>
-</div></div>
-<div class="overlay" id="off">It's now safe to turn off<br>your computer.<small>Click anywhere to restart MikaelOS</small></div>
+<div class="overlay" id="update" role="status" aria-live="polite"><div class="card"><div class="spin" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div><div class="u1" id="u1">Switching to MikaelOS 26 0%</div><div class="u2" id="u2">Life moves on, so does technology.</div><div class="u3" id="u3"></div><button type="button" id="uskip">Skip</button></div></div>
+<div class="overlay" id="boot" aria-hidden="true"><div class="bl"><b>Mikael</b>OS <em>95</em></div><div class="bar"><i></i></div><div class="bs">Mikael Wilkon's portfolio &middot; loading leadership drivers</div></div>
+<div class="overlay" id="bsod" role="dialog" aria-modal="true" aria-label="legacy_code.exe joke"><div class="scr"><div class="bs26"><p class="sad">:(</p><p>legacy_code.exe has accumulated too much technical debt, so it has been moved to the backlog.</p><small>Ticket: TECH-DEBT-42</small></div><div class="in bs95">
+  <div class="h">legacy_code.exe</div>
+  <p>legacy_code.exe has accumulated too much technical debt and has been moved to the backlog.</p>
+  <p>*&nbsp; Next sprint, maybe.<br>*&nbsp; Ask a Scrum Master to estimate it. Bring snacks.</p>
+</div><div class="joke"><span>Just a joke on Mikael Wilkon's portfolio site. Nothing is wrong with your device.</span><button type="button">Close</button></div></div></div>
+<div class="overlay" id="off">MikaelOS has shut down.<br>It's now safe to close this tab.<small>Click anywhere to start MikaelOS again</small></div>
 <div class="overlay" id="saver" aria-hidden="true"><canvas id="savercv"></canvas></div>
 
 <script>
@@ -1319,13 +1326,13 @@ JavaScript. No frameworks, no trackers.</pre>
     upgrading = true; closeMenus(); hideBalloon();
     var el = $('#update'), steps = to === '26' ? upSteps : downSteps, p = 0;
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    el.style.background = to === '26' ? '#0b5cad' : '#008080';
-    $('#u2').textContent = to === '26' ? 'Life moves on, so does technology. Please don\'t turn off your stakeholders.' : 'Some things are worth keeping. Rolling back to MikaelOS 95.';
-    $('#u1').textContent = (to === '26' ? 'Working on updates ' : 'Restoring ') + '0%'; $('#u3').textContent = steps[0];
+        $('#u2').textContent = to === '26' ? 'Life moves on, so does technology.' : 'Some things are worth keeping.';
+    $('#u1').textContent = (to === '26' ? 'Switching to MikaelOS 26 ' : 'Switching back to MikaelOS 95 ') + '0%'; $('#u3').textContent = steps[0];
     el.classList.add('open');
+    $('#uskip').onclick = function () { p = 99; };
     var iv = setInterval(function () {
       p = Math.min(100, p + (reduce ? 34 : 6 + Math.floor(Math.random() * 9)));
-      $('#u1').textContent = (to === '26' ? 'Working on updates ' : 'Restoring ') + p + '%';
+      $('#u1').textContent = (to === '26' ? 'Switching to MikaelOS 26 ' : 'Switching back to MikaelOS 95 ') + p + '%';
       $('#u3').textContent = steps[Math.min(steps.length - 1, Math.floor(p / 100 * steps.length))];
       if (p >= 100) {
         clearInterval(iv);
@@ -1462,7 +1469,7 @@ JavaScript. No frameworks, no trackers.</pre>
     if (scheduled) return; scheduled = true;
     setTimeout(function () {
       if (os === '95') {
-        if (!sstore('mw-later')) notify({ app: 'MikaelOS Update', icon: 'm-upgrade', title: 'A new version of MikaelOS is available', body: 'Life moves on, so does technology. Upgrade to MikaelOS 26 for a modern desktop and calmer notifications.', actions: [{ label: 'Upgrade now', run: function () { upgrade('26'); } }, { label: 'Later', run: function () { sstore('mw-later', '1'); } }] });
+        if (!sstore('mw-later')) notify({ app: 'MikaelOS Update', icon: 'm-upgrade', title: 'Try the modern look', body: 'Life moves on, so does technology. Switch this site to MikaelOS 26 for a modern desktop and calmer notifications.', actions: [{ label: 'Switch look', run: function () { upgrade('26'); } }, { label: 'Not now', run: function () { sstore('mw-later', '1'); } }] });
       } else {
         notify({ app: 'Career', icon: 'm-run', title: 'Now: Scrum Master, PIM Service Team', body: 'Tetra Pak, Lund. Driving a new inRiver PIM solution into the business.', actions: [{ label: 'Open', run: function () { open('w-now'); } }, { label: 'Career', run: function () { open('w-career'); } }] });
       }
